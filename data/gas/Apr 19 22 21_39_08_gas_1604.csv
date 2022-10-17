@@ -1,0 +1,539 @@
+grundpreis,anbieter,tarifname,preis,kwh_price,plz,place,abschliessbar_bei,mindestlaufzeit_monate,KeineVorkasse,Oeko,preisgarantie_monate,Kuendigungsfrist,vertragsverlaengerung_monate
+0,"148,75 €/Jahr",Teutoburger EN,PuraGas 3.0,"548,35 €","13,32 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Anbieter,8.0,True,True,8.0,1.0,1.0
+1,"70,83 €/Jahr",MONTANA,MONTANA bonus 12,"560,63 €","16,80 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Verivox,12.0,True,False,12.0,1.0,0.0
+2,"70,83 €/Jahr",MONTANA,MONTANA bonus 12,"560,63 €","16,83 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Check24,12.0,True,False,12.0,1.0,1.0
+3,"70,83 €/Jahr",MONTANA,MONTANA garant 12,"560,99 €","16,33 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Verivox,12.0,True,False,12.0,1.0,1.0
+4,"78,58 €/Jahr",Octopus Energy,OctopusSelect Gas,"561,55 €","16,20 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Verivox,30.0,True,False,24.0,1.0,0.0
+5,"78,58 €/Jahr",Octopus Energy,OctopusSelect Gas,"561,55 €","16,23 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Check24,1.0,True,False,24.0,1.0,1.0
+6,"142,80 €/Jahr",Vattenfall Sales,Easy12 Gas,"563,40 €","16,50 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Verivox,12.0,True,False,12.0,1.0,1.0
+7,"142,80 €/Jahr",Vattenfall Sales,Natur12 Gas,"566,40 €","16,60 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Verivox,12.0,True,True,12.0,1.0,1.0
+8,"70,83 €/Jahr",MONTANA,MONTANA bonus 12 klimaneutral,"569,56 €","17,10 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Verivox,12.0,True,True,12.0,1.0,0.0
+9,"70,83 €/Jahr",MONTANA,MONTANA bonus 12 klimaneutral,"569,56 €","17,12 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Check24,12.0,True,True,12.0,1.0,1.0
+10,"70,83 €/Jahr",MONTANA,MONTANA garant 12 klimaneutral,"569,91 €","16,63 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Verivox,12.0,True,True,12.0,1.0,0.0
+11,"70,83 €/Jahr",MONTANA,MONTANA garant 12 klimaneutral,"569,91 €","16,64 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Check24,12.0,True,True,12.0,1.0,1.0
+12,"142,80 €/Jahr",Vattenfall,Bio12 Gas 15,"571,80 €","16,80 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Verivox,12.0,True,True,12.0,1.0,0.0
+13,"142,80 €/Jahr",Vattenfall Sales,Bio12 Gas 15,"571,80 €","16,80 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Check24,12.0,True,True,12.0,1.0,1.0
+14,"70,83 €/Jahr",MONTANA,MONTANA bonus 12 Biogas10,"578,48 €","17,40 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Verivox,12.0,True,True,12.0,1.0,0.0
+15,"70,83 €/Jahr",MONTANA,MONTANA garant 12 Biogas10,"578,84 €","16,93 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Verivox,12.0,True,True,12.0,1.0,0.0
+16,"70,83 €/Jahr",MONTANA,MONTANA garant 12 Biogas10,"578,84 €","16,93 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Check24,12.0,True,True,12.0,1.0,1.0
+17,"142,80 €/Jahr",Vattenfall Sales,Natur12 Extra Gas,"596,40 €","16,60 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Verivox,12.0,True,True,12.0,1.0,1.0
+18,"97,28 €/Jahr",Brillant Energie,Brillant Gas Natur 12,"600,08 €","16,73 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Verivox,12.0,True,True,12.0,1.0,1.0
+19,"188,04 €/Jahr",stadtenergie,Checker Gas,"604,49 €","13,88 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Check24,12.0,True,True,12.0,1.0,1.0
+20,"137,78 €/Jahr",MAXENERGY,MAX Basic Gas,"621,08 €","16,11 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Check24,12.0,True,False,12.0,1.0,1.0
+21,"129,14 €/Jahr",R(H)EINPOWER,R(H)EINPOWER MeinGas 12 Natur,"659,64 €","17,67 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Verivox,12.0,True,False,12.0,1.0,0.0
+22,"129,14 €/Jahr",R(H)EINPOWER,R(H)EINPOWER MeinGas 12 Natur ,"659,64 €","17,68 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Check24,12.0,True,True,12.0,1.0,1.0
+23,"86,89 €/Jahr",NEW Energie,NEWgas online,"663,79 €","19,23 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Anbieter,12.0,True,False,12.0,1.0,1.0
+24,"86,89 €/Jahr",KlickEnergie,Klickgas12 plus,"663,81 €","19,23 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Check24,12.0,True,False,12.0,1.0,1.0
+25,"80,64 €/Jahr",team energie,teamgas günstig,"667,74 €","19,57 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Check24,12.0,True,False,12.0,1.0,1.0
+26,"114,24 €/Jahr",GASAG AG,Grund- und Ersatzversorgung Neukunde,"676,14 €","18,73 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Anbieter,0.0,True,False,0.0,0.5,0.0
+27,"86,89 €/Jahr",KlickEnergie,KlickGas,"681,66 €","19,83 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Check24,12.0,True,False,12.0,1.0,1.0
+28,"86,89 €/Jahr",NEW Energie,NEWgas online12 plus,"681,79 €","19,83 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Anbieter,12.0,True,False,12.0,1.0,1.0
+29,"118,81 €/Jahr",Bürgerwerke,BürgerÖkogas 5 %,"701,61 €","19,43 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Anbieter,1.0,True,True,8.0,1.0,1.0
+30,"74,99 €/Jahr",Yippie,Happy Yippie Gas,"724,79 €","21,63 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Verivox,12.0,True,True,12.0,1.0,0.0
+31,"74,99 €/Jahr",Yippie,Happy Yippie Gas,"724,79 €","21,66 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Check24,12.0,True,True,12.0,1.0,1.0
+32,"161,58 €/Jahr",LichtBlick,ÖkoGas Komfort 12,"724,98 €","18,77 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Verivox,12.0,True,True,12.0,1.0,1.0
+33,"169,96 €/Jahr",Stadtwerke München,M-Erdgas Fix,"754,36 €","19,47 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Verivox,12.0,True,False,12.0,1.0,1.0
+34,"169,96 €/Jahr",Stadtwerke München,M-Ökogas Fix,"763,36 €","19,77 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Verivox,12.0,True,True,12.0,1.0,1.0
+35,"307,04 €/Jahr",stadtenergie,Checker Gas +,"792,85 €","16,19 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Check24,12.0,True,True,12.0,1.0,1.0
+36,"142,80 €/Jahr",Vattenfall Sales,Easy12 Gas Standard,"868,80 €","24,20 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Verivox,12.0,True,False,12.0,1.0,1.0
+37,"174,11 €/Jahr",E.ON Energie,E.ON Erdgas Öko Plus 12,"890,51 €","23,87 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Verivox,12.0,True,True,16.0,1.0,1.0
+38,"83,32 €/Jahr",Weinstraßen Energie,Standard Gas,"900,43 €","27,23 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Anbieter,6.0,True,True,12.0,1.0,0.0
+39,"118,81 €/Jahr",Bürgerwerke,BürgerÖkogas 100 %,"964,58 €","28,19 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Anbieter,1.0,True,True,8.0,1.0,1.0
+40,"160,44 €/Jahr",Süwag,Gas Garant 100 ,"1.118,54 €","35,27 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Check24,12.0,True,False,12.0,1.0,1.0
+41,"914,21 €/Jahr",Weinstraßen Energie,Basic Gas,"1.725,95 €","27,03 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,Anbieter,12.0,True,True,12.0,1.0,0.0
+42,"142,80 €/Jahr",Vattenfall,Easy24 Gas,"522,20 €","16,47 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,KeineEmpfehlung,24.0,True,False,24.0,1.0,0.0
+43,"142,80 €/Jahr",Vattenfall,Natur24 Gas,"525,20 €","16,57 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+44,"97,28 €/Jahr",Brillant Energie,Brillant Gas Natur 24,"552,08 €","15,13 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+45,"142,80 €/Jahr",Vattenfall,Natur24 Extra Gas,"555,20 €","16,57 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+46,"142,80 €/Jahr",Vattenfall Sales,Natur24 Extra Gas,"555,20 €","16,58 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+47,"142,80 €/Jahr",Vattenfall,Bio24 Gas 15,"570,60 €","16,73 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+48,"142,80 €/Jahr",Vattenfall Sales,Bio24 Gas 15,"570,60 €","16,76 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+49,"70,83 €/Jahr",MONTANA,MONTANA garant 24,"574,91 €","16,80 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,KeineEmpfehlung,24.0,True,False,24.0,1.0,0.0
+50,"70,83 €/Jahr",MONTANA,MONTANA garant 24,"574,91 €","16,80 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+51,"70,83 €/Jahr",MONTANA,MONTANA bonus 24,"576,34 €","17,33 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,KeineEmpfehlung,24.0,True,False,24.0,1.0,0.0
+52,"70,83 €/Jahr",MONTANA,MONTANA garant 24 klimaneutral,"583,84 €","17,10 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+53,"70,83 €/Jahr",MONTANA,MONTANA garant 24 klimaneutral,"583,84 €","17,10 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+54,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 klimaneutral,"585,27 €","17,63 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+55,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 klimaneutral,"585,27 €","17,65 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+56,"70,83 €/Jahr",MONTANA,MONTANA garant 24 Biogas10,"592,76 €","17,37 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+57,"70,83 €/Jahr",MONTANA,MONTANA garant 24 Biogas10,"592,76 €","17,40 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+58,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 Biogas10,"594,19 €","17,93 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+59,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 Biogas10,"594,19 €","17,95 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+60,"137,78 €/Jahr",MAXENERGY,Max Safety Gas,"594,31 €","15,22 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+61,"117,45 €/Jahr",Stadtwerke Luckenwalde,local gas regio Neukunde,"630,46 €","17,10 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,KeineEmpfehlung,12.0,True,False,0.0,1.0,1.0
+62,"161,58 €/Jahr",LichtBlick,ÖkoGas Relax 24,"727,98 €","18,87 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+63,"118,80 €/Jahr",NATURSTROM AG,naturstrom biogas 10 %,"745,80 €","20,90 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,KeineEmpfehlung,1.0,True,True,0.0,1.0,1.0
+64,"180,57 €/Jahr",TEAG Thüringer Energie,TEAG.Gas extra,"808,18 €","20,92 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+65,"366,54 €/Jahr",stadtenergie,Gönn dir WATT +,"852,35 €","16,19 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+66,"160,44 €/Jahr",Süwag,Gas Garant 100 (24M) ,"1.118,54 €","35,27 ct/kWh",12459.0,Berlin / KGA Gartenfreunde Wuhlheide,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+0,"148,75 €/Jahr",Teutoburger EN,PuraGas 3.0,"548,35 €","13,32 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Anbieter,8.0,True,True,8.0,1.0,1.0
+1,"70,83 €/Jahr",MONTANA,MONTANA bonus 12,"560,63 €","16,80 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Verivox,12.0,True,False,12.0,1.0,0.0
+2,"70,83 €/Jahr",MONTANA,MONTANA bonus 12,"560,63 €","16,83 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Check24,12.0,True,False,12.0,1.0,1.0
+3,"70,83 €/Jahr",MONTANA,MONTANA garant 12,"560,99 €","16,33 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Verivox,12.0,True,False,12.0,1.0,1.0
+4,"78,58 €/Jahr",Octopus Energy,OctopusSelect Gas,"561,55 €","16,20 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Verivox,30.0,True,False,24.0,1.0,0.0
+5,"78,58 €/Jahr",Octopus Energy,OctopusSelect Gas,"561,55 €","16,23 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Check24,1.0,True,False,24.0,1.0,1.0
+6,"142,80 €/Jahr",Vattenfall Sales,Easy12 Gas,"563,40 €","16,50 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Verivox,12.0,True,False,12.0,1.0,1.0
+7,"142,80 €/Jahr",Vattenfall Sales,Natur12 Gas,"566,40 €","16,60 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Verivox,12.0,True,True,12.0,1.0,1.0
+8,"70,83 €/Jahr",MONTANA,MONTANA bonus 12 klimaneutral,"569,56 €","17,10 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Verivox,12.0,True,True,12.0,1.0,0.0
+9,"70,83 €/Jahr",MONTANA,MONTANA bonus 12 klimaneutral,"569,56 €","17,12 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Check24,12.0,True,True,12.0,1.0,1.0
+10,"70,83 €/Jahr",MONTANA,MONTANA garant 12 klimaneutral,"569,91 €","16,63 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Verivox,12.0,True,True,12.0,1.0,0.0
+11,"70,83 €/Jahr",MONTANA,MONTANA garant 12 klimaneutral,"569,91 €","16,64 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Check24,12.0,True,True,12.0,1.0,1.0
+12,"142,80 €/Jahr",Vattenfall,Bio12 Gas 15,"571,80 €","16,80 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Verivox,12.0,True,True,12.0,1.0,0.0
+13,"142,80 €/Jahr",Vattenfall Sales,Bio12 Gas 15,"571,80 €","16,80 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Check24,12.0,True,True,12.0,1.0,1.0
+14,"70,83 €/Jahr",MONTANA,MONTANA bonus 12 Biogas10,"578,48 €","17,40 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Verivox,12.0,True,True,12.0,1.0,0.0
+15,"70,83 €/Jahr",MONTANA,MONTANA garant 12 Biogas10,"578,84 €","16,93 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Verivox,12.0,True,True,12.0,1.0,0.0
+16,"70,83 €/Jahr",MONTANA,MONTANA garant 12 Biogas10,"578,84 €","16,93 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Check24,12.0,True,True,12.0,1.0,1.0
+17,"142,80 €/Jahr",Vattenfall Sales,Natur12 Extra Gas,"596,40 €","16,60 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Verivox,12.0,True,True,12.0,1.0,1.0
+18,"97,28 €/Jahr",Brillant Energie,Brillant Gas Natur 12,"600,08 €","16,73 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Verivox,12.0,True,True,12.0,1.0,1.0
+19,"188,04 €/Jahr",stadtenergie,Checker Gas,"604,49 €","13,88 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Check24,12.0,True,True,12.0,1.0,1.0
+20,"137,78 €/Jahr",MAXENERGY,MAX Basic Gas,"621,08 €","16,11 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Check24,12.0,True,False,12.0,1.0,1.0
+21,"129,14 €/Jahr",R(H)EINPOWER,R(H)EINPOWER MeinGas 12 Natur,"659,64 €","17,67 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Verivox,12.0,True,False,12.0,1.0,0.0
+22,"129,14 €/Jahr",R(H)EINPOWER,R(H)EINPOWER MeinGas 12 Natur ,"659,64 €","17,68 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Check24,12.0,True,True,12.0,1.0,1.0
+23,"86,89 €/Jahr",NEW Energie,NEWgas online,"663,79 €","19,23 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Anbieter,12.0,True,False,12.0,1.0,1.0
+24,"86,89 €/Jahr",KlickEnergie,Klickgas12 plus,"663,81 €","19,23 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Check24,12.0,True,False,12.0,1.0,1.0
+25,"80,64 €/Jahr",team energie,teamgas günstig,"667,74 €","19,57 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Check24,12.0,True,False,12.0,1.0,1.0
+26,"114,24 €/Jahr",GASAG AG,Grund- und Ersatzversorgung Neukunde,"676,14 €","18,73 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Anbieter,0.0,True,False,0.0,0.5,0.0
+27,"86,89 €/Jahr",KlickEnergie,KlickGas,"681,66 €","19,83 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Check24,12.0,True,False,12.0,1.0,1.0
+28,"86,89 €/Jahr",NEW Energie,NEWgas online12 plus,"681,79 €","19,83 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Anbieter,12.0,True,False,12.0,1.0,1.0
+29,"118,81 €/Jahr",Bürgerwerke,BürgerÖkogas 5 %,"701,61 €","19,43 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Anbieter,1.0,True,True,8.0,1.0,1.0
+30,"74,99 €/Jahr",Yippie,Happy Yippie Gas,"724,79 €","21,63 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Verivox,12.0,True,True,12.0,1.0,0.0
+31,"74,99 €/Jahr",Yippie,Happy Yippie Gas,"724,79 €","21,66 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Check24,12.0,True,True,12.0,1.0,1.0
+32,"161,58 €/Jahr",LichtBlick,ÖkoGas Komfort 12,"724,98 €","18,77 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Verivox,12.0,True,True,12.0,1.0,1.0
+33,"169,96 €/Jahr",Stadtwerke München,M-Erdgas Fix,"754,36 €","19,47 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Verivox,12.0,True,False,12.0,1.0,1.0
+34,"169,96 €/Jahr",Stadtwerke München,M-Ökogas Fix,"763,36 €","19,77 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Verivox,12.0,True,True,12.0,1.0,1.0
+35,"307,04 €/Jahr",stadtenergie,Checker Gas +,"792,85 €","16,19 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Check24,12.0,True,True,12.0,1.0,1.0
+36,"142,80 €/Jahr",Vattenfall Sales,Easy12 Gas Standard,"868,80 €","24,20 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Verivox,12.0,True,False,12.0,1.0,1.0
+37,"174,11 €/Jahr",E.ON Energie,E.ON Erdgas Öko Plus 12,"890,51 €","23,87 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Verivox,12.0,True,True,16.0,1.0,1.0
+38,"83,32 €/Jahr",Weinstraßen Energie,Standard Gas,"900,43 €","27,23 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Anbieter,6.0,True,True,12.0,1.0,0.0
+39,"118,81 €/Jahr",Bürgerwerke,BürgerÖkogas 100 %,"964,58 €","28,19 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Anbieter,1.0,True,True,8.0,1.0,1.0
+40,"160,44 €/Jahr",Süwag,Gas Garant 100 ,"1.118,54 €","35,27 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Check24,12.0,True,False,12.0,1.0,1.0
+41,"914,21 €/Jahr",Weinstraßen Energie,Basic Gas,"1.725,95 €","27,03 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,Anbieter,12.0,True,True,12.0,1.0,0.0
+42,"142,80 €/Jahr",Vattenfall,Easy24 Gas,"522,20 €","16,47 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,KeineEmpfehlung,24.0,True,False,24.0,1.0,0.0
+43,"142,80 €/Jahr",Vattenfall,Natur24 Gas,"525,20 €","16,57 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+44,"97,28 €/Jahr",Brillant Energie,Brillant Gas Natur 24,"552,08 €","15,13 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+45,"142,80 €/Jahr",Vattenfall,Natur24 Extra Gas,"555,20 €","16,57 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+46,"142,80 €/Jahr",Vattenfall Sales,Natur24 Extra Gas,"555,20 €","16,58 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+47,"142,80 €/Jahr",Vattenfall,Bio24 Gas 15,"570,60 €","16,73 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+48,"142,80 €/Jahr",Vattenfall Sales,Bio24 Gas 15,"570,60 €","16,76 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+49,"70,83 €/Jahr",MONTANA,MONTANA garant 24,"574,91 €","16,80 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,KeineEmpfehlung,24.0,True,False,24.0,1.0,0.0
+50,"70,83 €/Jahr",MONTANA,MONTANA garant 24,"574,91 €","16,80 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+51,"70,83 €/Jahr",MONTANA,MONTANA bonus 24,"576,34 €","17,33 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,KeineEmpfehlung,24.0,True,False,24.0,1.0,0.0
+52,"70,83 €/Jahr",MONTANA,MONTANA garant 24 klimaneutral,"583,84 €","17,10 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+53,"70,83 €/Jahr",MONTANA,MONTANA garant 24 klimaneutral,"583,84 €","17,10 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+54,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 klimaneutral,"585,27 €","17,63 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+55,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 klimaneutral,"585,27 €","17,65 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+56,"70,83 €/Jahr",MONTANA,MONTANA garant 24 Biogas10,"592,76 €","17,37 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+57,"70,83 €/Jahr",MONTANA,MONTANA garant 24 Biogas10,"592,76 €","17,40 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+58,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 Biogas10,"594,19 €","17,93 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+59,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 Biogas10,"594,19 €","17,95 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+60,"137,78 €/Jahr",MAXENERGY,Max Safety Gas,"594,31 €","15,22 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+61,"117,45 €/Jahr",Stadtwerke Luckenwalde,local gas regio Neukunde,"630,46 €","17,10 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,KeineEmpfehlung,12.0,True,False,0.0,1.0,1.0
+62,"161,58 €/Jahr",LichtBlick,ÖkoGas Relax 24,"727,98 €","18,87 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+63,"118,80 €/Jahr",NATURSTROM AG,naturstrom biogas 10 %,"745,80 €","20,90 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,KeineEmpfehlung,1.0,True,True,0.0,1.0,1.0
+64,"180,57 €/Jahr",TEAG Thüringer Energie,TEAG.Gas extra,"808,18 €","20,92 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+65,"366,54 €/Jahr",stadtenergie,Gönn dir WATT +,"852,35 €","16,19 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+66,"160,44 €/Jahr",Süwag,Gas Garant 100 (24M) ,"1.118,54 €","35,27 ct/kWh",12459.0,Berlin / KGA Wilhelmstrand,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+0,"148,75 €/Jahr",Teutoburger EN,PuraGas 3.0,"548,35 €","13,32 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Anbieter,8.0,True,True,8.0,1.0,1.0
+1,"70,83 €/Jahr",MONTANA,MONTANA bonus 12,"560,63 €","16,80 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Verivox,12.0,True,False,12.0,1.0,0.0
+2,"70,83 €/Jahr",MONTANA,MONTANA bonus 12,"560,63 €","16,83 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Check24,12.0,True,False,12.0,1.0,1.0
+3,"70,83 €/Jahr",MONTANA,MONTANA garant 12,"560,99 €","16,33 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Verivox,12.0,True,False,12.0,1.0,1.0
+4,"78,58 €/Jahr",Octopus Energy,OctopusSelect Gas,"561,55 €","16,20 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Verivox,30.0,True,False,24.0,1.0,0.0
+5,"78,58 €/Jahr",Octopus Energy,OctopusSelect Gas,"561,55 €","16,23 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Check24,1.0,True,False,24.0,1.0,1.0
+6,"142,80 €/Jahr",Vattenfall Sales,Easy12 Gas,"563,40 €","16,50 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Verivox,12.0,True,False,12.0,1.0,1.0
+7,"142,80 €/Jahr",Vattenfall Sales,Natur12 Gas,"566,40 €","16,60 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Verivox,12.0,True,True,12.0,1.0,1.0
+8,"70,83 €/Jahr",MONTANA,MONTANA bonus 12 klimaneutral,"569,56 €","17,10 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Verivox,12.0,True,True,12.0,1.0,0.0
+9,"70,83 €/Jahr",MONTANA,MONTANA bonus 12 klimaneutral,"569,56 €","17,12 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Check24,12.0,True,True,12.0,1.0,1.0
+10,"70,83 €/Jahr",MONTANA,MONTANA garant 12 klimaneutral,"569,91 €","16,63 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Verivox,12.0,True,True,12.0,1.0,0.0
+11,"70,83 €/Jahr",MONTANA,MONTANA garant 12 klimaneutral,"569,91 €","16,64 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Check24,12.0,True,True,12.0,1.0,1.0
+12,"142,80 €/Jahr",Vattenfall,Bio12 Gas 15,"571,80 €","16,80 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Verivox,12.0,True,True,12.0,1.0,0.0
+13,"142,80 €/Jahr",Vattenfall Sales,Bio12 Gas 15,"571,80 €","16,80 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Check24,12.0,True,True,12.0,1.0,1.0
+14,"70,83 €/Jahr",MONTANA,MONTANA bonus 12 Biogas10,"578,48 €","17,40 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Verivox,12.0,True,True,12.0,1.0,0.0
+15,"70,83 €/Jahr",MONTANA,MONTANA garant 12 Biogas10,"578,84 €","16,93 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Verivox,12.0,True,True,12.0,1.0,0.0
+16,"70,83 €/Jahr",MONTANA,MONTANA garant 12 Biogas10,"578,84 €","16,93 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Check24,12.0,True,True,12.0,1.0,1.0
+17,"142,80 €/Jahr",Vattenfall Sales,Natur12 Extra Gas,"596,40 €","16,60 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Verivox,12.0,True,True,12.0,1.0,1.0
+18,"97,28 €/Jahr",Brillant Energie,Brillant Gas Natur 12,"600,08 €","16,73 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Verivox,12.0,True,True,12.0,1.0,1.0
+19,"188,04 €/Jahr",stadtenergie,Checker Gas,"604,49 €","13,88 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Check24,12.0,True,True,12.0,1.0,1.0
+20,"137,78 €/Jahr",MAXENERGY,MAX Basic Gas,"621,08 €","16,11 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Check24,12.0,True,False,12.0,1.0,1.0
+21,"129,14 €/Jahr",R(H)EINPOWER,R(H)EINPOWER MeinGas 12 Natur,"659,64 €","17,67 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Verivox,12.0,True,False,12.0,1.0,0.0
+22,"129,14 €/Jahr",R(H)EINPOWER,R(H)EINPOWER MeinGas 12 Natur ,"659,64 €","17,68 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Check24,12.0,True,True,12.0,1.0,1.0
+23,"86,89 €/Jahr",NEW Energie,NEWgas online,"663,79 €","19,23 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Anbieter,12.0,True,False,12.0,1.0,1.0
+24,"86,89 €/Jahr",KlickEnergie,Klickgas12 plus,"663,81 €","19,23 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Check24,12.0,True,False,12.0,1.0,1.0
+25,"80,64 €/Jahr",team energie,teamgas günstig,"667,74 €","19,57 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Check24,12.0,True,False,12.0,1.0,1.0
+26,"114,24 €/Jahr",GASAG AG,Grund- und Ersatzversorgung Neukunde,"676,14 €","18,73 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Anbieter,0.0,True,False,0.0,0.5,0.0
+27,"86,89 €/Jahr",KlickEnergie,KlickGas,"681,66 €","19,83 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Check24,12.0,True,False,12.0,1.0,1.0
+28,"86,89 €/Jahr",NEW Energie,NEWgas online12 plus,"681,79 €","19,83 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Anbieter,12.0,True,False,12.0,1.0,1.0
+29,"118,81 €/Jahr",Bürgerwerke,BürgerÖkogas 5 %,"701,61 €","19,43 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Anbieter,1.0,True,True,8.0,1.0,1.0
+30,"74,99 €/Jahr",Yippie,Happy Yippie Gas,"724,79 €","21,63 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Verivox,12.0,True,True,12.0,1.0,0.0
+31,"74,99 €/Jahr",Yippie,Happy Yippie Gas,"724,79 €","21,66 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Check24,12.0,True,True,12.0,1.0,1.0
+32,"161,58 €/Jahr",LichtBlick,ÖkoGas Komfort 12,"724,98 €","18,77 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Verivox,12.0,True,True,12.0,1.0,1.0
+33,"169,96 €/Jahr",Stadtwerke München,M-Erdgas Fix,"754,36 €","19,47 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Verivox,12.0,True,False,12.0,1.0,1.0
+34,"169,96 €/Jahr",Stadtwerke München,M-Ökogas Fix,"763,36 €","19,77 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Verivox,12.0,True,True,12.0,1.0,1.0
+35,"307,04 €/Jahr",stadtenergie,Checker Gas +,"792,85 €","16,19 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Check24,12.0,True,True,12.0,1.0,1.0
+36,"142,80 €/Jahr",Vattenfall Sales,Easy12 Gas Standard,"868,80 €","24,20 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Verivox,12.0,True,False,12.0,1.0,1.0
+37,"174,11 €/Jahr",E.ON Energie,E.ON Erdgas Öko Plus 12,"890,51 €","23,87 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Verivox,12.0,True,True,16.0,1.0,1.0
+38,"83,32 €/Jahr",Weinstraßen Energie,Standard Gas,"900,43 €","27,23 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Anbieter,6.0,True,True,12.0,1.0,0.0
+39,"118,81 €/Jahr",Bürgerwerke,BürgerÖkogas 100 %,"964,58 €","28,19 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Anbieter,1.0,True,True,8.0,1.0,1.0
+40,"160,44 €/Jahr",Süwag,Gas Garant 100 ,"1.118,54 €","35,27 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Check24,12.0,True,False,12.0,1.0,1.0
+41,"914,21 €/Jahr",Weinstraßen Energie,Basic Gas,"1.725,95 €","27,03 ct/kWh",12459.0,Berlin / KGA Grüne Aue,Anbieter,12.0,True,True,12.0,1.0,0.0
+42,"142,80 €/Jahr",Vattenfall,Easy24 Gas,"522,20 €","16,47 ct/kWh",12459.0,Berlin / KGA Grüne Aue,KeineEmpfehlung,24.0,True,False,24.0,1.0,0.0
+43,"142,80 €/Jahr",Vattenfall,Natur24 Gas,"525,20 €","16,57 ct/kWh",12459.0,Berlin / KGA Grüne Aue,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+44,"97,28 €/Jahr",Brillant Energie,Brillant Gas Natur 24,"552,08 €","15,13 ct/kWh",12459.0,Berlin / KGA Grüne Aue,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+45,"142,80 €/Jahr",Vattenfall,Natur24 Extra Gas,"555,20 €","16,57 ct/kWh",12459.0,Berlin / KGA Grüne Aue,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+46,"142,80 €/Jahr",Vattenfall Sales,Natur24 Extra Gas,"555,20 €","16,58 ct/kWh",12459.0,Berlin / KGA Grüne Aue,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+47,"142,80 €/Jahr",Vattenfall,Bio24 Gas 15,"570,60 €","16,73 ct/kWh",12459.0,Berlin / KGA Grüne Aue,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+48,"142,80 €/Jahr",Vattenfall Sales,Bio24 Gas 15,"570,60 €","16,76 ct/kWh",12459.0,Berlin / KGA Grüne Aue,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+49,"70,83 €/Jahr",MONTANA,MONTANA garant 24,"574,91 €","16,80 ct/kWh",12459.0,Berlin / KGA Grüne Aue,KeineEmpfehlung,24.0,True,False,24.0,1.0,0.0
+50,"70,83 €/Jahr",MONTANA,MONTANA garant 24,"574,91 €","16,80 ct/kWh",12459.0,Berlin / KGA Grüne Aue,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+51,"70,83 €/Jahr",MONTANA,MONTANA bonus 24,"576,34 €","17,33 ct/kWh",12459.0,Berlin / KGA Grüne Aue,KeineEmpfehlung,24.0,True,False,24.0,1.0,0.0
+52,"70,83 €/Jahr",MONTANA,MONTANA garant 24 klimaneutral,"583,84 €","17,10 ct/kWh",12459.0,Berlin / KGA Grüne Aue,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+53,"70,83 €/Jahr",MONTANA,MONTANA garant 24 klimaneutral,"583,84 €","17,10 ct/kWh",12459.0,Berlin / KGA Grüne Aue,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+54,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 klimaneutral,"585,27 €","17,63 ct/kWh",12459.0,Berlin / KGA Grüne Aue,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+55,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 klimaneutral,"585,27 €","17,65 ct/kWh",12459.0,Berlin / KGA Grüne Aue,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+56,"70,83 €/Jahr",MONTANA,MONTANA garant 24 Biogas10,"592,76 €","17,37 ct/kWh",12459.0,Berlin / KGA Grüne Aue,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+57,"70,83 €/Jahr",MONTANA,MONTANA garant 24 Biogas10,"592,76 €","17,40 ct/kWh",12459.0,Berlin / KGA Grüne Aue,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+58,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 Biogas10,"594,19 €","17,93 ct/kWh",12459.0,Berlin / KGA Grüne Aue,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+59,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 Biogas10,"594,19 €","17,95 ct/kWh",12459.0,Berlin / KGA Grüne Aue,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+60,"137,78 €/Jahr",MAXENERGY,Max Safety Gas,"594,31 €","15,22 ct/kWh",12459.0,Berlin / KGA Grüne Aue,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+61,"117,45 €/Jahr",Stadtwerke Luckenwalde,local gas regio Neukunde,"630,46 €","17,10 ct/kWh",12459.0,Berlin / KGA Grüne Aue,KeineEmpfehlung,12.0,True,False,0.0,1.0,1.0
+62,"161,58 €/Jahr",LichtBlick,ÖkoGas Relax 24,"727,98 €","18,87 ct/kWh",12459.0,Berlin / KGA Grüne Aue,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+63,"118,80 €/Jahr",NATURSTROM AG,naturstrom biogas 10 %,"745,80 €","20,90 ct/kWh",12459.0,Berlin / KGA Grüne Aue,KeineEmpfehlung,1.0,True,True,0.0,1.0,1.0
+64,"180,57 €/Jahr",TEAG Thüringer Energie,TEAG.Gas extra,"808,18 €","20,92 ct/kWh",12459.0,Berlin / KGA Grüne Aue,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+65,"366,54 €/Jahr",stadtenergie,Gönn dir WATT +,"852,35 €","16,19 ct/kWh",12459.0,Berlin / KGA Grüne Aue,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+66,"160,44 €/Jahr",Süwag,Gas Garant 100 (24M) ,"1.118,54 €","35,27 ct/kWh",12459.0,Berlin / KGA Grüne Aue,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+0,"148,75 €/Jahr",Teutoburger EN,PuraGas 3.0,"548,35 €","13,32 ct/kWh",12459.0,Berlin / Oberschöneweide,Anbieter,8.0,True,True,8.0,1.0,1.0
+1,"70,83 €/Jahr",MONTANA,MONTANA bonus 12,"560,63 €","16,80 ct/kWh",12459.0,Berlin / Oberschöneweide,Verivox,12.0,True,False,12.0,1.0,0.0
+2,"70,83 €/Jahr",MONTANA,MONTANA bonus 12,"560,63 €","16,83 ct/kWh",12459.0,Berlin / Oberschöneweide,Check24,12.0,True,False,12.0,1.0,1.0
+3,"70,83 €/Jahr",MONTANA,MONTANA garant 12,"560,99 €","16,33 ct/kWh",12459.0,Berlin / Oberschöneweide,Verivox,12.0,True,False,12.0,1.0,1.0
+4,"78,58 €/Jahr",Octopus Energy,OctopusSelect Gas,"561,55 €","16,20 ct/kWh",12459.0,Berlin / Oberschöneweide,Verivox,30.0,True,False,24.0,1.0,0.0
+5,"78,58 €/Jahr",Octopus Energy,OctopusSelect Gas,"561,55 €","16,23 ct/kWh",12459.0,Berlin / Oberschöneweide,Check24,1.0,True,False,24.0,1.0,1.0
+6,"142,80 €/Jahr",Vattenfall Sales,Easy12 Gas,"563,40 €","16,50 ct/kWh",12459.0,Berlin / Oberschöneweide,Verivox,12.0,True,False,12.0,1.0,1.0
+7,"142,80 €/Jahr",Vattenfall Sales,Natur12 Gas,"566,40 €","16,60 ct/kWh",12459.0,Berlin / Oberschöneweide,Verivox,12.0,True,True,12.0,1.0,1.0
+8,"70,83 €/Jahr",MONTANA,MONTANA bonus 12 klimaneutral,"569,56 €","17,10 ct/kWh",12459.0,Berlin / Oberschöneweide,Verivox,12.0,True,True,12.0,1.0,0.0
+9,"70,83 €/Jahr",MONTANA,MONTANA bonus 12 klimaneutral,"569,56 €","17,12 ct/kWh",12459.0,Berlin / Oberschöneweide,Check24,12.0,True,True,12.0,1.0,1.0
+10,"70,83 €/Jahr",MONTANA,MONTANA garant 12 klimaneutral,"569,91 €","16,63 ct/kWh",12459.0,Berlin / Oberschöneweide,Verivox,12.0,True,True,12.0,1.0,0.0
+11,"70,83 €/Jahr",MONTANA,MONTANA garant 12 klimaneutral,"569,91 €","16,64 ct/kWh",12459.0,Berlin / Oberschöneweide,Check24,12.0,True,True,12.0,1.0,1.0
+12,"142,80 €/Jahr",Vattenfall,Bio12 Gas 15,"571,80 €","16,80 ct/kWh",12459.0,Berlin / Oberschöneweide,Verivox,12.0,True,True,12.0,1.0,0.0
+13,"142,80 €/Jahr",Vattenfall Sales,Bio12 Gas 15,"571,80 €","16,80 ct/kWh",12459.0,Berlin / Oberschöneweide,Check24,12.0,True,True,12.0,1.0,1.0
+14,"70,83 €/Jahr",MONTANA,MONTANA bonus 12 Biogas10,"578,48 €","17,40 ct/kWh",12459.0,Berlin / Oberschöneweide,Verivox,12.0,True,True,12.0,1.0,0.0
+15,"70,83 €/Jahr",MONTANA,MONTANA garant 12 Biogas10,"578,84 €","16,93 ct/kWh",12459.0,Berlin / Oberschöneweide,Verivox,12.0,True,True,12.0,1.0,0.0
+16,"70,83 €/Jahr",MONTANA,MONTANA garant 12 Biogas10,"578,84 €","16,93 ct/kWh",12459.0,Berlin / Oberschöneweide,Check24,12.0,True,True,12.0,1.0,1.0
+17,"142,80 €/Jahr",Vattenfall Sales,Natur12 Extra Gas,"596,40 €","16,60 ct/kWh",12459.0,Berlin / Oberschöneweide,Verivox,12.0,True,True,12.0,1.0,1.0
+18,"97,28 €/Jahr",Brillant Energie,Brillant Gas Natur 12,"600,08 €","16,73 ct/kWh",12459.0,Berlin / Oberschöneweide,Verivox,12.0,True,True,12.0,1.0,1.0
+19,"188,04 €/Jahr",stadtenergie,Checker Gas,"604,49 €","13,88 ct/kWh",12459.0,Berlin / Oberschöneweide,Check24,12.0,True,True,12.0,1.0,1.0
+20,"137,78 €/Jahr",MAXENERGY,MAX Basic Gas,"621,08 €","16,11 ct/kWh",12459.0,Berlin / Oberschöneweide,Check24,12.0,True,False,12.0,1.0,1.0
+21,"129,14 €/Jahr",R(H)EINPOWER,R(H)EINPOWER MeinGas 12 Natur,"659,64 €","17,67 ct/kWh",12459.0,Berlin / Oberschöneweide,Verivox,12.0,True,False,12.0,1.0,0.0
+22,"129,14 €/Jahr",R(H)EINPOWER,R(H)EINPOWER MeinGas 12 Natur ,"659,64 €","17,68 ct/kWh",12459.0,Berlin / Oberschöneweide,Check24,12.0,True,True,12.0,1.0,1.0
+23,"86,89 €/Jahr",NEW Energie,NEWgas online,"663,79 €","19,23 ct/kWh",12459.0,Berlin / Oberschöneweide,Anbieter,12.0,True,False,12.0,1.0,1.0
+24,"86,89 €/Jahr",KlickEnergie,Klickgas12 plus,"663,81 €","19,23 ct/kWh",12459.0,Berlin / Oberschöneweide,Check24,12.0,True,False,12.0,1.0,1.0
+25,"80,64 €/Jahr",team energie,teamgas günstig,"667,74 €","19,57 ct/kWh",12459.0,Berlin / Oberschöneweide,Check24,12.0,True,False,12.0,1.0,1.0
+26,"114,24 €/Jahr",GASAG AG,Grund- und Ersatzversorgung Neukunde,"676,14 €","18,73 ct/kWh",12459.0,Berlin / Oberschöneweide,Anbieter,0.0,True,False,0.0,0.5,0.0
+27,"86,89 €/Jahr",KlickEnergie,KlickGas,"681,66 €","19,83 ct/kWh",12459.0,Berlin / Oberschöneweide,Check24,12.0,True,False,12.0,1.0,1.0
+28,"86,89 €/Jahr",NEW Energie,NEWgas online12 plus,"681,79 €","19,83 ct/kWh",12459.0,Berlin / Oberschöneweide,Anbieter,12.0,True,False,12.0,1.0,1.0
+29,"118,81 €/Jahr",Bürgerwerke,BürgerÖkogas 5 %,"701,61 €","19,43 ct/kWh",12459.0,Berlin / Oberschöneweide,Anbieter,1.0,True,True,8.0,1.0,1.0
+30,"74,99 €/Jahr",Yippie,Happy Yippie Gas,"724,79 €","21,63 ct/kWh",12459.0,Berlin / Oberschöneweide,Verivox,12.0,True,True,12.0,1.0,0.0
+31,"74,99 €/Jahr",Yippie,Happy Yippie Gas,"724,79 €","21,66 ct/kWh",12459.0,Berlin / Oberschöneweide,Check24,12.0,True,True,12.0,1.0,1.0
+32,"161,58 €/Jahr",LichtBlick,ÖkoGas Komfort 12,"724,98 €","18,77 ct/kWh",12459.0,Berlin / Oberschöneweide,Verivox,12.0,True,True,12.0,1.0,1.0
+33,"169,96 €/Jahr",Stadtwerke München,M-Erdgas Fix,"754,36 €","19,47 ct/kWh",12459.0,Berlin / Oberschöneweide,Verivox,12.0,True,False,12.0,1.0,1.0
+34,"169,96 €/Jahr",Stadtwerke München,M-Ökogas Fix,"763,36 €","19,77 ct/kWh",12459.0,Berlin / Oberschöneweide,Verivox,12.0,True,True,12.0,1.0,1.0
+35,"307,04 €/Jahr",stadtenergie,Checker Gas +,"792,85 €","16,19 ct/kWh",12459.0,Berlin / Oberschöneweide,Check24,12.0,True,True,12.0,1.0,1.0
+36,"142,80 €/Jahr",Vattenfall Sales,Easy12 Gas Standard,"868,80 €","24,20 ct/kWh",12459.0,Berlin / Oberschöneweide,Verivox,12.0,True,False,12.0,1.0,1.0
+37,"174,11 €/Jahr",E.ON Energie,E.ON Erdgas Öko Plus 12,"890,51 €","23,87 ct/kWh",12459.0,Berlin / Oberschöneweide,Verivox,12.0,True,True,16.0,1.0,1.0
+38,"83,32 €/Jahr",Weinstraßen Energie,Standard Gas,"900,43 €","27,23 ct/kWh",12459.0,Berlin / Oberschöneweide,Anbieter,6.0,True,True,12.0,1.0,0.0
+39,"118,81 €/Jahr",Bürgerwerke,BürgerÖkogas 100 %,"964,58 €","28,19 ct/kWh",12459.0,Berlin / Oberschöneweide,Anbieter,1.0,True,True,8.0,1.0,1.0
+40,"160,44 €/Jahr",Süwag,Gas Garant 100 ,"1.118,54 €","35,27 ct/kWh",12459.0,Berlin / Oberschöneweide,Check24,12.0,True,False,12.0,1.0,1.0
+41,"914,21 €/Jahr",Weinstraßen Energie,Basic Gas,"1.725,95 €","27,03 ct/kWh",12459.0,Berlin / Oberschöneweide,Anbieter,12.0,True,True,12.0,1.0,0.0
+42,"142,80 €/Jahr",Vattenfall,Easy24 Gas,"522,20 €","16,47 ct/kWh",12459.0,Berlin / Oberschöneweide,KeineEmpfehlung,24.0,True,False,24.0,1.0,0.0
+43,"142,80 €/Jahr",Vattenfall,Natur24 Gas,"525,20 €","16,57 ct/kWh",12459.0,Berlin / Oberschöneweide,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+44,"97,28 €/Jahr",Brillant Energie,Brillant Gas Natur 24,"552,08 €","15,13 ct/kWh",12459.0,Berlin / Oberschöneweide,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+45,"142,80 €/Jahr",Vattenfall,Natur24 Extra Gas,"555,20 €","16,57 ct/kWh",12459.0,Berlin / Oberschöneweide,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+46,"142,80 €/Jahr",Vattenfall Sales,Natur24 Extra Gas,"555,20 €","16,58 ct/kWh",12459.0,Berlin / Oberschöneweide,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+47,"142,80 €/Jahr",Vattenfall,Bio24 Gas 15,"570,60 €","16,73 ct/kWh",12459.0,Berlin / Oberschöneweide,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+48,"142,80 €/Jahr",Vattenfall Sales,Bio24 Gas 15,"570,60 €","16,76 ct/kWh",12459.0,Berlin / Oberschöneweide,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+49,"70,83 €/Jahr",MONTANA,MONTANA garant 24,"574,91 €","16,80 ct/kWh",12459.0,Berlin / Oberschöneweide,KeineEmpfehlung,24.0,True,False,24.0,1.0,0.0
+50,"70,83 €/Jahr",MONTANA,MONTANA garant 24,"574,91 €","16,80 ct/kWh",12459.0,Berlin / Oberschöneweide,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+51,"70,83 €/Jahr",MONTANA,MONTANA bonus 24,"576,34 €","17,33 ct/kWh",12459.0,Berlin / Oberschöneweide,KeineEmpfehlung,24.0,True,False,24.0,1.0,0.0
+52,"70,83 €/Jahr",MONTANA,MONTANA garant 24 klimaneutral,"583,84 €","17,10 ct/kWh",12459.0,Berlin / Oberschöneweide,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+53,"70,83 €/Jahr",MONTANA,MONTANA garant 24 klimaneutral,"583,84 €","17,10 ct/kWh",12459.0,Berlin / Oberschöneweide,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+54,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 klimaneutral,"585,27 €","17,63 ct/kWh",12459.0,Berlin / Oberschöneweide,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+55,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 klimaneutral,"585,27 €","17,65 ct/kWh",12459.0,Berlin / Oberschöneweide,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+56,"70,83 €/Jahr",MONTANA,MONTANA garant 24 Biogas10,"592,76 €","17,37 ct/kWh",12459.0,Berlin / Oberschöneweide,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+57,"70,83 €/Jahr",MONTANA,MONTANA garant 24 Biogas10,"592,76 €","17,40 ct/kWh",12459.0,Berlin / Oberschöneweide,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+58,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 Biogas10,"594,19 €","17,93 ct/kWh",12459.0,Berlin / Oberschöneweide,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+59,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 Biogas10,"594,19 €","17,95 ct/kWh",12459.0,Berlin / Oberschöneweide,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+60,"137,78 €/Jahr",MAXENERGY,Max Safety Gas,"594,31 €","15,22 ct/kWh",12459.0,Berlin / Oberschöneweide,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+61,"117,45 €/Jahr",Stadtwerke Luckenwalde,local gas regio Neukunde,"630,46 €","17,10 ct/kWh",12459.0,Berlin / Oberschöneweide,KeineEmpfehlung,12.0,True,False,0.0,1.0,1.0
+62,"161,58 €/Jahr",LichtBlick,ÖkoGas Relax 24,"727,98 €","18,87 ct/kWh",12459.0,Berlin / Oberschöneweide,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+63,"118,80 €/Jahr",NATURSTROM AG,naturstrom biogas 10 %,"745,80 €","20,90 ct/kWh",12459.0,Berlin / Oberschöneweide,KeineEmpfehlung,1.0,True,True,0.0,1.0,1.0
+64,"180,57 €/Jahr",TEAG Thüringer Energie,TEAG.Gas extra,"808,18 €","20,92 ct/kWh",12459.0,Berlin / Oberschöneweide,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+65,"366,54 €/Jahr",stadtenergie,Gönn dir WATT +,"852,35 €","16,19 ct/kWh",12459.0,Berlin / Oberschöneweide,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+66,"160,44 €/Jahr",Süwag,Gas Garant 100 (24M) ,"1.118,54 €","35,27 ct/kWh",12459.0,Berlin / Oberschöneweide,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+0,"148,75 €/Jahr",Teutoburger EN,PuraGas 3.0,"548,35 €","13,32 ct/kWh",12459.0,Berlin / KGA Am Freibad,Anbieter,8.0,True,True,8.0,1.0,1.0
+1,"70,83 €/Jahr",MONTANA,MONTANA bonus 12,"560,63 €","16,80 ct/kWh",12459.0,Berlin / KGA Am Freibad,Verivox,12.0,True,False,12.0,1.0,0.0
+2,"70,83 €/Jahr",MONTANA,MONTANA bonus 12,"560,63 €","16,83 ct/kWh",12459.0,Berlin / KGA Am Freibad,Check24,12.0,True,False,12.0,1.0,1.0
+3,"70,83 €/Jahr",MONTANA,MONTANA garant 12,"560,99 €","16,33 ct/kWh",12459.0,Berlin / KGA Am Freibad,Verivox,12.0,True,False,12.0,1.0,1.0
+4,"78,58 €/Jahr",Octopus Energy,OctopusSelect Gas,"561,55 €","16,20 ct/kWh",12459.0,Berlin / KGA Am Freibad,Verivox,30.0,True,False,24.0,1.0,0.0
+5,"78,58 €/Jahr",Octopus Energy,OctopusSelect Gas,"561,55 €","16,23 ct/kWh",12459.0,Berlin / KGA Am Freibad,Check24,1.0,True,False,24.0,1.0,1.0
+6,"142,80 €/Jahr",Vattenfall Sales,Easy12 Gas,"563,40 €","16,50 ct/kWh",12459.0,Berlin / KGA Am Freibad,Verivox,12.0,True,False,12.0,1.0,1.0
+7,"142,80 €/Jahr",Vattenfall Sales,Natur12 Gas,"566,40 €","16,60 ct/kWh",12459.0,Berlin / KGA Am Freibad,Verivox,12.0,True,True,12.0,1.0,1.0
+8,"70,83 €/Jahr",MONTANA,MONTANA bonus 12 klimaneutral,"569,56 €","17,10 ct/kWh",12459.0,Berlin / KGA Am Freibad,Verivox,12.0,True,True,12.0,1.0,0.0
+9,"70,83 €/Jahr",MONTANA,MONTANA bonus 12 klimaneutral,"569,56 €","17,12 ct/kWh",12459.0,Berlin / KGA Am Freibad,Check24,12.0,True,True,12.0,1.0,1.0
+10,"70,83 €/Jahr",MONTANA,MONTANA garant 12 klimaneutral,"569,91 €","16,63 ct/kWh",12459.0,Berlin / KGA Am Freibad,Verivox,12.0,True,True,12.0,1.0,0.0
+11,"70,83 €/Jahr",MONTANA,MONTANA garant 12 klimaneutral,"569,91 €","16,64 ct/kWh",12459.0,Berlin / KGA Am Freibad,Check24,12.0,True,True,12.0,1.0,1.0
+12,"142,80 €/Jahr",Vattenfall,Bio12 Gas 15,"571,80 €","16,80 ct/kWh",12459.0,Berlin / KGA Am Freibad,Verivox,12.0,True,True,12.0,1.0,0.0
+13,"142,80 €/Jahr",Vattenfall Sales,Bio12 Gas 15,"571,80 €","16,80 ct/kWh",12459.0,Berlin / KGA Am Freibad,Check24,12.0,True,True,12.0,1.0,1.0
+14,"70,83 €/Jahr",MONTANA,MONTANA bonus 12 Biogas10,"578,48 €","17,40 ct/kWh",12459.0,Berlin / KGA Am Freibad,Verivox,12.0,True,True,12.0,1.0,0.0
+15,"70,83 €/Jahr",MONTANA,MONTANA garant 12 Biogas10,"578,84 €","16,93 ct/kWh",12459.0,Berlin / KGA Am Freibad,Verivox,12.0,True,True,12.0,1.0,0.0
+16,"70,83 €/Jahr",MONTANA,MONTANA garant 12 Biogas10,"578,84 €","16,93 ct/kWh",12459.0,Berlin / KGA Am Freibad,Check24,12.0,True,True,12.0,1.0,1.0
+17,"142,80 €/Jahr",Vattenfall Sales,Natur12 Extra Gas,"596,40 €","16,60 ct/kWh",12459.0,Berlin / KGA Am Freibad,Verivox,12.0,True,True,12.0,1.0,1.0
+18,"97,28 €/Jahr",Brillant Energie,Brillant Gas Natur 12,"600,08 €","16,73 ct/kWh",12459.0,Berlin / KGA Am Freibad,Verivox,12.0,True,True,12.0,1.0,1.0
+19,"188,04 €/Jahr",stadtenergie,Checker Gas,"604,49 €","13,88 ct/kWh",12459.0,Berlin / KGA Am Freibad,Check24,12.0,True,True,12.0,1.0,1.0
+20,"137,78 €/Jahr",MAXENERGY,MAX Basic Gas,"621,08 €","16,11 ct/kWh",12459.0,Berlin / KGA Am Freibad,Check24,12.0,True,False,12.0,1.0,1.0
+21,"129,14 €/Jahr",R(H)EINPOWER,R(H)EINPOWER MeinGas 12 Natur,"659,64 €","17,67 ct/kWh",12459.0,Berlin / KGA Am Freibad,Verivox,12.0,True,False,12.0,1.0,0.0
+22,"129,14 €/Jahr",R(H)EINPOWER,R(H)EINPOWER MeinGas 12 Natur ,"659,64 €","17,68 ct/kWh",12459.0,Berlin / KGA Am Freibad,Check24,12.0,True,True,12.0,1.0,1.0
+23,"86,89 €/Jahr",NEW Energie,NEWgas online,"663,79 €","19,23 ct/kWh",12459.0,Berlin / KGA Am Freibad,Anbieter,12.0,True,False,12.0,1.0,1.0
+24,"86,89 €/Jahr",KlickEnergie,Klickgas12 plus,"663,81 €","19,23 ct/kWh",12459.0,Berlin / KGA Am Freibad,Check24,12.0,True,False,12.0,1.0,1.0
+25,"80,64 €/Jahr",team energie,teamgas günstig,"667,74 €","19,57 ct/kWh",12459.0,Berlin / KGA Am Freibad,Check24,12.0,True,False,12.0,1.0,1.0
+26,"114,24 €/Jahr",GASAG AG,Grund- und Ersatzversorgung Neukunde,"676,14 €","18,73 ct/kWh",12459.0,Berlin / KGA Am Freibad,Anbieter,0.0,True,False,0.0,0.5,0.0
+27,"86,89 €/Jahr",KlickEnergie,KlickGas,"681,66 €","19,83 ct/kWh",12459.0,Berlin / KGA Am Freibad,Check24,12.0,True,False,12.0,1.0,1.0
+28,"86,89 €/Jahr",NEW Energie,NEWgas online12 plus,"681,79 €","19,83 ct/kWh",12459.0,Berlin / KGA Am Freibad,Anbieter,12.0,True,False,12.0,1.0,1.0
+29,"118,81 €/Jahr",Bürgerwerke,BürgerÖkogas 5 %,"701,61 €","19,43 ct/kWh",12459.0,Berlin / KGA Am Freibad,Anbieter,1.0,True,True,8.0,1.0,1.0
+30,"74,99 €/Jahr",Yippie,Happy Yippie Gas,"724,79 €","21,63 ct/kWh",12459.0,Berlin / KGA Am Freibad,Verivox,12.0,True,True,12.0,1.0,0.0
+31,"74,99 €/Jahr",Yippie,Happy Yippie Gas,"724,79 €","21,66 ct/kWh",12459.0,Berlin / KGA Am Freibad,Check24,12.0,True,True,12.0,1.0,1.0
+32,"161,58 €/Jahr",LichtBlick,ÖkoGas Komfort 12,"724,98 €","18,77 ct/kWh",12459.0,Berlin / KGA Am Freibad,Verivox,12.0,True,True,12.0,1.0,1.0
+33,"169,96 €/Jahr",Stadtwerke München,M-Erdgas Fix,"754,36 €","19,47 ct/kWh",12459.0,Berlin / KGA Am Freibad,Verivox,12.0,True,False,12.0,1.0,1.0
+34,"169,96 €/Jahr",Stadtwerke München,M-Ökogas Fix,"763,36 €","19,77 ct/kWh",12459.0,Berlin / KGA Am Freibad,Verivox,12.0,True,True,12.0,1.0,1.0
+35,"307,04 €/Jahr",stadtenergie,Checker Gas +,"792,85 €","16,19 ct/kWh",12459.0,Berlin / KGA Am Freibad,Check24,12.0,True,True,12.0,1.0,1.0
+36,"142,80 €/Jahr",Vattenfall Sales,Easy12 Gas Standard,"868,80 €","24,20 ct/kWh",12459.0,Berlin / KGA Am Freibad,Verivox,12.0,True,False,12.0,1.0,1.0
+37,"174,11 €/Jahr",E.ON Energie,E.ON Erdgas Öko Plus 12,"890,51 €","23,87 ct/kWh",12459.0,Berlin / KGA Am Freibad,Verivox,12.0,True,True,16.0,1.0,1.0
+38,"83,32 €/Jahr",Weinstraßen Energie,Standard Gas,"900,43 €","27,23 ct/kWh",12459.0,Berlin / KGA Am Freibad,Anbieter,6.0,True,True,12.0,1.0,0.0
+39,"118,81 €/Jahr",Bürgerwerke,BürgerÖkogas 100 %,"964,58 €","28,19 ct/kWh",12459.0,Berlin / KGA Am Freibad,Anbieter,1.0,True,True,8.0,1.0,1.0
+40,"160,44 €/Jahr",Süwag,Gas Garant 100 ,"1.118,54 €","35,27 ct/kWh",12459.0,Berlin / KGA Am Freibad,Check24,12.0,True,False,12.0,1.0,1.0
+41,"914,21 €/Jahr",Weinstraßen Energie,Basic Gas,"1.725,95 €","27,03 ct/kWh",12459.0,Berlin / KGA Am Freibad,Anbieter,12.0,True,True,12.0,1.0,0.0
+42,"142,80 €/Jahr",Vattenfall,Easy24 Gas,"522,20 €","16,47 ct/kWh",12459.0,Berlin / KGA Am Freibad,KeineEmpfehlung,24.0,True,False,24.0,1.0,0.0
+43,"142,80 €/Jahr",Vattenfall,Natur24 Gas,"525,20 €","16,57 ct/kWh",12459.0,Berlin / KGA Am Freibad,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+44,"97,28 €/Jahr",Brillant Energie,Brillant Gas Natur 24,"552,08 €","15,13 ct/kWh",12459.0,Berlin / KGA Am Freibad,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+45,"142,80 €/Jahr",Vattenfall,Natur24 Extra Gas,"555,20 €","16,57 ct/kWh",12459.0,Berlin / KGA Am Freibad,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+46,"142,80 €/Jahr",Vattenfall Sales,Natur24 Extra Gas,"555,20 €","16,58 ct/kWh",12459.0,Berlin / KGA Am Freibad,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+47,"142,80 €/Jahr",Vattenfall,Bio24 Gas 15,"570,60 €","16,73 ct/kWh",12459.0,Berlin / KGA Am Freibad,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+48,"142,80 €/Jahr",Vattenfall Sales,Bio24 Gas 15,"570,60 €","16,76 ct/kWh",12459.0,Berlin / KGA Am Freibad,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+49,"70,83 €/Jahr",MONTANA,MONTANA garant 24,"574,91 €","16,80 ct/kWh",12459.0,Berlin / KGA Am Freibad,KeineEmpfehlung,24.0,True,False,24.0,1.0,0.0
+50,"70,83 €/Jahr",MONTANA,MONTANA garant 24,"574,91 €","16,80 ct/kWh",12459.0,Berlin / KGA Am Freibad,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+51,"70,83 €/Jahr",MONTANA,MONTANA bonus 24,"576,34 €","17,33 ct/kWh",12459.0,Berlin / KGA Am Freibad,KeineEmpfehlung,24.0,True,False,24.0,1.0,0.0
+52,"70,83 €/Jahr",MONTANA,MONTANA garant 24 klimaneutral,"583,84 €","17,10 ct/kWh",12459.0,Berlin / KGA Am Freibad,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+53,"70,83 €/Jahr",MONTANA,MONTANA garant 24 klimaneutral,"583,84 €","17,10 ct/kWh",12459.0,Berlin / KGA Am Freibad,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+54,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 klimaneutral,"585,27 €","17,63 ct/kWh",12459.0,Berlin / KGA Am Freibad,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+55,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 klimaneutral,"585,27 €","17,65 ct/kWh",12459.0,Berlin / KGA Am Freibad,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+56,"70,83 €/Jahr",MONTANA,MONTANA garant 24 Biogas10,"592,76 €","17,37 ct/kWh",12459.0,Berlin / KGA Am Freibad,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+57,"70,83 €/Jahr",MONTANA,MONTANA garant 24 Biogas10,"592,76 €","17,40 ct/kWh",12459.0,Berlin / KGA Am Freibad,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+58,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 Biogas10,"594,19 €","17,93 ct/kWh",12459.0,Berlin / KGA Am Freibad,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+59,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 Biogas10,"594,19 €","17,95 ct/kWh",12459.0,Berlin / KGA Am Freibad,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+60,"137,78 €/Jahr",MAXENERGY,Max Safety Gas,"594,31 €","15,22 ct/kWh",12459.0,Berlin / KGA Am Freibad,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+61,"117,45 €/Jahr",Stadtwerke Luckenwalde,local gas regio Neukunde,"630,46 €","17,10 ct/kWh",12459.0,Berlin / KGA Am Freibad,KeineEmpfehlung,12.0,True,False,0.0,1.0,1.0
+62,"161,58 €/Jahr",LichtBlick,ÖkoGas Relax 24,"727,98 €","18,87 ct/kWh",12459.0,Berlin / KGA Am Freibad,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+63,"118,80 €/Jahr",NATURSTROM AG,naturstrom biogas 10 %,"745,80 €","20,90 ct/kWh",12459.0,Berlin / KGA Am Freibad,KeineEmpfehlung,1.0,True,True,0.0,1.0,1.0
+64,"180,57 €/Jahr",TEAG Thüringer Energie,TEAG.Gas extra,"808,18 €","20,92 ct/kWh",12459.0,Berlin / KGA Am Freibad,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+65,"366,54 €/Jahr",stadtenergie,Gönn dir WATT +,"852,35 €","16,19 ct/kWh",12459.0,Berlin / KGA Am Freibad,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+66,"160,44 €/Jahr",Süwag,Gas Garant 100 (24M) ,"1.118,54 €","35,27 ct/kWh",12459.0,Berlin / KGA Am Freibad,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+0,"148,75 €/Jahr",Teutoburger EN,PuraGas 3.0,"548,35 €","13,32 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Anbieter,8.0,True,True,8.0,1.0,1.0
+1,"70,83 €/Jahr",MONTANA,MONTANA bonus 12,"560,63 €","16,80 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Verivox,12.0,True,False,12.0,1.0,0.0
+2,"70,83 €/Jahr",MONTANA,MONTANA bonus 12,"560,63 €","16,83 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Check24,12.0,True,False,12.0,1.0,1.0
+3,"70,83 €/Jahr",MONTANA,MONTANA garant 12,"560,99 €","16,33 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Verivox,12.0,True,False,12.0,1.0,1.0
+4,"78,58 €/Jahr",Octopus Energy,OctopusSelect Gas,"561,55 €","16,20 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Verivox,30.0,True,False,24.0,1.0,0.0
+5,"78,58 €/Jahr",Octopus Energy,OctopusSelect Gas,"561,55 €","16,23 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Check24,1.0,True,False,24.0,1.0,1.0
+6,"142,80 €/Jahr",Vattenfall Sales,Easy12 Gas,"563,40 €","16,50 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Verivox,12.0,True,False,12.0,1.0,1.0
+7,"142,80 €/Jahr",Vattenfall Sales,Natur12 Gas,"566,40 €","16,60 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Verivox,12.0,True,True,12.0,1.0,1.0
+8,"70,83 €/Jahr",MONTANA,MONTANA bonus 12 klimaneutral,"569,56 €","17,10 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Verivox,12.0,True,True,12.0,1.0,0.0
+9,"70,83 €/Jahr",MONTANA,MONTANA bonus 12 klimaneutral,"569,56 €","17,12 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Check24,12.0,True,True,12.0,1.0,1.0
+10,"70,83 €/Jahr",MONTANA,MONTANA garant 12 klimaneutral,"569,91 €","16,63 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Verivox,12.0,True,True,12.0,1.0,0.0
+11,"70,83 €/Jahr",MONTANA,MONTANA garant 12 klimaneutral,"569,91 €","16,64 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Check24,12.0,True,True,12.0,1.0,1.0
+12,"142,80 €/Jahr",Vattenfall,Bio12 Gas 15,"571,80 €","16,80 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Verivox,12.0,True,True,12.0,1.0,0.0
+13,"142,80 €/Jahr",Vattenfall Sales,Bio12 Gas 15,"571,80 €","16,80 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Check24,12.0,True,True,12.0,1.0,1.0
+14,"70,83 €/Jahr",MONTANA,MONTANA bonus 12 Biogas10,"578,48 €","17,40 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Verivox,12.0,True,True,12.0,1.0,0.0
+15,"70,83 €/Jahr",MONTANA,MONTANA garant 12 Biogas10,"578,84 €","16,93 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Verivox,12.0,True,True,12.0,1.0,0.0
+16,"70,83 €/Jahr",MONTANA,MONTANA garant 12 Biogas10,"578,84 €","16,93 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Check24,12.0,True,True,12.0,1.0,1.0
+17,"142,80 €/Jahr",Vattenfall Sales,Natur12 Extra Gas,"596,40 €","16,60 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Verivox,12.0,True,True,12.0,1.0,1.0
+18,"97,28 €/Jahr",Brillant Energie,Brillant Gas Natur 12,"600,08 €","16,73 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Verivox,12.0,True,True,12.0,1.0,1.0
+19,"188,04 €/Jahr",stadtenergie,Checker Gas,"604,49 €","13,88 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Check24,12.0,True,True,12.0,1.0,1.0
+20,"137,78 €/Jahr",MAXENERGY,MAX Basic Gas,"621,08 €","16,11 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Check24,12.0,True,False,12.0,1.0,1.0
+21,"129,14 €/Jahr",R(H)EINPOWER,R(H)EINPOWER MeinGas 12 Natur,"659,64 €","17,67 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Verivox,12.0,True,False,12.0,1.0,0.0
+22,"129,14 €/Jahr",R(H)EINPOWER,R(H)EINPOWER MeinGas 12 Natur ,"659,64 €","17,68 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Check24,12.0,True,True,12.0,1.0,1.0
+23,"86,89 €/Jahr",NEW Energie,NEWgas online,"663,79 €","19,23 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Anbieter,12.0,True,False,12.0,1.0,1.0
+24,"86,89 €/Jahr",KlickEnergie,Klickgas12 plus,"663,81 €","19,23 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Check24,12.0,True,False,12.0,1.0,1.0
+25,"80,64 €/Jahr",team energie,teamgas günstig,"667,74 €","19,57 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Check24,12.0,True,False,12.0,1.0,1.0
+26,"114,24 €/Jahr",GASAG AG,Grund- und Ersatzversorgung Neukunde,"676,14 €","18,73 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Anbieter,0.0,True,False,0.0,0.5,0.0
+27,"86,89 €/Jahr",KlickEnergie,KlickGas,"681,66 €","19,83 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Check24,12.0,True,False,12.0,1.0,1.0
+28,"86,89 €/Jahr",NEW Energie,NEWgas online12 plus,"681,79 €","19,83 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Anbieter,12.0,True,False,12.0,1.0,1.0
+29,"118,81 €/Jahr",Bürgerwerke,BürgerÖkogas 5 %,"701,61 €","19,43 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Anbieter,1.0,True,True,8.0,1.0,1.0
+30,"74,99 €/Jahr",Yippie,Happy Yippie Gas,"724,79 €","21,63 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Verivox,12.0,True,True,12.0,1.0,0.0
+31,"74,99 €/Jahr",Yippie,Happy Yippie Gas,"724,79 €","21,66 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Check24,12.0,True,True,12.0,1.0,1.0
+32,"161,58 €/Jahr",LichtBlick,ÖkoGas Komfort 12,"724,98 €","18,77 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Verivox,12.0,True,True,12.0,1.0,1.0
+33,"169,96 €/Jahr",Stadtwerke München,M-Erdgas Fix,"754,36 €","19,47 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Verivox,12.0,True,False,12.0,1.0,1.0
+34,"169,96 €/Jahr",Stadtwerke München,M-Ökogas Fix,"763,36 €","19,77 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Verivox,12.0,True,True,12.0,1.0,1.0
+35,"307,04 €/Jahr",stadtenergie,Checker Gas +,"792,85 €","16,19 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Check24,12.0,True,True,12.0,1.0,1.0
+36,"142,80 €/Jahr",Vattenfall Sales,Easy12 Gas Standard,"868,80 €","24,20 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Verivox,12.0,True,False,12.0,1.0,1.0
+37,"174,11 €/Jahr",E.ON Energie,E.ON Erdgas Öko Plus 12,"890,51 €","23,87 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Verivox,12.0,True,True,16.0,1.0,1.0
+38,"83,32 €/Jahr",Weinstraßen Energie,Standard Gas,"900,43 €","27,23 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Anbieter,6.0,True,True,12.0,1.0,0.0
+39,"118,81 €/Jahr",Bürgerwerke,BürgerÖkogas 100 %,"964,58 €","28,19 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Anbieter,1.0,True,True,8.0,1.0,1.0
+40,"160,44 €/Jahr",Süwag,Gas Garant 100 ,"1.118,54 €","35,27 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Check24,12.0,True,False,12.0,1.0,1.0
+41,"914,21 €/Jahr",Weinstraßen Energie,Basic Gas,"1.725,95 €","27,03 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,Anbieter,12.0,True,True,12.0,1.0,0.0
+42,"142,80 €/Jahr",Vattenfall,Easy24 Gas,"522,20 €","16,47 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,KeineEmpfehlung,24.0,True,False,24.0,1.0,0.0
+43,"142,80 €/Jahr",Vattenfall,Natur24 Gas,"525,20 €","16,57 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+44,"97,28 €/Jahr",Brillant Energie,Brillant Gas Natur 24,"552,08 €","15,13 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+45,"142,80 €/Jahr",Vattenfall,Natur24 Extra Gas,"555,20 €","16,57 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+46,"142,80 €/Jahr",Vattenfall Sales,Natur24 Extra Gas,"555,20 €","16,58 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+47,"142,80 €/Jahr",Vattenfall,Bio24 Gas 15,"570,60 €","16,73 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+48,"142,80 €/Jahr",Vattenfall Sales,Bio24 Gas 15,"570,60 €","16,76 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+49,"70,83 €/Jahr",MONTANA,MONTANA garant 24,"574,91 €","16,80 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,KeineEmpfehlung,24.0,True,False,24.0,1.0,0.0
+50,"70,83 €/Jahr",MONTANA,MONTANA garant 24,"574,91 €","16,80 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+51,"70,83 €/Jahr",MONTANA,MONTANA bonus 24,"576,34 €","17,33 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,KeineEmpfehlung,24.0,True,False,24.0,1.0,0.0
+52,"70,83 €/Jahr",MONTANA,MONTANA garant 24 klimaneutral,"583,84 €","17,10 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+53,"70,83 €/Jahr",MONTANA,MONTANA garant 24 klimaneutral,"583,84 €","17,10 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+54,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 klimaneutral,"585,27 €","17,63 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+55,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 klimaneutral,"585,27 €","17,65 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+56,"70,83 €/Jahr",MONTANA,MONTANA garant 24 Biogas10,"592,76 €","17,37 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+57,"70,83 €/Jahr",MONTANA,MONTANA garant 24 Biogas10,"592,76 €","17,40 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+58,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 Biogas10,"594,19 €","17,93 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+59,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 Biogas10,"594,19 €","17,95 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+60,"137,78 €/Jahr",MAXENERGY,Max Safety Gas,"594,31 €","15,22 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+61,"117,45 €/Jahr",Stadtwerke Luckenwalde,local gas regio Neukunde,"630,46 €","17,10 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,KeineEmpfehlung,12.0,True,False,0.0,1.0,1.0
+62,"161,58 €/Jahr",LichtBlick,ÖkoGas Relax 24,"727,98 €","18,87 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+63,"118,80 €/Jahr",NATURSTROM AG,naturstrom biogas 10 %,"745,80 €","20,90 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,KeineEmpfehlung,1.0,True,True,0.0,1.0,1.0
+64,"180,57 €/Jahr",TEAG Thüringer Energie,TEAG.Gas extra,"808,18 €","20,92 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+65,"366,54 €/Jahr",stadtenergie,Gönn dir WATT +,"852,35 €","16,19 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+66,"160,44 €/Jahr",Süwag,Gas Garant 100 (24M) ,"1.118,54 €","35,27 ct/kWh",12459.0,Berlin / Siedl. Oberspree Köpenick,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+0,"148,75 €/Jahr",Teutoburger EN,PuraGas 3.0,"548,35 €","13,32 ct/kWh",73033.0,Göppingen / Faurndau,Anbieter,8.0,True,True,8.0,1.0,1.0
+1,"70,83 €/Jahr",MONTANA,MONTANA bonus 12,"557,42 €","16,70 ct/kWh",73033.0,Göppingen / Faurndau,Verivox,12.0,True,False,12.0,1.0,0.0
+2,"70,83 €/Jahr",MONTANA,MONTANA bonus 12,"557,42 €","16,72 ct/kWh",73033.0,Göppingen / Faurndau,Check24,12.0,True,False,12.0,1.0,1.0
+3,"110,11 €/Jahr",Octopus Energy,OctopusSelect Gas,"557,97 €","16,07 ct/kWh",73033.0,Göppingen / Faurndau,Verivox,30.0,True,False,24.0,1.0,0.0
+4,"110,11 €/Jahr",Octopus Energy,OctopusSelect Gas,"557,97 €","16,10 ct/kWh",73033.0,Göppingen / Faurndau,Check24,1.0,True,False,24.0,1.0,1.0
+5,"70,83 €/Jahr",MONTANA,MONTANA garant 12,"558,49 €","16,23 ct/kWh",73033.0,Göppingen / Faurndau,Verivox,12.0,True,False,12.0,1.0,1.0
+6,"70,83 €/Jahr",MONTANA,MONTANA bonus 12 klimaneutral,"566,34 €","17,00 ct/kWh",73033.0,Göppingen / Faurndau,Verivox,12.0,True,True,12.0,1.0,0.0
+7,"70,83 €/Jahr",MONTANA,MONTANA bonus 12 klimaneutral,"566,34 €","17,02 ct/kWh",73033.0,Göppingen / Faurndau,Check24,12.0,True,True,12.0,1.0,1.0
+8,"70,83 €/Jahr",MONTANA,MONTANA garant 12 klimaneutral,"567,42 €","16,53 ct/kWh",73033.0,Göppingen / Faurndau,Verivox,12.0,True,True,12.0,1.0,0.0
+9,"70,83 €/Jahr",MONTANA,MONTANA garant 12 klimaneutral,"567,42 €","16,55 ct/kWh",73033.0,Göppingen / Faurndau,Check24,12.0,True,True,12.0,1.0,1.0
+10,"70,83 €/Jahr",MONTANA,MONTANA bonus 12 Biogas10,"575,27 €","17,30 ct/kWh",73033.0,Göppingen / Faurndau,Verivox,12.0,True,True,12.0,1.0,0.0
+11,"70,83 €/Jahr",MONTANA,MONTANA garant 12 Biogas10,"576,34 €","16,83 ct/kWh",73033.0,Göppingen / Faurndau,Verivox,12.0,True,True,12.0,1.0,0.0
+12,"70,83 €/Jahr",MONTANA,MONTANA garant 12 Biogas10,"576,34 €","16,85 ct/kWh",73033.0,Göppingen / Faurndau,Check24,12.0,True,True,12.0,1.0,1.0
+13,"169,31 €/Jahr",stadtenergie,Checker Gas,"596,06 €","14,23 ct/kWh",73033.0,Göppingen / Faurndau,Check24,12.0,True,True,12.0,1.0,1.0
+14,"56,26 €/Jahr",Yippie,Happy Yippie Gas,"598,06 €","18,03 ct/kWh",73033.0,Göppingen / Faurndau,Verivox,12.0,True,True,12.0,1.0,0.0
+15,"56,26 €/Jahr",Yippie,Happy Yippie Gas,"598,06 €","18,06 ct/kWh",73033.0,Göppingen / Faurndau,Check24,12.0,True,True,12.0,1.0,1.0
+16,"94,83 €/Jahr",Brillant Energie,Brillant Gas Natur 12,"598,23 €","16,77 ct/kWh",73033.0,Göppingen / Faurndau,Verivox,12.0,True,True,12.0,1.0,1.0
+17,"142,80 €/Jahr",Vattenfall Sales,Easy12 Gas,"600,40 €","15,90 ct/kWh",73033.0,Göppingen / Faurndau,Verivox,12.0,True,False,12.0,1.0,1.0
+18,"142,80 €/Jahr",Vattenfall Sales,Natur12 Extra Gas,"603,40 €","16,00 ct/kWh",73033.0,Göppingen / Faurndau,Verivox,12.0,True,True,12.0,1.0,1.0
+19,"142,80 €/Jahr",Vattenfall Sales,Natur12 Gas,"603,40 €","16,00 ct/kWh",73033.0,Göppingen / Faurndau,Verivox,12.0,True,True,12.0,1.0,1.0
+20,"142,80 €/Jahr",Vattenfall,Bio12 Gas 15,"608,80 €","16,20 ct/kWh",73033.0,Göppingen / Faurndau,Verivox,12.0,True,True,12.0,1.0,0.0
+21,"142,80 €/Jahr",Vattenfall Sales,Bio12 Gas 15,"608,80 €","16,20 ct/kWh",73033.0,Göppingen / Faurndau,Check24,12.0,True,True,12.0,1.0,1.0
+22,"115,76 €/Jahr",MAXENERGY,MAX Basic Gas,"611,03 €","16,51 ct/kWh",73033.0,Göppingen / Faurndau,Check24,12.0,True,False,12.0,1.0,1.0
+23,"103,53 €/Jahr",Energieversorgung Filstal,HG1-2 Neukunde,"614,04 €","17,02 ct/kWh",73033.0,Göppingen / Faurndau,Anbieter,0.0,True,False,0.0,0.5,0.0
+24,"41,65 €/Jahr",Energieversorgung Filstal,HGK-2 Neukunde,"636,06 €","19,81 ct/kWh",73033.0,Göppingen / Faurndau,Anbieter,0.0,True,False,0.0,0.5,0.0
+25,"110,41 €/Jahr",R(H)EINPOWER,R(H)EINPOWER MeinGas 12 Natur,"651,26 €","18,00 ct/kWh",73033.0,Göppingen / Faurndau,Verivox,12.0,True,False,12.0,1.0,0.0
+26,"110,41 €/Jahr",R(H)EINPOWER,R(H)EINPOWER MeinGas 12 Natur ,"651,26 €","18,03 ct/kWh",73033.0,Göppingen / Faurndau,Check24,12.0,True,True,12.0,1.0,1.0
+27,"68,16 €/Jahr",NEW Energie,NEWgas online,"655,26 €","19,57 ct/kWh",73033.0,Göppingen / Faurndau,Anbieter,12.0,True,False,12.0,1.0,1.0
+28,"68,16 €/Jahr",KlickEnergie,Klickgas12 plus,"655,39 €","19,57 ct/kWh",73033.0,Göppingen / Faurndau,Check24,12.0,True,False,12.0,1.0,1.0
+29,"165,41 €/Jahr",Energieversorgung Filstal,HG2-2 Neukunde,"657,00 €","16,39 ct/kWh",73033.0,Göppingen / Faurndau,Anbieter,0.0,True,False,0.0,0.5,0.0
+30,"61,80 €/Jahr",team energie,teamgas günstig,"659,10 €","19,91 ct/kWh",73033.0,Göppingen / Faurndau,Check24,12.0,True,False,12.0,1.0,1.0
+31,"68,16 €/Jahr",KlickEnergie,KlickGas,"673,24 €","20,17 ct/kWh",73033.0,Göppingen / Faurndau,Check24,12.0,True,False,12.0,1.0,1.0
+32,"68,16 €/Jahr",NEW Energie,NEWgas online12 plus,"673,26 €","20,17 ct/kWh",73033.0,Göppingen / Faurndau,Anbieter,12.0,True,False,12.0,1.0,1.0
+33,"118,81 €/Jahr",Bürgerwerke,BürgerÖkogas 5 %,"706,29 €","19,58 ct/kWh",73033.0,Göppingen / Faurndau,Anbieter,1.0,True,True,8.0,1.0,1.0
+34,"193,11 €/Jahr",LichtBlick,ÖkoGas Komfort 12,"752,31 €","18,63 ct/kWh",73033.0,Göppingen / Faurndau,Verivox,12.0,True,True,12.0,1.0,1.0
+35,"201,49 €/Jahr",Stadtwerke München,M-Erdgas Fix,"781,69 €","19,33 ct/kWh",73033.0,Göppingen / Faurndau,Verivox,12.0,True,False,12.0,1.0,1.0
+36,"288,31 €/Jahr",stadtenergie,Checker Gas +,"784,43 €","16,54 ct/kWh",73033.0,Göppingen / Faurndau,Check24,12.0,True,True,12.0,1.0,1.0
+37,"201,49 €/Jahr",Stadtwerke München,M-Ökogas Fix,"790,69 €","19,63 ct/kWh",73033.0,Göppingen / Faurndau,Verivox,12.0,True,True,12.0,1.0,1.0
+38,"142,80 €/Jahr",Vattenfall Sales,Easy12 Gas Standard,"850,80 €","23,60 ct/kWh",73033.0,Göppingen / Faurndau,Verivox,12.0,True,False,12.0,1.0,1.0
+39,"64,59 €/Jahr",Weinstraßen Energie,Standard Gas,"892,00 €","27,57 ct/kWh",73033.0,Göppingen / Faurndau,Anbieter,6.0,True,True,12.0,1.0,0.0
+40,"183,33 €/Jahr",E.ON Energie,E.ON Erdgas Öko Plus 12,"899,13 €","23,83 ct/kWh",73033.0,Göppingen / Faurndau,Verivox,12.0,True,True,16.0,1.0,1.0
+41,"118,81 €/Jahr",Bürgerwerke,BürgerÖkogas 100 %,"969,26 €","28,35 ct/kWh",73033.0,Göppingen / Faurndau,Anbieter,1.0,True,True,8.0,1.0,1.0
+42,"192,00 €/Jahr",Süwag,Gas Garant 100 ,"1.145,90 €","35,13 ct/kWh",73033.0,Göppingen / Faurndau,Check24,12.0,True,False,12.0,1.0,1.0
+43,"689,44 €/Jahr",Weinstraßen Energie,Basic Gas,"1.511,50 €","27,40 ct/kWh",73033.0,Göppingen / Faurndau,Anbieter,12.0,True,True,12.0,1.0,0.0
+44,"94,83 €/Jahr",Brillant Energie,Brillant Gas Natur 24,"549,93 €","15,17 ct/kWh",73033.0,Göppingen / Faurndau,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+45,"142,80 €/Jahr",Vattenfall,Easy24 Gas,"559,20 €","15,87 ct/kWh",73033.0,Göppingen / Faurndau,KeineEmpfehlung,24.0,True,False,24.0,1.0,0.0
+46,"142,80 €/Jahr",Vattenfall,Natur24 Gas,"562,20 €","15,97 ct/kWh",73033.0,Göppingen / Faurndau,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+47,"70,83 €/Jahr",MONTANA,MONTANA garant 24,"572,41 €","16,70 ct/kWh",73033.0,Göppingen / Faurndau,KeineEmpfehlung,24.0,True,False,24.0,1.0,0.0
+48,"70,83 €/Jahr",MONTANA,MONTANA garant 24,"572,41 €","16,72 ct/kWh",73033.0,Göppingen / Faurndau,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+49,"70,83 €/Jahr",MONTANA,MONTANA bonus 24,"573,13 €","17,23 ct/kWh",73033.0,Göppingen / Faurndau,KeineEmpfehlung,24.0,True,False,24.0,1.0,0.0
+50,"70,83 €/Jahr",MONTANA,MONTANA garant 24 klimaneutral,"581,34 €","17,00 ct/kWh",73033.0,Göppingen / Faurndau,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+51,"70,83 €/Jahr",MONTANA,MONTANA garant 24 klimaneutral,"581,34 €","17,02 ct/kWh",73033.0,Göppingen / Faurndau,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+52,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 klimaneutral,"582,05 €","17,53 ct/kWh",73033.0,Göppingen / Faurndau,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+53,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 klimaneutral,"582,05 €","17,54 ct/kWh",73033.0,Göppingen / Faurndau,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+54,"115,76 €/Jahr",MAXENERGY,Max Safety Gas,"584,26 €","15,62 ct/kWh",73033.0,Göppingen / Faurndau,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+55,"70,83 €/Jahr",MONTANA,MONTANA garant 24 Biogas10,"590,26 €","17,30 ct/kWh",73033.0,Göppingen / Faurndau,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+56,"70,83 €/Jahr",MONTANA,MONTANA garant 24 Biogas10,"590,26 €","17,31 ct/kWh",73033.0,Göppingen / Faurndau,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+57,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 Biogas10,"590,98 €","17,83 ct/kWh",73033.0,Göppingen / Faurndau,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+58,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 Biogas10,"590,98 €","17,84 ct/kWh",73033.0,Göppingen / Faurndau,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+59,"142,80 €/Jahr",Vattenfall,Natur24 Extra Gas,"592,20 €","15,97 ct/kWh",73033.0,Göppingen / Faurndau,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+60,"142,80 €/Jahr",Vattenfall Sales,Natur24 Extra Gas,"592,20 €","15,98 ct/kWh",73033.0,Göppingen / Faurndau,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+61,"142,80 €/Jahr",Vattenfall,Bio24 Gas 15,"607,60 €","16,13 ct/kWh",73033.0,Göppingen / Faurndau,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+62,"142,80 €/Jahr",Vattenfall Sales,Bio24 Gas 15,"607,60 €","16,16 ct/kWh",73033.0,Göppingen / Faurndau,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+63,"118,80 €/Jahr",NATURSTROM AG,naturstrom biogas 10 %,"745,80 €","20,90 ct/kWh",73033.0,Göppingen / Faurndau,KeineEmpfehlung,1.0,True,True,0.0,1.0,1.0
+64,"193,11 €/Jahr",LichtBlick,ÖkoGas Relax 24,"755,31 €","18,73 ct/kWh",73033.0,Göppingen / Faurndau,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+65,"162,36 €/Jahr",TEAG Thüringer Energie,TEAG.Gas extra,"800,32 €","21,27 ct/kWh",73033.0,Göppingen / Faurndau,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+66,"347,81 €/Jahr",stadtenergie,Gönn dir WATT +,"843,93 €","16,54 ct/kWh",73033.0,Göppingen / Faurndau,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+67,"192,00 €/Jahr",Süwag,Gas Garant 100 (24M) ,"1.145,90 €","35,13 ct/kWh",73033.0,Göppingen / Faurndau,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+0,"148,75 €/Jahr",Teutoburger EN,PuraGas 3.0,"548,35 €","13,32 ct/kWh",73033.0,Göppingen / Stadtgebiet,Anbieter,8.0,True,True,8.0,1.0,1.0
+1,"70,83 €/Jahr",MONTANA,MONTANA bonus 12,"557,42 €","16,70 ct/kWh",73033.0,Göppingen / Stadtgebiet,Verivox,12.0,True,False,12.0,1.0,0.0
+2,"70,83 €/Jahr",MONTANA,MONTANA bonus 12,"557,42 €","16,72 ct/kWh",73033.0,Göppingen / Stadtgebiet,Check24,12.0,True,False,12.0,1.0,1.0
+3,"110,11 €/Jahr",Octopus Energy,OctopusSelect Gas,"557,97 €","16,07 ct/kWh",73033.0,Göppingen / Stadtgebiet,Verivox,30.0,True,False,24.0,1.0,0.0
+4,"110,11 €/Jahr",Octopus Energy,OctopusSelect Gas,"557,97 €","16,10 ct/kWh",73033.0,Göppingen / Stadtgebiet,Check24,1.0,True,False,24.0,1.0,1.0
+5,"70,83 €/Jahr",MONTANA,MONTANA garant 12,"558,49 €","16,23 ct/kWh",73033.0,Göppingen / Stadtgebiet,Verivox,12.0,True,False,12.0,1.0,1.0
+6,"70,83 €/Jahr",MONTANA,MONTANA bonus 12 klimaneutral,"566,34 €","17,00 ct/kWh",73033.0,Göppingen / Stadtgebiet,Verivox,12.0,True,True,12.0,1.0,0.0
+7,"70,83 €/Jahr",MONTANA,MONTANA bonus 12 klimaneutral,"566,34 €","17,02 ct/kWh",73033.0,Göppingen / Stadtgebiet,Check24,12.0,True,True,12.0,1.0,1.0
+8,"70,83 €/Jahr",MONTANA,MONTANA garant 12 klimaneutral,"567,42 €","16,53 ct/kWh",73033.0,Göppingen / Stadtgebiet,Verivox,12.0,True,True,12.0,1.0,0.0
+9,"70,83 €/Jahr",MONTANA,MONTANA garant 12 klimaneutral,"567,42 €","16,55 ct/kWh",73033.0,Göppingen / Stadtgebiet,Check24,12.0,True,True,12.0,1.0,1.0
+10,"70,83 €/Jahr",MONTANA,MONTANA bonus 12 Biogas10,"575,27 €","17,30 ct/kWh",73033.0,Göppingen / Stadtgebiet,Verivox,12.0,True,True,12.0,1.0,0.0
+11,"70,83 €/Jahr",MONTANA,MONTANA garant 12 Biogas10,"576,34 €","16,83 ct/kWh",73033.0,Göppingen / Stadtgebiet,Verivox,12.0,True,True,12.0,1.0,0.0
+12,"70,83 €/Jahr",MONTANA,MONTANA garant 12 Biogas10,"576,34 €","16,85 ct/kWh",73033.0,Göppingen / Stadtgebiet,Check24,12.0,True,True,12.0,1.0,1.0
+13,"169,31 €/Jahr",stadtenergie,Checker Gas,"596,06 €","14,23 ct/kWh",73033.0,Göppingen / Stadtgebiet,Check24,12.0,True,True,12.0,1.0,1.0
+14,"56,26 €/Jahr",Yippie,Happy Yippie Gas,"598,06 €","18,03 ct/kWh",73033.0,Göppingen / Stadtgebiet,Verivox,12.0,True,True,12.0,1.0,0.0
+15,"56,26 €/Jahr",Yippie,Happy Yippie Gas,"598,06 €","18,06 ct/kWh",73033.0,Göppingen / Stadtgebiet,Check24,12.0,True,True,12.0,1.0,1.0
+16,"94,83 €/Jahr",Brillant Energie,Brillant Gas Natur 12,"598,23 €","16,77 ct/kWh",73033.0,Göppingen / Stadtgebiet,Verivox,12.0,True,True,12.0,1.0,1.0
+17,"142,80 €/Jahr",Vattenfall Sales,Easy12 Gas,"600,40 €","15,90 ct/kWh",73033.0,Göppingen / Stadtgebiet,Verivox,12.0,True,False,12.0,1.0,1.0
+18,"142,80 €/Jahr",Vattenfall Sales,Natur12 Extra Gas,"603,40 €","16,00 ct/kWh",73033.0,Göppingen / Stadtgebiet,Verivox,12.0,True,True,12.0,1.0,1.0
+19,"142,80 €/Jahr",Vattenfall Sales,Natur12 Gas,"603,40 €","16,00 ct/kWh",73033.0,Göppingen / Stadtgebiet,Verivox,12.0,True,True,12.0,1.0,1.0
+20,"142,80 €/Jahr",Vattenfall,Bio12 Gas 15,"608,80 €","16,20 ct/kWh",73033.0,Göppingen / Stadtgebiet,Verivox,12.0,True,True,12.0,1.0,0.0
+21,"142,80 €/Jahr",Vattenfall Sales,Bio12 Gas 15,"608,80 €","16,20 ct/kWh",73033.0,Göppingen / Stadtgebiet,Check24,12.0,True,True,12.0,1.0,1.0
+22,"115,76 €/Jahr",MAXENERGY,MAX Basic Gas,"611,03 €","16,51 ct/kWh",73033.0,Göppingen / Stadtgebiet,Check24,12.0,True,False,12.0,1.0,1.0
+23,"103,53 €/Jahr",Energieversorgung Filstal,HG1-2 Neukunde,"614,04 €","17,02 ct/kWh",73033.0,Göppingen / Stadtgebiet,Anbieter,0.0,True,False,0.0,0.5,0.0
+24,"41,65 €/Jahr",Energieversorgung Filstal,HGK-2 Neukunde,"636,06 €","19,81 ct/kWh",73033.0,Göppingen / Stadtgebiet,Anbieter,0.0,True,False,0.0,0.5,0.0
+25,"110,41 €/Jahr",R(H)EINPOWER,R(H)EINPOWER MeinGas 12 Natur,"651,26 €","18,00 ct/kWh",73033.0,Göppingen / Stadtgebiet,Verivox,12.0,True,False,12.0,1.0,0.0
+26,"110,41 €/Jahr",R(H)EINPOWER,R(H)EINPOWER MeinGas 12 Natur ,"651,26 €","18,03 ct/kWh",73033.0,Göppingen / Stadtgebiet,Check24,12.0,True,True,12.0,1.0,1.0
+27,"68,16 €/Jahr",NEW Energie,NEWgas online,"655,26 €","19,57 ct/kWh",73033.0,Göppingen / Stadtgebiet,Anbieter,12.0,True,False,12.0,1.0,1.0
+28,"68,16 €/Jahr",KlickEnergie,Klickgas12 plus,"655,39 €","19,57 ct/kWh",73033.0,Göppingen / Stadtgebiet,Check24,12.0,True,False,12.0,1.0,1.0
+29,"165,41 €/Jahr",Energieversorgung Filstal,HG2-2 Neukunde,"657,00 €","16,39 ct/kWh",73033.0,Göppingen / Stadtgebiet,Anbieter,0.0,True,False,0.0,0.5,0.0
+30,"61,80 €/Jahr",team energie,teamgas günstig,"659,10 €","19,91 ct/kWh",73033.0,Göppingen / Stadtgebiet,Check24,12.0,True,False,12.0,1.0,1.0
+31,"68,16 €/Jahr",KlickEnergie,KlickGas,"673,24 €","20,17 ct/kWh",73033.0,Göppingen / Stadtgebiet,Check24,12.0,True,False,12.0,1.0,1.0
+32,"68,16 €/Jahr",NEW Energie,NEWgas online12 plus,"673,26 €","20,17 ct/kWh",73033.0,Göppingen / Stadtgebiet,Anbieter,12.0,True,False,12.0,1.0,1.0
+33,"118,81 €/Jahr",Bürgerwerke,BürgerÖkogas 5 %,"706,29 €","19,58 ct/kWh",73033.0,Göppingen / Stadtgebiet,Anbieter,1.0,True,True,8.0,1.0,1.0
+34,"193,11 €/Jahr",LichtBlick,ÖkoGas Komfort 12,"752,31 €","18,63 ct/kWh",73033.0,Göppingen / Stadtgebiet,Verivox,12.0,True,True,12.0,1.0,1.0
+35,"201,49 €/Jahr",Stadtwerke München,M-Erdgas Fix,"781,69 €","19,33 ct/kWh",73033.0,Göppingen / Stadtgebiet,Verivox,12.0,True,False,12.0,1.0,1.0
+36,"288,31 €/Jahr",stadtenergie,Checker Gas +,"784,43 €","16,54 ct/kWh",73033.0,Göppingen / Stadtgebiet,Check24,12.0,True,True,12.0,1.0,1.0
+37,"201,49 €/Jahr",Stadtwerke München,M-Ökogas Fix,"790,69 €","19,63 ct/kWh",73033.0,Göppingen / Stadtgebiet,Verivox,12.0,True,True,12.0,1.0,1.0
+38,"142,80 €/Jahr",Vattenfall Sales,Easy12 Gas Standard,"850,80 €","23,60 ct/kWh",73033.0,Göppingen / Stadtgebiet,Verivox,12.0,True,False,12.0,1.0,1.0
+39,"64,59 €/Jahr",Weinstraßen Energie,Standard Gas,"892,00 €","27,57 ct/kWh",73033.0,Göppingen / Stadtgebiet,Anbieter,6.0,True,True,12.0,1.0,0.0
+40,"183,33 €/Jahr",E.ON Energie,E.ON Erdgas Öko Plus 12,"899,13 €","23,83 ct/kWh",73033.0,Göppingen / Stadtgebiet,Verivox,12.0,True,True,16.0,1.0,1.0
+41,"118,81 €/Jahr",Bürgerwerke,BürgerÖkogas 100 %,"969,26 €","28,35 ct/kWh",73033.0,Göppingen / Stadtgebiet,Anbieter,1.0,True,True,8.0,1.0,1.0
+42,"192,00 €/Jahr",Süwag,Gas Garant 100 ,"1.145,90 €","35,13 ct/kWh",73033.0,Göppingen / Stadtgebiet,Check24,12.0,True,False,12.0,1.0,1.0
+43,"689,44 €/Jahr",Weinstraßen Energie,Basic Gas,"1.511,50 €","27,40 ct/kWh",73033.0,Göppingen / Stadtgebiet,Anbieter,12.0,True,True,12.0,1.0,0.0
+44,"94,83 €/Jahr",Brillant Energie,Brillant Gas Natur 24,"549,93 €","15,17 ct/kWh",73033.0,Göppingen / Stadtgebiet,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+45,"142,80 €/Jahr",Vattenfall,Easy24 Gas,"559,20 €","15,87 ct/kWh",73033.0,Göppingen / Stadtgebiet,KeineEmpfehlung,24.0,True,False,24.0,1.0,0.0
+46,"142,80 €/Jahr",Vattenfall,Natur24 Gas,"562,20 €","15,97 ct/kWh",73033.0,Göppingen / Stadtgebiet,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+47,"70,83 €/Jahr",MONTANA,MONTANA garant 24,"572,41 €","16,70 ct/kWh",73033.0,Göppingen / Stadtgebiet,KeineEmpfehlung,24.0,True,False,24.0,1.0,0.0
+48,"70,83 €/Jahr",MONTANA,MONTANA garant 24,"572,41 €","16,72 ct/kWh",73033.0,Göppingen / Stadtgebiet,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+49,"70,83 €/Jahr",MONTANA,MONTANA bonus 24,"573,13 €","17,23 ct/kWh",73033.0,Göppingen / Stadtgebiet,KeineEmpfehlung,24.0,True,False,24.0,1.0,0.0
+50,"70,83 €/Jahr",MONTANA,MONTANA garant 24 klimaneutral,"581,34 €","17,00 ct/kWh",73033.0,Göppingen / Stadtgebiet,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+51,"70,83 €/Jahr",MONTANA,MONTANA garant 24 klimaneutral,"581,34 €","17,02 ct/kWh",73033.0,Göppingen / Stadtgebiet,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+52,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 klimaneutral,"582,05 €","17,53 ct/kWh",73033.0,Göppingen / Stadtgebiet,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+53,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 klimaneutral,"582,05 €","17,54 ct/kWh",73033.0,Göppingen / Stadtgebiet,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+54,"115,76 €/Jahr",MAXENERGY,Max Safety Gas,"584,26 €","15,62 ct/kWh",73033.0,Göppingen / Stadtgebiet,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+55,"70,83 €/Jahr",MONTANA,MONTANA garant 24 Biogas10,"590,26 €","17,30 ct/kWh",73033.0,Göppingen / Stadtgebiet,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+56,"70,83 €/Jahr",MONTANA,MONTANA garant 24 Biogas10,"590,26 €","17,31 ct/kWh",73033.0,Göppingen / Stadtgebiet,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+57,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 Biogas10,"590,98 €","17,83 ct/kWh",73033.0,Göppingen / Stadtgebiet,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+58,"70,83 €/Jahr",MONTANA,MONTANA bonus 24 Biogas10,"590,98 €","17,84 ct/kWh",73033.0,Göppingen / Stadtgebiet,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+59,"142,80 €/Jahr",Vattenfall,Natur24 Extra Gas,"592,20 €","15,97 ct/kWh",73033.0,Göppingen / Stadtgebiet,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+60,"142,80 €/Jahr",Vattenfall Sales,Natur24 Extra Gas,"592,20 €","15,98 ct/kWh",73033.0,Göppingen / Stadtgebiet,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+61,"142,80 €/Jahr",Vattenfall,Bio24 Gas 15,"607,60 €","16,13 ct/kWh",73033.0,Göppingen / Stadtgebiet,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+62,"142,80 €/Jahr",Vattenfall Sales,Bio24 Gas 15,"607,60 €","16,16 ct/kWh",73033.0,Göppingen / Stadtgebiet,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+63,"118,80 €/Jahr",NATURSTROM AG,naturstrom biogas 10 %,"745,80 €","20,90 ct/kWh",73033.0,Göppingen / Stadtgebiet,KeineEmpfehlung,1.0,True,True,0.0,1.0,1.0
+64,"193,11 €/Jahr",LichtBlick,ÖkoGas Relax 24,"755,31 €","18,73 ct/kWh",73033.0,Göppingen / Stadtgebiet,KeineEmpfehlung,24.0,True,True,24.0,1.0,0.0
+65,"162,36 €/Jahr",TEAG Thüringer Energie,TEAG.Gas extra,"800,32 €","21,27 ct/kWh",73033.0,Göppingen / Stadtgebiet,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
+66,"347,81 €/Jahr",stadtenergie,Gönn dir WATT +,"843,93 €","16,54 ct/kWh",73033.0,Göppingen / Stadtgebiet,KeineEmpfehlung,24.0,True,True,24.0,1.0,1.0
+67,"192,00 €/Jahr",Süwag,Gas Garant 100 (24M) ,"1.145,90 €","35,13 ct/kWh",73033.0,Göppingen / Stadtgebiet,KeineEmpfehlung,24.0,True,False,24.0,1.0,1.0
