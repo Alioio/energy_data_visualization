@@ -3,14 +3,16 @@ import pandas as pd
 import os
 import re
 import datetime
+from datetime import datetime as dt
 import altair as alt
 import altair_catplot as altcat
 import streamlit as st
 
 
+
 st.set_page_config(page_title="Energy Dashboard",
                     page_icon=":bar_chart:",
-                    layout="wide")
+                    )
 
 
 def unit_to_month(currentunit, value_with_current_unit):
@@ -150,19 +152,32 @@ def summarize(high_consume, seperation_var='priceGuaranteeNormalized',seperation
 
 
 #@st.cache(ttl=24*60*60)
-def create_chart(summary,  aggregation='mean',seperation_var='priceGuaranteeNormalized', seperation_value=12):
+def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNormalized', seperation_value=12, date_interval=['2022-07-17', '2022-10-17']):
+
     ## Definitionsbereich der Y achse
-    min = np.floor(summary['median'].min() - 5)
-    max = np.ceil( summary['median'].max() + 5)
+    min = np.floor(summary[aggregation].min() - (0.025*summary[aggregation].min()))
+    max = np.ceil( summary[aggregation].max() + (0.025*summary[aggregation].max()))
     domain1 = np.linspace(min, max, 2, endpoint = True)
     
+    #chart view scaling
+    chart_min = summary[(summary.date >= pd.to_datetime(date_interval[0])) & (summary.date <= pd.to_datetime(date_interval[1])) ][aggregation].min() 
+    chart_max = summary[(summary.date >= pd.to_datetime(date_interval[0])) & (summary.date <= pd.to_datetime(date_interval[1])) ][aggregation].max()
+    
+    chart_min = np.floor(chart_min - (0.025*chart_min))
+    chart_max = np.ceil( chart_max + (0.025*chart_max))
+    domain2 = np.linspace(chart_min, chart_max, 2, endpoint = True)
 
+    #count view scaling
+    chart_max = summary[(summary.date >= pd.to_datetime(date_interval[0])) & (summary.date <= pd.to_datetime(date_interval[1])) ]['count'].max()
+    
+    chart_max = np.ceil( chart_max + (0.25*chart_max))
+    domain3 = np.linspace(0, chart_max, 2, endpoint = True)
+    
     source = summary.copy()
-    interval = alt.selection_interval(encodings=['x'])
+    
+    x_init = pd.to_datetime(date_interval).astype(int) / 1E6
+    interval = alt.selection_interval(encodings=['x'],init = {'x':list(x_init)})
     single = alt.selection_single()
-    #x_init = pd.to_datetime(['2005-03-01', '2005-04-01']).astype(int) / 1E6
-    #interval = alt.selection_interval(encodings=['x'], init={'x':list(x_init)})
-
 
     interval_y = alt.selection_interval(encodings=['y'], bind="scales")
 
@@ -203,7 +218,7 @@ def create_chart(summary,  aggregation='mean',seperation_var='priceGuaranteeNorm
     
     base = alt.Chart(source).mark_line(size=2).encode(
         #x= alt.X('date:T',axis= alt.Axis(grid=False, title='Datum')),
-        y = alt.Y(aggregation+':Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)'),scale=alt.Scale(domain=list(domain1))),
+        y = alt.Y(aggregation+':Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)')),
         x= alt.X('date:T',axis= alt.Axis(grid=False, title='Datum')),
         #y = alt.Y('median:Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)')),
         color='beschreibung:N'
@@ -213,18 +228,32 @@ def create_chart(summary,  aggregation='mean',seperation_var='priceGuaranteeNorm
         #x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
         #y=alt.Y('mean:Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)')),
         x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
-        y=alt.Y(aggregation+':Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)')),
+        y=alt.Y(aggregation+':Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)'),scale=alt.Scale(domain=list(domain2))),
         tooltip = alt.Tooltip(['date:T', aggregation+':Q', 'count:Q', 'beschreibung:N'])
     ).properties(
-        width=1000,
+        width=1200,
         height=400
     )
 
-    view = base.add_selection(
+    count_chart = base.mark_bar().encode(
+        #x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
+        #y=alt.Y('mean:Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)')),
+        x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
+        y=alt.Y('count:Q', axis = alt.Axis(title='Anzahl'),scale=alt.Scale(domain=list(domain3))),
+        color='beschreibung:N',
+        tooltip = alt.Tooltip(['date:T', aggregation+':Q', 'count:Q', 'beschreibung:N'])
+    ).properties(
+        width=1200,
+        height=60
+    )
+    
+    view = base.encode(
+        y = alt.Y(aggregation+':Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)'),scale=alt.Scale(domain=list(domain1))),
+    ).add_selection(
         interval
     ).properties(
-        width=1000,
-        height=80,
+        width=1200,
+        height=60,
     )
 
     ###############
@@ -232,7 +261,6 @@ def create_chart(summary,  aggregation='mean',seperation_var='priceGuaranteeNorm
     # Create a selection that chooses the nearest point & selects based on x-value
     nearest = alt.selection(type='single', nearest=True, on='mouseover',
                             fields=['date'], empty='none')
-
 
     # Transparent selectors across the chart. This is what tells us
     # the x-value of the cursor
@@ -253,6 +281,11 @@ def create_chart(summary,  aggregation='mean',seperation_var='priceGuaranteeNorm
         text=alt.condition(nearest, 'median:Q', alt.value(' '))
     )
 
+    count_text = count_chart.mark_text(align='left', dx=5, dy=-5).encode(
+        text=alt.condition(nearest, 'count:Q', alt.value(' ')),
+        color='beschreibung:N'
+    )
+
     # Draw a rule at the location of the selection
     rules = alt.Chart(source).mark_rule(color='gray').encode(
         x='date:T',
@@ -263,7 +296,13 @@ def create_chart(summary,  aggregation='mean',seperation_var='priceGuaranteeNorm
     # Put the five layers into a chart and bind the data
     
     main_view = alt.layer(
-        chart, selectors, points, rules, text
+        chart , selectors, points, rules, text
+    ).properties(
+        width=1000, height=400
+    )
+
+    count_chart_view = alt.layer(
+        count_chart , selectors,  rules, count_text
     ).properties(
         width=1000, height=400
     )
@@ -272,7 +311,7 @@ def create_chart(summary,  aggregation='mean',seperation_var='priceGuaranteeNorm
 
     main_view = main_view + annotationen
 
-    final_view = main_view & view 
+    final_view = main_view & count_chart_view & view 
     
 
     #final_view.save('D:\energy_data_visualization\energy_chart.html')
@@ -296,45 +335,45 @@ def summarize_tariffs(high_consume, date='2022-02-24'):
 
     return tariff_summary, boxplot
 
-
-#def create_chart2(tariff_summary): 
-
 selection_menu_container = st.container()
 selection_dropdown_column = selection_menu_container.columns(2)
 main_chart_container = st.container()
 
-seperation_var = selection_dropdown_column[0].selectbox(
+date_interval = selection_dropdown_column[0].date_input(label='Date Range: ',
+            value=(dt(year=2022, month=7, day=17, hour=16, minute=30), 
+                    dt(year=2022, month=10, day=17, hour=16, minute=30)),
+            key='#date_range',
+            help="Start-und End Datum: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
+
+seperation_var = selection_dropdown_column[1].selectbox(
     'Nach welches Attribut möchtest du trennen?',
-    ('Vertragslaufzeit', 'Preisgarantie', 'Öko Tarif/ Konventioneller Tarif'))
+    ('Vertragslaufzeit', 'Preisgarantie', 'Öko Tarif/ Konventioneller Tarif'),
+    help="Gebe hier ein nach welhes Attribut du trennen möchtest: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
 
-
-selection_dropdown_column[1].write('Vergleiche nach: '+ seperation_var)
-
-selection_slider = selection_dropdown_column[1].slider('Ab welchen Wert für die Variable '+seperation_var+ ' möchtest die Daten teilen?', 0, 24, 12, step=3)
-
+selection_slider = selection_dropdown_column[1].slider('Ab welchen Wert für die Variable '+seperation_var+ ' möchtest die Daten teilen?', 0, 24, 12, step=3,
+    help="Start-und End Datum: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
 
 summary = summarize(high_consume, seperation_var,int(selection_slider))
 
 mean_median_btn = selection_dropdown_column[0].radio(
-        "Set selectbox label visibility 👉",
+        "Wie möchtest du die Tarifdaten aggregieren? 👉",
         options=["mean", "median"],
     )
+
 selection_dropdown_column[0].write(str(mean_median_btn))
 
-energy_line_chart = create_chart(summary,mean_median_btn, int(selection_slider))
-
-main_chart_container.altair_chart(energy_line_chart)
-
-#start_date = selection_dropdown_column[0].date_input("Start Date", value=pd.to_datetime("2021-01-31", format="%Y-%m-%d"))
-#end_date = selection_dropdown_column[0].date_input("End Date", value=pd.to_datetime("today", format="%Y-%m-%d"))
-
-#start = start_date.strftime("%Y-%m-%d")
-#end = end_date.strftime("%Y-%m-%d")
+if(len(date_interval) == 2):
+    energy_line_chart = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval)
+    main_chart_container.altair_chart(energy_line_chart, use_container_width=True)
 
 print(high_consume.dtypes)
 tariff_summary, boxplot = summarize_tariffs(high_consume)
 
 main_chart_container.altair_chart(boxplot)
+
+
+
+
 
 
 
