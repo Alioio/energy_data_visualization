@@ -52,6 +52,8 @@ def set_plz(ID):
 @st.cache(ttl=24*60*60)
 def read_energy_data(energy_type, verbrauch):
     ## Lese alle Dateien und füge sie zu einer Liste zusammen
+
+    '''
     gas_path = 'D:\energy_data_visualization\data\{energy_type}'.format(energy_type=energy_type)
     files = os.listdir(gas_path)
     print(files)
@@ -59,7 +61,7 @@ def read_energy_data(energy_type, verbrauch):
     dfs = list([])
     names = list([])
 
-    '''
+    
     for file in files:
         if(re.search("[15|9|13|3]+[0]{3}.csv$", str(file))):
             f = open(os.path.join(gas_path, file),'r')
@@ -115,7 +117,14 @@ def read_energy_data(energy_type, verbrauch):
     wa_df['contractDurationNormalized'] = wa_df.apply(lambda row : unit_to_month(row['Einheit Vertragslaufzeit'], row['Vertragslaufzeit']), axis = 1)
     wa_df['priceGuaranteeNormalized'] = wa_df.apply(lambda row : unit_to_month(row['Einheit Garantielaufzeit'], row['Garantielaufzeit']), axis = 1)
 
-    wa_df.rename(columns = {'Datum':'date','Anbieter':'providerName','Tarifname':'tariffName', 'Partner':'signupPartner', 'Arbeitspreis':'dataunit', 'Öko':'dataeco'}, inplace = True)
+    print('davor: ',wa_df.columns)
+
+    if('Grunpreis' in wa_df.columns):
+        wa_df.rename(columns = {'Datum':'date','Anbieter':'providerName','Tarifname':'tariffName', 'Partner':'signupPartner', 'Arbeitspreis':'dataunit', 'Öko':'dataeco', 'Kosten pro Jahr':'Jahreskosten', 'Grunpreis':'datafixed'}, inplace = True)
+    else:
+        wa_df.rename(columns = {'Datum':'date','Anbieter':'providerName','Tarifname':'tariffName', 'Partner':'signupPartner', 'Arbeitspreis':'dataunit', 'Öko':'dataeco', 'Kosten pro Jahr':'Jahreskosten', 'Grundpreis':'datafixed'}, inplace = True)
+
+    print('danach: ',wa_df.columns)
     wa_df['plz'] = wa_df.apply(lambda row : set_plz(row['ID']), axis = 1)
     #wa_df = wa_df[wa_df.date < all_dates.date.min()]
     wa_df = wa_df.drop_duplicates(['date', 'providerName', 'tariffName', 'signupPartner', 'plz'])
@@ -124,11 +133,11 @@ def read_energy_data(energy_type, verbrauch):
     all_dates = wa_df.copy()
     ###
 
-    data_types_dict = {'date':'<M8[ns]', 'providerName':str, 'tariffName':str,'signupPartner':str, 'dataunit':float, 'dataeco':bool, 'plz':str }
+    data_types_dict = {'date':'<M8[ns]', 'providerName':str, 'tariffName':str,'signupPartner':str, 'dataunit':float, 'dataeco':bool, 'plz':str, 'datafixed':float, 'Jahreskosten':float}
     all_dates = all_dates.astype(data_types_dict)
 
     print('MIT DEM EINLESEN DER 5 PLZ DATEN FERTIG ',energy_type)
-    return all_dates[['date', 'providerName', 'tariffName', 'signupPartner', 'plz', 'dataunit',  'contractDurationNormalized', 'priceGuaranteeNormalized', 'dataeco']]
+    return all_dates[['date', 'providerName', 'tariffName', 'signupPartner', 'plz', 'dataunit',  'datafixed','Jahreskosten','contractDurationNormalized', 'priceGuaranteeNormalized', 'dataeco']]
 
 #electricity_loader_thread = threading.Thread(target=read_energy_data, args = ['electricity'], name='electricity_loader_thread')
 #gas_loader_thread = threading.Thread(target=read_energy_data, args = ('gas'), name='gas_loader_thread')
@@ -153,7 +162,7 @@ with concurrent.futures.ThreadPoolExecutor() as executor:
 #high_consume = read_energy_data('gas')
 
 #@st.cache(ttl=24*60*60)
-def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_value=12, consumption='unknown'):
+def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_value=12, consumption='unknown',selected_variable='dataunit'):
 
     sep_var_readable = seperation_var
     if(seperation_var == 'Vertragslaufzeit'):
@@ -161,31 +170,35 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
     elif(seperation_var == 'Preisgarantie'):
         seperation_var='priceGuaranteeNormalized'
     
+    variables_dict = {
+        "Arbeitspreis": "dataunit",
+        "Grundpreis": "datafixed",
+        "Jahreskosten": "Jahreskosten"
+        }
+
     agg_functions = {
-        'dataunit':
+        variables_dict[selected_variable]:
         [ 'mean', 'median','std', 'min', 'max', 'count']
     }
     
     ohne_laufzeit  = results[results[seperation_var] < seperation_value]
-    summary_ohne_laufzeit = ohne_laufzeit[ ['date','providerName','tariffName','signupPartner', 'dataunit']].groupby(['date']).agg(agg_functions)
+    summary_ohne_laufzeit = ohne_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
     summary_ohne_laufzeit.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
     summary_ohne_laufzeit['date'] = summary_ohne_laufzeit.index
     summary_ohne_laufzeit['beschreibung'] = 'Verbrauch: '+consumption+'\n'+sep_var_readable+' < '+str(seperation_value) 
     
-
     #mit_laufzeit  = high_consume[high_consume['contractDurationNormalized'] > 11]
     mit_laufzeit  = results[results[seperation_var] >= seperation_value]
-    summary_mit_laufzeit = mit_laufzeit[ ['date','providerName','tariffName','signupPartner', 'dataunit']].groupby(['date']).agg(agg_functions)
+    summary_mit_laufzeit = mit_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
     summary_mit_laufzeit.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
     summary_mit_laufzeit['date'] = summary_mit_laufzeit.index
     summary_mit_laufzeit['beschreibung'] = 'Verbrauch: '+consumption+'\n'+sep_var_readable+' >= '+str(seperation_value)
-    
 
     summary = pd.concat([summary_mit_laufzeit, summary_ohne_laufzeit])
     return summary
 
 #@st.cache(ttl=24*60*60)
-def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNormalized', seperation_value=12, date_interval=['2022-07-17', '2022-10-17'], widtht=800, height=300):
+def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNormalized', seperation_value=12, date_interval=['2022-07-17', '2022-10-17'], widtht=800, height=300,selected_variable='dataunit'):
 
     ## Definitionsbereich der Y achse
     min = np.floor(summary[aggregation].min() - (0.025*summary[aggregation].min()))
@@ -414,6 +427,10 @@ seperation_var = selection_dropdown_column[2].selectbox(
 selection_slider = selection_dropdown_column[2].slider('Ab welchen Wert für die Variable '+seperation_var+ ' möchtest die Daten teilen?', 0, 24, 12, step=3,
     help="Start-und End Datum: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
 
+selected_variable = selection_dropdown_column[0].selectbox(
+    'Welches Attribut möchtest du anschauen?',
+    ('Arbeitspreis', 'Grundpreis', 'Jahreskosten'))
+
 energy_type_selections = selection_dropdown_column[0].multiselect(
     'What are your favorite colors',
     ['Strom','Gas'],
@@ -423,12 +440,12 @@ chart_columns = main_chart_container.columns(len(energy_type_selections))
 
 for i, energy_selection in enumerate(energy_type_selections):
     if((energy_selection == 'Strom')):
-        summary_3000 = summarize(electricity_results_3000, seperation_var, int(selection_slider),'3000')
-        summary_1300 = summarize(electricity_results_1300, seperation_var, int(selection_slider),'1300')
+        summary_3000 = summarize(electricity_results_3000, seperation_var, int(selection_slider),'3000',selected_variable)
+        summary_1300 = summarize(electricity_results_1300, seperation_var, int(selection_slider),'1300', selected_variable)
         summary = pd.concat([summary_3000, summary_1300])
     elif((energy_selection == 'Gas')):
-        summary_9000 = summarize(gas_results_9000, seperation_var,int(selection_slider),'9000')
-        summary_15000 = summarize(gas_results_15000, seperation_var,int(selection_slider),'15000')
+        summary_9000 = summarize(gas_results_9000, seperation_var,int(selection_slider),'9000',selected_variable)
+        summary_15000 = summarize(gas_results_15000, seperation_var,int(selection_slider),'15000',selected_variable)
         summary = pd.concat([summary_9000, summary_15000])
 
 #summary = summarize(high_consume, seperation_var,int(selection_slider))
@@ -442,9 +459,6 @@ for i, energy_selection in enumerate(energy_type_selections):
 
 #main_chart_container.altair_chart(boxplot)
 
-
-
-print('CURRENT WIDTH',chart_columns[0].get_column_width)
 
 
 
