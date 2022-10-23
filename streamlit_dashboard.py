@@ -223,8 +223,9 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
     
     source = summary.copy()
     
-    x_init = pd.to_datetime(date_interval).astype(int) / 1E6
-    interval = alt.selection_interval(encodings=['x'],init = {'x':np.array(x_init)})
+    #x_init = pd.to_datetime(date_interval).astype(int) / 1E6
+    #,init = {'x':np.array(x_init)}
+    interval = alt.selection_interval(encodings=['x'])
     selection = alt.selection_multi(fields=['beschreibung'], bind='legend')
     
 
