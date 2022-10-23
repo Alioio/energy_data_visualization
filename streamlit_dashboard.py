@@ -10,6 +10,7 @@ import altair_catplot as altcat
 import streamlit as st
 import threading
 import concurrent.futures
+import json
 
 def foo(bar):
     print('hello {}'.format(bar))
@@ -224,8 +225,9 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
     source = summary.copy()
     
     x_init = pd.to_datetime(date_interval).astype(int) / 1E6
+    x_init = x_init.to_list()
     #,init = {'x':np.array(x_init)}
-    interval = alt.selection_interval(encodings=['x'],init = {'x':x_init.to_list()})
+    interval = alt.selection_interval(encodings=['x'],init = {'x':x_init})
     selection = alt.selection_multi(fields=['beschreibung'], bind='legend')
     
 
