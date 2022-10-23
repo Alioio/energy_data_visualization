@@ -95,7 +95,7 @@ def read_energy_data(energy_type, verbrauch):
     print('MIT DEM EINLESEN DER 100 PLZ DATEN FERTIG')
     '''
     #### lese die Daten der wöchentlichen Abfrage zu den 5 Städten
-    wa_df = pd.read_excel('data\wa_{energy_type}.xlsx'.format(energy_type=energy_type))
+    wa_df = pd.read_excel('data/\wa_{energy_type}.xlsx'.format(energy_type=energy_type))
 
     if( ((energy_type == 'gas') & (verbrauch=="15000")) | ((energy_type == 'electricity') & (verbrauch=="3000")) ):
         wa_df = wa_df[(wa_df.ID == 3) | 
