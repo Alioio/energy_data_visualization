@@ -471,7 +471,7 @@ for i, energy_selection in enumerate(energy_type_selections):
 
         chart_columns[i].altair_chart(energy_line_chart_e)
 
-        chart_columns[i].write("""<style>
+        st.write("""<style>
     [data-testid="stHorizontalBlock"] {
         align-items: center;
     }
