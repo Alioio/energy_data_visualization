@@ -458,8 +458,7 @@ for i, energy_selection in enumerate(energy_type_selections):
 
     if(len(date_interval) == 2):
 
-        title_alignment=
-                """
+        title_alignment="""
                 <style>
                 #the-title {
                 text-align: center
