@@ -457,28 +457,19 @@ for i, energy_selection in enumerate(energy_type_selections):
 #summary = summarize(high_consume, seperation_var,int(selection_slider))
 
     if(len(date_interval) == 2):
+        with chart_columns[i]:
+            title_alignment="""
+                    <style>
+                    #the-title {
+                    text-align: center
+                    }
+                    </style>
+                    """
 
-        title_alignment="""
-                <style>
-                #the-title {
-                text-align: center
-                }
-                </style>
-                """
+            st.markdown(chart_header, unsafe_allow_html=True)
+            energy_line_chart_e = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable)
 
-        chart_columns[i].markdown(chart_header, unsafe_allow_html=True)
-        energy_line_chart_e = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable)
-
-        chart_columns[i].altair_chart(energy_line_chart_e)
-
-        st.write("""<style>
-    [data-testid="stHorizontalBlock"] {
-        align-items: center;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+            st.altair_chart(energy_line_chart_e)
 
 #print(high_consume.dtypes)
 #tariff_summary, boxplot = summarize_tariffs(high_consume)
