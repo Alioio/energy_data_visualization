@@ -454,7 +454,7 @@ for i, energy_selection in enumerate(energy_type_selections):
 #summary = summarize(high_consume, seperation_var,int(selection_slider))
 
     if(len(date_interval) == 2):
-        energy_line_chart_e = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable)
+        energy_line_chart_e = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable)
         chart_columns[i].altair_chart(energy_line_chart_e)
 
 #print(high_consume.dtypes)
