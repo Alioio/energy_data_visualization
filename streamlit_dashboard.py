@@ -272,10 +272,11 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
     )
 
     ## Visualisierung:
+    y_axis_title = selected_variable
     
     base = alt.Chart(source).mark_line(size=2).encode(
         #x= alt.X('date:T',axis= alt.Axis(grid=False, title='Datum')),
-        y = alt.Y(aggregation+':Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)')),
+        y = alt.Y(aggregation+':Q', axis = alt.Axis(title=y_axis_title)),
         x= alt.X('date:T',axis= alt.Axis(grid=False, title='Datum')),
         #y = alt.Y('median:Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)')),
         color='beschreibung:N'
@@ -285,7 +286,7 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
         #x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
         #y=alt.Y('mean:Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)')),
         x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
-        y=alt.Y(aggregation+':Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)'),scale=alt.Scale(domain=list(domain2))),
+        y=alt.Y(aggregation+':Q', axis = alt.Axis(title=y_axis_title),scale=alt.Scale(domain=list(domain2))),
         tooltip = alt.Tooltip(['date:T', aggregation+':Q', 'count:Q', 'beschreibung:N']),
         opacity=alt.condition(selection, alt.value(1), alt.value(0.2))
     ).properties(
@@ -297,7 +298,7 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
         #x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
         #y=alt.Y('mean:Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)')),
         x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
-        y=alt.Y('count:Q', axis = alt.Axis(title='Anzahl'),scale=alt.Scale(domain=list(domain3))),
+        y=alt.Y('count:Q', axis = alt.Axis(title='Anzahl Ergenbisse'),scale=alt.Scale(domain=list(domain3))),
         color='beschreibung:N',
         tooltip = alt.Tooltip(['date:T', aggregation+':Q', 'count:Q', 'beschreibung:N'])
     ).properties(
@@ -306,7 +307,7 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
     )
     
     view = base.encode(
-        y = alt.Y(aggregation+':Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)'),scale=alt.Scale(domain=list(domain1))),
+        y = alt.Y(aggregation+':Q', axis = alt.Axis(title=y_axis_title),scale=alt.Scale(domain=list(domain1))),
     ).add_selection(
         interval
     ).properties(
