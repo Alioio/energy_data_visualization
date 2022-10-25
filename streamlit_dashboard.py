@@ -18,7 +18,8 @@ def foo(bar):
 
 
 st.set_page_config(page_title="Energy Dashboard",
-                    page_icon=":bar_chart:")
+                    page_icon=":bar_chart:",
+                    layout="wide")
 
 st.markdown('<style>body{background-color: Blue;}</style>',unsafe_allow_html=True)
 
@@ -440,6 +441,7 @@ energy_type_selections = selection_dropdown_column[0].multiselect(
 
 chart_columns = main_chart_container.columns(len(energy_type_selections)) 
 
+
 for i, energy_selection in enumerate(energy_type_selections):
     if((energy_selection == 'Strom')):
         chart_header = '### Entwciklung der Strompreise'
@@ -455,6 +457,16 @@ for i, energy_selection in enumerate(energy_type_selections):
 #summary = summarize(high_consume, seperation_var,int(selection_slider))
 
     if(len(date_interval) == 2):
+
+        title_alignment=
+                """
+                <style>
+                #the-title {
+                text-align: center
+                }
+                </style>
+                """
+        st.markdown(title_alignment, unsafe_allow_html=True)
         
         chart_columns[i].write(chart_header)
         energy_line_chart_e = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable)
