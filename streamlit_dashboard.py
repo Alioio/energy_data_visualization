@@ -444,12 +444,12 @@ chart_columns = main_chart_container.columns(len(energy_type_selections))
 
 for i, energy_selection in enumerate(energy_type_selections):
     if((energy_selection == 'Strom')):
-        chart_header = "<h2 style='text-align: center; color: black;'>Entwciklung der Strompreise </h2>"
+        chart_header = "<h2 style='text-align: center; color: black;'>Entwckilung der Strompreise </h2>"
         summary_3000 = summarize(electricity_results_3000, seperation_var, int(selection_slider),'3000',selected_variable)
         summary_1300 = summarize(electricity_results_1300, seperation_var, int(selection_slider),'1300', selected_variable)
         summary = pd.concat([summary_3000, summary_1300])
     elif((energy_selection == 'Gas')):
-        chart_header = "<h2 style='text-align: center; color: black;'>Entwciklung der Gaspreise </h2>"
+        chart_header = "<h2 style='text-align: center; color: black;'>Entwckilung der Gaspreise </h2>"
         summary_9000 = summarize(gas_results_9000, seperation_var,int(selection_slider),'9000',selected_variable)
         summary_15000 = summarize(gas_results_15000, seperation_var,int(selection_slider),'15000',selected_variable)
         summary = pd.concat([summary_9000, summary_15000])
@@ -465,18 +465,22 @@ for i, energy_selection in enumerate(energy_type_selections):
                 }
                 </style>
                 """
-        
-        
+
         chart_columns[i].markdown(chart_header, unsafe_allow_html=True)
         energy_line_chart_e = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable)
+
         chart_columns[i].altair_chart(energy_line_chart_e)
+
+        chart_columns[i].write("""<style>
+    [data-testid="stHorizontalBlock"] {
+        align-items: center;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 #print(high_consume.dtypes)
 #tariff_summary, boxplot = summarize_tariffs(high_consume)
 
 #main_chart_container.altair_chart(boxplot)
-
-
-
-
-
