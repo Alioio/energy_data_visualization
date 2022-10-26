@@ -403,6 +403,24 @@ def summarize_tariffs(results, date='2022-02-24'):
 
     return tariff_summary, boxplot
 
+
+####
+gas_import_df = pd.read_csv('gas_importe_bna.csv')
+
+gas_import_chart = alt.Chart(gas_import_df).mark_line(size=2).encode(
+        #x= alt.X('date:T',axis= alt.Axis(grid=False, title='Datum')),
+        y = alt.Y('Russland:Q', axis = alt.Axis(title=y_axis_title)),
+        x= alt.X('date:T',axis= alt.Axis(grid=False, title='Datum')),
+        #y = alt.Y('median:Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)')),
+    ).properties(
+        width=800,
+        height=300
+    )
+
+
+###
+
+
 selection_menu_container = st.container()
 selection_dropdown_column = selection_menu_container.columns([2,1,2])
 main_chart_container = st.container()
@@ -442,6 +460,8 @@ energy_type_selections = selection_dropdown_column[0].multiselect(
 chart_columns = main_chart_container.columns(len(energy_type_selections)) 
 
 
+
+
 for i, energy_selection in enumerate(energy_type_selections):
     if((energy_selection == 'Strom')):
         chart_header = "**Entwicklung der Strompreise**"
@@ -471,7 +491,13 @@ for i, energy_selection in enumerate(energy_type_selections):
 
             st.altair_chart(energy_line_chart_e)
 
+            st.altair_chart(gas_import_chart)
+
+
 #print(high_consume.dtypes)
 #tariff_summary, boxplot = summarize_tariffs(high_consume)
 
 #main_chart_container.altair_chart(boxplot)
+
+#gasimportdaten
+#https://www.bundesnetzagentur.de/DE/Fachthemen/ElektrizitaetundGas/Versorgungssicherheit/aktuelle_gasversorgung_/_svg/Gasimporte/Gasimporte.html
