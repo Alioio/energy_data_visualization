@@ -409,7 +409,7 @@ gas_import_df = pd.read_csv('data/gas_importe_bna.csv')
 
 gas_import_chart = alt.Chart(gas_import_df).mark_line(size=2).encode(
         #x= alt.X('date:T',axis= alt.Axis(grid=False, title='Datum')),
-        y = alt.Y('Russland:Q', axis = alt.Axis(title=y_axis_title)),
+        y = alt.Y('Russland:Q', axis = alt.Axis(title='Gas Importmengen aus Russland')),
         x= alt.X('date:T',axis= alt.Axis(grid=False, title='Datum')),
         #y = alt.Y('median:Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)')),
     ).properties(
