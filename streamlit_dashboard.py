@@ -405,7 +405,7 @@ def summarize_tariffs(results, date='2022-02-24'):
 
 
 ####
-gas_import_df = pd.read_csv('gas_importe_bna.csv')
+gas_import_df = pd.read_csv('data/gas_importe_bna.csv')
 
 gas_import_chart = alt.Chart(gas_import_df).mark_line(size=2).encode(
         #x= alt.X('date:T',axis= alt.Axis(grid=False, title='Datum')),
