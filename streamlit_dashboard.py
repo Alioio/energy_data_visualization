@@ -172,6 +172,8 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         seperation_var = 'contractDurationNormalized'
     elif(seperation_var == 'Preisgarantie'):
         seperation_var='priceGuaranteeNormalized'
+    elif(seperation_var == 'Öko Tarif/ Konventioneller Tarif'):
+        seperation_var = 'dataeco'
     
     variables_dict = {
         "Arbeitspreis": "dataunit",
@@ -184,20 +186,38 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         [ 'mean', 'median','std', 'min', 'max', 'count']
     }
     
-    ohne_laufzeit  = results[results[seperation_var] < seperation_value]
-    summary_ohne_laufzeit = ohne_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
-    summary_ohne_laufzeit.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
-    summary_ohne_laufzeit['date'] = summary_ohne_laufzeit.index
-    summary_ohne_laufzeit['beschreibung'] = 'Verbrauch: '+consumption+'\n'+sep_var_readable+' < '+str(seperation_value) 
-    
-    #mit_laufzeit  = high_consume[high_consume['contractDurationNormalized'] > 11]
-    mit_laufzeit  = results[results[seperation_var] >= seperation_value]
-    summary_mit_laufzeit = mit_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
-    summary_mit_laufzeit.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
-    summary_mit_laufzeit['date'] = summary_mit_laufzeit.index
-    summary_mit_laufzeit['beschreibung'] = 'Verbrauch: '+consumption+'\n'+sep_var_readable+' >= '+str(seperation_value)
 
-    summary = pd.concat([summary_mit_laufzeit, summary_ohne_laufzeit])
+    if(seperation_var != 'dataeco'):
+        ohne_laufzeit  = results[results[seperation_var] < seperation_value]
+        summary_ohne_laufzeit = ohne_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
+        summary_ohne_laufzeit.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
+        summary_ohne_laufzeit['date'] = summary_ohne_laufzeit.index
+        summary_ohne_laufzeit['beschreibung'] = 'Verbrauch: '+consumption+'\n'+sep_var_readable+' < '+str(seperation_value) 
+        
+        #mit_laufzeit  = high_consume[high_consume['contractDurationNormalized'] > 11]
+        mit_laufzeit  = results[results[seperation_var] >= seperation_value]
+        summary_mit_laufzeit = mit_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
+        summary_mit_laufzeit.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
+        summary_mit_laufzeit['date'] = summary_mit_laufzeit.index
+        summary_mit_laufzeit['beschreibung'] = 'Verbrauch: '+consumption+'\n'+sep_var_readable+' >= '+str(seperation_value)
+
+        summary = pd.concat([summary_mit_laufzeit, summary_ohne_laufzeit])
+    else:
+        ohne_laufzeit  = results[results[seperation_var] == True]
+        summary_ohne_laufzeit = ohne_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
+        summary_ohne_laufzeit.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
+        summary_ohne_laufzeit['date'] = summary_ohne_laufzeit.index
+        summary_ohne_laufzeit['beschreibung'] = 'Verbrauch: '+consumption+' und Öko Tarif' 
+        
+        #mit_laufzeit  = high_consume[high_consume['contractDurationNormalized'] > 11]
+        mit_laufzeit  = results[results[seperation_var] ==  False]
+        summary_mit_laufzeit = mit_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
+        summary_mit_laufzeit.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
+        summary_mit_laufzeit['date'] = summary_mit_laufzeit.index
+        summary_mit_laufzeit['beschreibung'] = 'Verbrauch: '+consumption+' und Nicht-Öko Tarif'
+
+        summary = pd.concat([summary_mit_laufzeit, summary_ohne_laufzeit])
+
     return summary
 
 #@st.cache(ttl=24*60*60)
@@ -219,7 +239,7 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
     #count view scaling
     chart_max = summary[(summary.date >= pd.to_datetime(date_interval[0])) & (summary.date <= pd.to_datetime(date_interval[1])) ]['count'].max()
     
-    chart_max = np.ceil( chart_max + (0.8*chart_max))
+    chart_max = np.ceil( chart_max + (1.05*chart_max))
     domain3 = np.linspace(0, chart_max, 2, endpoint = True)
     
     source = summary.copy()
@@ -234,22 +254,66 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
     events_df = pd.DataFrame([
         {
             "start": "2022-07-01",
-            "ereignis": "Strom: Abschaffung der EEG Umlage",
-            "tooltip":"EEG Umlage wurde abgeschafft."
+            "end":"2022-07-01",
+            "ereignis": "Abschaffung EEG Umlage",
+            "tooltip":"EEG Umlage wurde abgeschafft.",
+            "intervall":False
         },
         {
             "start": "2022-02-24",
-            "ereignis": "Kriegsbegin in der Ukraine",
-            "tooltip":"Invasion in der Ukraine"
+            "end":"2022-02-24",
+            "ereignis": "Krieg in der Ukraine",
+            "tooltip":"Invasion in der Ukraine",
+            "intervall":False
         },
         {
             "start": "2022-10-01",
-            "ereignis": "Senkung der Mehrwertsteuer für Gas",
-            "tooltip":"Mehrwertsteuer für Gas wurde von 19% auf 7% gesenkt."
+            "end":"2022-10-01",
+            "ereignis": "Mehrwertsteuersenkung für Gas",
+            "tooltip":"Mehrwertsteuer für Gas wurde von 19% auf 7% gesenkt.",
+            "intervall":False
         }
+        ,
+        {
+            "start": "2022-06-05",
+            "end":"2022-07-09",
+            "ereignis": "Reduzierung Gaslieferung auf 40%",
+            "tooltip":"Reduzierung der Gasliefermenge auf 40%",
+            "intervall":True
+        },
+        {
+            "start": "2022-07-10",
+            "end":"2022-07-20",
+            "ereignis": "Keine Gaslieferung durch Nord Stream 1",
+            "tooltip":"Mehrwertsteuer für Gas wurde von 19% auf 7% gesenkt.",
+            "intervall":True
+        },
+        {
+            "start": "2022-07-21",
+            "end":"2022-07-27",
+            "ereignis": "Gasliefermenge weiter auf 40% reduziert",
+            "tooltip":"Gasliefermenge weiter auf 40% reduziert",
+            "intervall":True
+        }
+        ,
+        {
+            "start": "2022-07-28",
+            "end":"2022-08-29",
+            "ereignis": "Gasliefermenge weiter auf 20% reduziert",
+            "tooltip":"Gasliefermenge weiter auf 20% reduziert",
+            "intervall":True
+        },
+        {
+            "start": "2022-08-26",
+            "end":"2022-08-29",
+            "ereignis": "Explosionen NordStream 1 & 2",
+            "tooltip":"In der Nacht zum Montag, dem 26. September 2022, fiel der Druck in einer der beiden Röhren der Pipeline NordStream 2 stark ab. Montagabend meldete dann auch der Betreiber von NordStream 1 einen Druckabfall – in diesem Fall für beide Röhren der Pipeline. Am Dienstag teilte die dänische Energiebehörde mit, es gebe insgesamt drei Gaslecks nahe der Insel Bornholm – zwei Lecks an NordStream 1 nordöstlich der Ostsee-Insel sowie eines an NordStream 2 südöstlich der Insel. Zudem zeichneten Messstationen auf schwedischem und dänischem Hoheitsgebiet am Montag mächtige Unterwasser-Explosionen auf. Die Schwedische Küstenwache teilte am 29. September 20022 mit, dass ein viertes Leck in den NordStream-Pipelines entdeckt wurde. [Quelle: WWF]",
+            "intervall":False
+        }
+
     ])
 
-    rule = alt.Chart(events_df).mark_rule(
+    rule = alt.Chart(events_df[events_df.intervall == False]).mark_rule(
         color="gray",
         strokeWidth=2,
         strokeDash=[12, 6]
@@ -257,10 +321,16 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
         x= alt.X('start:T', scale=alt.Scale(domain=interval.ref()))
     )
 
-    events_text = alt.Chart(events_df).mark_text(
+    rect = alt.Chart(events_df[events_df.intervall == True]).mark_rect(opacity=0.3, color= 'gray').encode(
+    x= alt.X('start:T', scale=alt.Scale(domain=interval.ref())),
+    x2='end:T',
+    tooltip='ereignis:N'
+    )
+
+    events_text = alt.Chart(events_df[events_df.intervall == False]).mark_text(
         align='left',
         baseline='middle',
-        dx=-7,
+        dx=0.25*height*-1,
         dy=-7,
         size=11,
         angle=270,
@@ -368,9 +438,9 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
         height=height
     )
 
-    annotationen = rule + events_text
+    annotationen = rule + events_text + rect
 
-    main_view = main_view + annotationen
+    main_view = (main_view + annotationen)
 
     final_view = main_view.add_selection(
     selection
@@ -404,23 +474,6 @@ def summarize_tariffs(results, date='2022-02-24'):
     return tariff_summary, boxplot
 
 
-####
-gas_import_df = pd.read_csv('data/gas_importe_bna.csv')
-print(gas_import_df.columns)
-
-gas_import_chart = alt.Chart(gas_import_df).mark_line(size=2).encode(
-        #x= alt.X('date:T',axis= alt.Axis(grid=False, title='Datum')),
-        y = alt.Y('Russland:Q', axis = alt.Axis(title='Gas Importmengen aus Russland')),
-        x= alt.X('date:T',axis= alt.Axis(grid=False, title='Datum')),
-        #y = alt.Y('median:Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)')),
-    ).properties(
-        width=800,
-        height=300
-    )
-
-
-###
-
 
 selection_menu_container = st.container()
 selection_dropdown_column = selection_menu_container.columns([2,1,2])
@@ -446,8 +499,11 @@ seperation_var = selection_dropdown_column[2].selectbox(
     ('Vertragslaufzeit', 'Preisgarantie', 'Öko Tarif/ Konventioneller Tarif'),
     help="Gebe hier ein nach welhes Attribut du trennen möchtest: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
 
-selection_slider = selection_dropdown_column[2].slider('Ab welchen Wert für die Variable '+seperation_var+ ' möchtest die Daten teilen?', 0, 24, 12, step=3,
-    help="Start-und End Datum: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
+selection_slider = 12
+
+if(seperation_var !='Öko Tarif/ Konventioneller Tarif'):
+    selection_slider = selection_dropdown_column[2].slider('Ab welchen Wert für die Variable '+seperation_var+ ' möchtest die Daten teilen?', 0, 24, 12, step=3,
+        help="Start-und End Datum: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
 
 selected_variable = selection_dropdown_column[0].selectbox(
     'Welches Attribut möchtest du anschauen?',
@@ -459,8 +515,6 @@ energy_type_selections = selection_dropdown_column[0].multiselect(
     default=['Strom'])
 
 chart_columns = main_chart_container.columns(len(energy_type_selections)) 
-
-
 
 
 for i, energy_selection in enumerate(energy_type_selections):
@@ -491,8 +545,6 @@ for i, energy_selection in enumerate(energy_type_selections):
             energy_line_chart_e = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable)
 
             st.altair_chart(energy_line_chart_e)
-
-            st.altair_chart(gas_import_chart)
 
 
 #print(high_consume.dtypes)
