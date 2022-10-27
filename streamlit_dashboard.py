@@ -1,3 +1,5 @@
+from multiprocessing.sharedctypes import Value
+from turtle import width
 import numpy as np
 import pandas as pd
 import os
@@ -8,13 +10,29 @@ from datetime import date, timedelta
 import altair as alt
 import altair_catplot as altcat
 import streamlit as st
+from st_aggrid import AgGrid, GridUpdateMode, JsCode
+from st_aggrid.grid_options_builder import GridOptionsBuilder
 import threading
 import concurrent.futures
 import json
 
-def foo(bar):
-    print('hello {}'.format(bar))
-    return 'foo'
+def my_theme():
+  return {
+    'config': {
+      'view': {"stroke": "transparent",'continuousHeight': 300, 'continuousWidth': 400},  # from the default theme
+      'range': {'category': ['#4650DF','#FC6E44','#CCF6E5', '#006E78', '#20B679', '#929898','#EBB5C5', '#54183E', '#CDE9FF', '#FAB347', '#E3D1FF']},
+      "axisY": {
+                "size":'1px',
+                "color":'lightgray',
+                "domain": False,
+                "tickSize": 20,
+                "gridDash": [2, 8]
+            },
+        
+    }
+  }
+alt.themes.register('my_theme', my_theme)
+alt.themes.enable('my_theme')
 
 
 st.set_page_config(page_title="Energy Dashboard",
@@ -221,7 +239,7 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
     return summary
 
 #@st.cache(ttl=24*60*60)
-def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNormalized', seperation_value=12, date_interval=['2022-07-17', '2022-10-17'], widtht=800, height=300,selected_variable='dataunit'):
+def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNormalized', seperation_value=12, date_interval=['2022-07-17', '2022-10-17'], widtht=1000, height=300,selected_variable='dataunit', events_df=None):
 
     ## Definitionsbereich der Y achse
     min = np.floor(summary[aggregation].min() - (0.025*summary[aggregation].min()))
@@ -251,67 +269,6 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
     interval_y = alt.selection_interval(encodings=['y'], bind="scales")
 
     ## Eregignisse
-    events_df = pd.DataFrame([
-        {
-            "start": "2022-07-01",
-            "end":"2022-07-01",
-            "ereignis": "Abschaffung EEG Umlage",
-            "tooltip":"EEG Umlage wurde abgeschafft.",
-            "intervall":False
-        },
-        {
-            "start": "2022-02-24",
-            "end":"2022-02-24",
-            "ereignis": "Krieg in der Ukraine",
-            "tooltip":"Invasion in der Ukraine",
-            "intervall":False
-        },
-        {
-            "start": "2022-10-01",
-            "end":"2022-10-01",
-            "ereignis": "Mehrwertsteuersenkung für Gas",
-            "tooltip":"Mehrwertsteuer für Gas wurde von 19% auf 7% gesenkt.",
-            "intervall":False
-        }
-        ,
-        {
-            "start": "2022-06-05",
-            "end":"2022-07-09",
-            "ereignis": "Reduzierung Gaslieferung auf 40%",
-            "tooltip":"Reduzierung der Gasliefermenge auf 40%",
-            "intervall":True
-        },
-        {
-            "start": "2022-07-10",
-            "end":"2022-07-20",
-            "ereignis": "Keine Gaslieferung durch Nord Stream 1",
-            "tooltip":"Mehrwertsteuer für Gas wurde von 19% auf 7% gesenkt.",
-            "intervall":True
-        },
-        {
-            "start": "2022-07-21",
-            "end":"2022-07-27",
-            "ereignis": "Gasliefermenge weiter auf 40% reduziert",
-            "tooltip":"Gasliefermenge weiter auf 40% reduziert",
-            "intervall":True
-        }
-        ,
-        {
-            "start": "2022-07-28",
-            "end":"2022-08-29",
-            "ereignis": "Gasliefermenge weiter auf 20% reduziert",
-            "tooltip":"Gasliefermenge weiter auf 20% reduziert",
-            "intervall":True
-        },
-        {
-            "start": "2022-08-26",
-            "end":"2022-08-29",
-            "ereignis": "Explosionen NordStream 1 & 2",
-            "tooltip":"In der Nacht zum Montag, dem 26. September 2022, fiel der Druck in einer der beiden Röhren der Pipeline NordStream 2 stark ab. Montagabend meldete dann auch der Betreiber von NordStream 1 einen Druckabfall – in diesem Fall für beide Röhren der Pipeline. Am Dienstag teilte die dänische Energiebehörde mit, es gebe insgesamt drei Gaslecks nahe der Insel Bornholm – zwei Lecks an NordStream 1 nordöstlich der Ostsee-Insel sowie eines an NordStream 2 südöstlich der Insel. Zudem zeichneten Messstationen auf schwedischem und dänischem Hoheitsgebiet am Montag mächtige Unterwasser-Explosionen auf. Die Schwedische Küstenwache teilte am 29. September 20022 mit, dass ein viertes Leck in den NordStream-Pipelines entdeckt wurde. [Quelle: WWF]",
-            "intervall":False
-        }
-
-    ])
 
     rule = alt.Chart(events_df[events_df.intervall == False]).mark_rule(
         color="gray",
@@ -344,7 +301,7 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
     ## Visualisierung:
     y_axis_title = selected_variable
     
-    base = alt.Chart(source).mark_line(size=2).encode(
+    base = alt.Chart(source).mark_line(size=3).encode(
         #x= alt.X('date:T',axis= alt.Axis(grid=False, title='Datum')),
         y = alt.Y(aggregation+':Q', axis = alt.Axis(title=y_axis_title)),
         x= alt.X('date:T',axis= alt.Axis(grid=False, title='Datum')),
@@ -364,7 +321,7 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
         height=height
     )
 
-    count_chart = base.mark_bar().encode(
+    count_chart = base.mark_bar(size=6).encode(
         #x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
         #y=alt.Y('mean:Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)')),
         x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
@@ -450,7 +407,6 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
   orient='bottom',
   labelFontSize=10
 )
-    
 
     #final_view.save('D:\energy_data_visualization\energy_chart.html')
     return final_view
@@ -474,20 +430,145 @@ def summarize_tariffs(results, date='2022-02-24'):
     return tariff_summary, boxplot
 
 
+def remove_event(events_df, start, end, event):
+    events_df.loc[(events_df.start == start) & (events_df.end == end) & (events_df.ereignis == event)]
+
+    return events_df
+
+row1_1, row1_2 = st.columns((2, 3))
+
+
+with row1_1:
+    st.title("Strom- und Gas Dashboard")
+    
+with row1_2:
+    st.write(
+        """
+    ##
+    Dieses Dashboard ist zum Explorieren von Strom- und Gaspreisdaten. Es ermöglicht das .... zusammenhang mit Ereinisse, anderen Daten Börsenpreise, Erzeugungsmengen (Erneuerbare/ Fosile/ Atom), Importmengen etc.
+    Datensatz: ....
+    """
+    )
+
+events_df = pd.DataFrame([
+        {
+            "start": "2022-07-01",
+            "end":"2022-07-01",
+            "ereignis": "Abschaffung EEG Umlage",
+            "tooltip":"EEG Umlage wurde abgeschafft.",
+            "intervall":False
+        },
+        {
+            "start": "2022-02-24",
+            "end":"2022-02-24",
+            "ereignis": "Krieg in der Ukraine",
+            "tooltip":"Invasion in der Ukraine",
+            "intervall":False
+        },
+        {
+            "start": "2022-10-01",
+            "end":"2022-10-01",
+            "ereignis": "Mehrwertsteuersenkung für Gas",
+            "tooltip":"Mehrwertsteuer für Gas wurde von 19% auf 7% gesenkt.",
+            "intervall":False
+        }
+        ,
+        {
+            "start": "2022-06-05",
+            "end":"2022-07-09",
+            "ereignis": "Drosselung der Gasliefermenge auf 40%",
+            "tooltip":"Drosselung der Gasliefermenge auf 40%",
+            "intervall":True
+        },
+        {
+            "start": "2022-07-10",
+            "end":"2022-07-20",
+            "ereignis": "Keine Gaslieferung durch Nord Stream 1",
+            "tooltip":"Mehrwertsteuer für Gas wurde von 19% auf 7% gesenkt.",
+            "intervall":True
+        },
+        {
+            "start": "2022-07-21",
+            "end":"2022-07-27",
+            "ereignis": "Gasliefermenge nach Wartung weiterhin auf 40% gedrosselt",
+            "tooltip":"Gasliefermenge nach Wartung weiterhin auf 40% gedrosselt",
+            "intervall":True
+        }
+        ,
+        {
+            "start": "2022-07-28",
+            "end":"2022-08-29",
+            "ereignis": "Weitere Drosselung der Gasliefermenge auf 20% reduziert",
+            "tooltip":"Weitere Drosselung der Gasliefermenge auf 20% reduziert",
+            "intervall":True
+        },
+        {
+            "start": "2022-08-26",
+            "end":"2022-08-29",
+            "ereignis": "Explosionen NordStream 1 & 2",
+            "tooltip":"In der Nacht zum Montag, dem 26. September 2022, fiel der Druck in einer der beiden Röhren der Pipeline NordStream 2 stark ab. Montagabend meldete dann auch der Betreiber von NordStream 1 einen Druckabfall – in diesem Fall für beide Röhren der Pipeline. Am Dienstag teilte die dänische Energiebehörde mit, es gebe insgesamt drei Gaslecks nahe der Insel Bornholm – zwei Lecks an NordStream 1 nordöstlich der Ostsee-Insel sowie eines an NordStream 2 südöstlich der Insel. Zudem zeichneten Messstationen auf schwedischem und dänischem Hoheitsgebiet am Montag mächtige Unterwasser-Explosionen auf. Die Schwedische Küstenwache teilte am 29. September 20022 mit, dass ein viertes Leck in den NordStream-Pipelines entdeckt wurde. [Quelle: WWF]",
+            "intervall":False
+        }
+
+    ])
+
+#df = events_df.copy()
 
 selection_menu_container = st.container()
 selection_dropdown_column = selection_menu_container.columns([2,1,2])
+annotation_container = st.expander('Ereignisse', expanded=False)
+
+with annotation_container:
+    st.info('Hier kannst du Ereinisse in die Zeitachse der Grafiken einfügen oder entfernen.')
+
+    gd = GridOptionsBuilder.from_dataframe(events_df)
+    gd.configure_pagination(enabled=True)
+    gd.configure_default_column(editable=True, groupable=True)
+    gd.configure_selection(selection_mode='multiple', use_checkbox=True)
+    gd.configure_column("start", type=["customDateTimeFormat"], custom_format_string='yyyy-MM-dd')
+    #um date picker einzufügen: https://discuss.streamlit.io/t/ag-grid-component-with-input-support/8108/349?page=17
+
+    gridoptions = gd.build()
+
+    grid_table = AgGrid(events_df, 
+    gridOptions=gridoptions, 
+    update_mode=GridUpdateMode.SELECTION_CHANGED, 
+    enable_enterprise_modules= True,
+    fit_columns_on_grid_load=True,
+    #height = 300,
+    width='100%',
+    allow_unsafe_jscode=True,
+    theme='alpine'
+     )
+
+    sel_row = grid_table['selected_rows']
+
+    inxexes_of_selected = []
+    for i, event in enumerate(sel_row):
+        #st.write(event['ereignis'])
+        inxexes_of_selected.append(int(events_df.loc[(events_df.start == event['start']) & (events_df.end == event['end']) ].index[0]))
+        events_df.loc[(events_df.start == event['start']) & (events_df.end == event['end']), 'ereignis' ] = event['ereignis']
+         #st.write(inxexes_of_selected)
+
+    selected_events = events_df.iloc[inxexes_of_selected]
+
+    ##GEhe alle Elemente in der List durch und suche im ereinnis DF nach genau gleiche start, end, ereinis und lösche diese zeilen. 
+
 main_chart_container = st.container()
 
 today = date.today()
 tree_months_ago = today - timedelta(days=90)
 date_interval = [tree_months_ago, today]
 
-date_interval = selection_dropdown_column[1].date_input(label='Date Range: ',
+date_interval = selection_dropdown_column[0].date_input(label='Zeitraum: ',
             value=(tree_months_ago, 
                     today),
             key='#date_range',
             help="Start-und End Datum: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
+
+selected_variable = selection_dropdown_column[1].selectbox(
+    'Welches Attribut möchtest du anschauen?',
+    ('Arbeitspreis', 'Grundpreis', 'Jahreskosten'))
 
 mean_median_btn = selection_dropdown_column[1].radio(
         "Wie möchtest du die Tarifdaten aggregieren?",
@@ -502,12 +583,9 @@ seperation_var = selection_dropdown_column[2].selectbox(
 selection_slider = 12
 
 if(seperation_var !='Öko Tarif/ Konventioneller Tarif'):
-    selection_slider = selection_dropdown_column[2].slider('Ab welchen Wert für die Variable '+seperation_var+ ' möchtest die Daten teilen?', 0, 24, 12, step=3,
-        help="Start-und End Datum: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
+    selection_slider = selection_dropdown_column[2].slider('Ab welchen Wert für die Variable '+seperation_var+ ' möchtest die Daten trennen?', 0, 24, 12, step=3,
+        help="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
 
-selected_variable = selection_dropdown_column[0].selectbox(
-    'Welches Attribut möchtest du anschauen?',
-    ('Arbeitspreis', 'Grundpreis', 'Jahreskosten'))
 
 energy_type_selections = selection_dropdown_column[0].multiselect(
     'What are your favorite colors',
@@ -515,7 +593,6 @@ energy_type_selections = selection_dropdown_column[0].multiselect(
     default=['Strom'])
 
 chart_columns = main_chart_container.columns(len(energy_type_selections)) 
-
 
 for i, energy_selection in enumerate(energy_type_selections):
     if((energy_selection == 'Strom')):
@@ -542,9 +619,9 @@ for i, energy_selection in enumerate(energy_type_selections):
                     """
 
             st.write(chart_header)
-            energy_line_chart_e = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable)
+            energy_line_chart_e = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events)
 
-            st.altair_chart(energy_line_chart_e)
+            st.altair_chart(energy_line_chart_e, use_container_width=True)
 
 
 #print(high_consume.dtypes)
