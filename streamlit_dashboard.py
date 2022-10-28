@@ -308,18 +308,18 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
     y_axis_title = selected_variable
 
     if(selected_variable == 'dataunit'):
-        axis_label = 'ct/kWh'
+        y_axis_title = y_axis_title+'in ct/kWh'
     elif(selected_variable == 'datafixed'):
-        axis_label = '€/Monat'
+        y_axis_title = y_axis_title+'in €/Monat'
     elif(selected_variable == 'Jahreskosten'):
-        axis_label = '€/Jahr'
+        y_axis_title = '€ im ersten Jahr'
     else:
-        axis_label = 'etwas anderes'
+        y_axis_title = 'etwas anderes'
 
 
     base = alt.Chart(source).mark_line(size=3).encode(
         #x= alt.X('date:T',axis= alt.Axis(grid=False, title='Datum')),
-        y = alt.Y(aggregation+':Q', axis = alt.Axis(title=y_axis_title, offset= 50),
+        y = alt.Y(aggregation+':Q', axis = alt.Axis(title=y_axis_title, offset= 50)),
         x= alt.X('date:T',axis= alt.Axis(grid=False, title='📅')),
         #y = alt.Y('median:Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)')),
         color='beschreibung:N'
