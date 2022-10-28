@@ -504,8 +504,7 @@ row1_1, row1_2 = st.columns((2, 3))
 
 
 with row1_1:
-    st.title(" Strom 🔌 &  Gas 🔥 Dashboard")
-    
+    st.title(" Strom 🔌 &  Gas 🔥 Dashboard :bar_chart:")
     
 with row1_2:
     st.write(
