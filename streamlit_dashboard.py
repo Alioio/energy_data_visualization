@@ -314,7 +314,7 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
     elif(selected_variable == 'Jahreskosten'):
         axis_label = '€/Jahr'
     else:
-        axis_label = ''
+        axis_label = 'etwas anderes'
 
 
     base = alt.Chart(source).mark_line(size=3).encode(
