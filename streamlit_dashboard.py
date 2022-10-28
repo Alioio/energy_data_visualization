@@ -23,7 +23,15 @@ def my_theme():
                 "size":'1px',
                 "color":'lightgray',
                 "domain": False,
-                "tickSize": 20,
+                "tickSize": 0,
+                "gridDash": [2, 8]
+            },
+
+        "axisX": {
+                "size":'1px',
+                "color":'lightgray',
+                "domain": False,
+                "tickSize": 0,
                 "gridDash": [2, 8]
             },
         
@@ -399,7 +407,7 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
 
     final_view = main_view.add_selection(
     selection
-    ).interactive(bind_x=False) & count_chart_view & view 
+    ).interactive(bind_x=False)  & view & count_chart_view
 
     final_view = final_view.configure_legend(
   orient='bottom',
@@ -428,27 +436,8 @@ def summarize_tariffs(results, date='2022-02-24'):
     return tariff_summary, boxplot
 
 
-def remove_event(events_df, start, end, event):
-    events_df.loc[(events_df.start == start) & (events_df.end == end) & (events_df.ereignis == event)]
-
-    return events_df
-
-row1_1, row1_2 = st.columns((2, 3))
-
-
-with row1_1:
-    st.title("Strom- und Gas Dashboard")
-    
-with row1_2:
-    st.write(
-        """
-    ##
-    Dieses Dashboard ist zum Explorieren von Strom- und Gaspreisdaten. Es ermöglicht das .... zusammenhang mit Ereinisse, anderen Daten Börsenpreise, Erzeugungsmengen (Erneuerbare/ Fosile/ Atom), Importmengen etc.
-    Datensatz: ....
-    """
-    )
-
-events_df = pd.DataFrame([
+def load_events_df():
+    events_df = pd.DataFrame([
         {
             "start": "2022-07-01",
             "end":"2022-07-01",
@@ -509,6 +498,34 @@ events_df = pd.DataFrame([
         }
 
     ])
+    return events_df
+
+row1_1, row1_2 = st.columns((2, 3))
+
+
+with row1_1:
+    st.title("Strom- und Gas Dashboard")
+    
+with row1_2:
+    st.write(
+        """
+    ##
+    **Dieses Dashboard ist zum Explorieren von Strom- und Gaspreisdaten**. Es ermöglicht das .... zusammenhang mit Ereinisse, anderen Daten Börsenpreise, Erzeugungsmengen (Erneuerbare/ Fosile/ Atom), Importmengen etc.
+    """
+    )
+
+    dateset_description_expander = st.expander('Datensatz', expanded=False)
+
+    with dateset_description_expander:
+        st.write(
+            """
+        ##
+        **Datensatz:** Hier die beschreibung der verwendeten Datensätze. 
+        """
+        )
+
+
+events_df = load_events_df()
 
 #df = events_df.copy()
 
@@ -525,12 +542,11 @@ with annotation_container:
     gd.configure_selection(selection_mode='multiple', use_checkbox=True)
     gd.configure_column("start", type=["customDateTimeFormat"], custom_format_string='yyyy-MM-dd')
     #um date picker einzufügen: https://discuss.streamlit.io/t/ag-grid-component-with-input-support/8108/349?page=17
-
     gridoptions = gd.build()
 
     grid_table = AgGrid(events_df, 
     gridOptions=gridoptions, 
-    update_mode=GridUpdateMode.SELECTION_CHANGED, 
+    update_mode=GridUpdateMode.GRID_CHANGED, 
     enable_enterprise_modules= True,
     fit_columns_on_grid_load=True,
     #height = 300,
@@ -546,7 +562,7 @@ with annotation_container:
         #st.write(event['ereignis'])
         inxexes_of_selected.append(int(events_df.loc[(events_df.start == event['start']) & (events_df.end == event['end']) ].index[0]))
         events_df.loc[(events_df.start == event['start']) & (events_df.end == event['end']), 'ereignis' ] = event['ereignis']
-         #st.write(inxexes_of_selected)
+        #st.write(events_df)
 
     selected_events = events_df.iloc[inxexes_of_selected]
 
@@ -558,11 +574,20 @@ today = date.today()
 tree_months_ago = today - timedelta(days=90)
 date_interval = [tree_months_ago, today]
 
+
+selection_dropdown_column[0].write('**Energieart und Zeitraum**')
 date_interval = selection_dropdown_column[0].date_input(label='Zeitraum: ',
             value=(tree_months_ago, 
                     today),
             key='#date_range',
             help="Start-und End Datum: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
+
+energy_type_selections = selection_dropdown_column[0].multiselect(
+    'What are your favorite colors',
+    ['Strom','Gas'],
+    default=['Strom', 'Gas'])
+
+selection_dropdown_column[1].write("**Attributauswahl für Aggregierung**")
 
 selected_variable = selection_dropdown_column[1].selectbox(
     'Welches Attribut möchtest du anschauen?',
@@ -572,6 +597,8 @@ mean_median_btn = selection_dropdown_column[1].radio(
         "Wie möchtest du die Tarifdaten aggregieren?",
         options=["mean", "median"],
     )
+
+selection_dropdown_column[2].write('**Aufteilung zum Vergleich**')
 
 seperation_var = selection_dropdown_column[2].selectbox(
     'Nach welches Attribut möchtest du trennen?',
@@ -584,11 +611,6 @@ if(seperation_var !='Öko Tarif/ Konventioneller Tarif'):
     selection_slider = selection_dropdown_column[2].slider('Ab welchen Wert für die Variable '+seperation_var+ ' möchtest die Daten trennen?', 0, 24, 12, step=3,
         help="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
 
-
-energy_type_selections = selection_dropdown_column[0].multiselect(
-    'What are your favorite colors',
-    ['Strom','Gas'],
-    default=['Strom'])
 
 chart_columns = main_chart_container.columns(len(energy_type_selections)) 
 
@@ -620,6 +642,14 @@ for i, energy_selection in enumerate(energy_type_selections):
             energy_line_chart_e = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events)
 
             st.altair_chart(energy_line_chart_e, use_container_width=True)
+
+            tariff_list_expander = st.expander('Tarife', expanded=False)
+
+            with tariff_list_expander:
+                st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
+
+
+
 
 
 #print(high_consume.dtypes)
