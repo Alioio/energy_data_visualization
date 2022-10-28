@@ -524,6 +524,7 @@ with row1_2:
         """
         )
 
+st.markdown("""---""")
 
 events_df = load_events_df()
 
@@ -531,44 +532,8 @@ events_df = load_events_df()
 
 selection_menu_container = st.container()
 selection_dropdown_column = selection_menu_container.columns([2,1,2])
-annotation_container = st.expander('Ereignisse', expanded=False)
-
-with annotation_container:
-    st.info('Hier kannst du Ereinisse in die Zeitachse der Grafiken einfügen oder entfernen.')
-
-    gd = GridOptionsBuilder.from_dataframe(events_df)
-    gd.configure_pagination(enabled=True)
-    gd.configure_default_column(editable=True, groupable=True)
-    gd.configure_selection(selection_mode='multiple', use_checkbox=True)
-    gd.configure_column("start", type=["customDateTimeFormat"], custom_format_string='yyyy-MM-dd')
-    #um date picker einzufügen: https://discuss.streamlit.io/t/ag-grid-component-with-input-support/8108/349?page=17
-    gridoptions = gd.build()
-
-    grid_table = AgGrid(events_df, 
-    gridOptions=gridoptions, 
-    update_mode=GridUpdateMode.GRID_CHANGED, 
-    enable_enterprise_modules= True,
-    fit_columns_on_grid_load=True,
-    #height = 300,
-    width='100%',
-    allow_unsafe_jscode=True,
-    theme='alpine'
-     )
-
-    sel_row = grid_table['selected_rows']
-
-    inxexes_of_selected = []
-    for i, event in enumerate(sel_row):
-        #st.write(event['ereignis'])
-        inxexes_of_selected.append(int(events_df.loc[(events_df.start == event['start']) & (events_df.end == event['end']) ].index[0]))
-        events_df.loc[(events_df.start == event['start']) & (events_df.end == event['end']), 'ereignis' ] = event['ereignis']
-        #st.write(events_df)
-
-    selected_events = events_df.iloc[inxexes_of_selected]
 
     ##GEhe alle Elemente in der List durch und suche im ereinnis DF nach genau gleiche start, end, ereinis und lösche diese zeilen. 
-
-main_chart_container = st.container()
 
 today = date.today()
 tree_months_ago = today - timedelta(days=90)
@@ -611,6 +576,48 @@ if(seperation_var !='Öko Tarif/ Konventioneller Tarif'):
     selection_slider = selection_dropdown_column[2].slider('Ab welchen Wert für die Variable '+seperation_var+ ' möchtest die Daten trennen?', 0, 24, 12, step=3,
         help="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
 
+st.markdown("""---""")
+
+#### Annotaion bereich ####
+annotation_container = st.expander('Ereignisse', expanded=False)
+
+with annotation_container:
+    st.info('Hier kannst du Ereinisse in die Zeitachse der Grafiken einfügen oder entfernen.')
+
+    gd = GridOptionsBuilder.from_dataframe(events_df)
+    gd.configure_pagination(enabled=True)
+    gd.configure_default_column(editable=True, groupable=True)
+    gd.configure_selection(selection_mode='multiple', use_checkbox=True)
+    gd.configure_column("start", type=["customDateTimeFormat"], custom_format_string='yyyy-MM-dd')
+    #um date picker einzufügen: https://discuss.streamlit.io/t/ag-grid-component-with-input-support/8108/349?page=17
+    gridoptions = gd.build()
+
+    grid_table = AgGrid(events_df, 
+    gridOptions=gridoptions, 
+    update_mode=GridUpdateMode.GRID_CHANGED, 
+    enable_enterprise_modules= True,
+    fit_columns_on_grid_load=True,
+    #height = 300,
+    width='100%',
+    allow_unsafe_jscode=True,
+    theme='alpine'
+     )
+
+    sel_row = grid_table['selected_rows']
+
+    inxexes_of_selected = []
+    for i, event in enumerate(sel_row):
+        #st.write(event['ereignis'])
+        inxexes_of_selected.append(int(events_df.loc[(events_df.start == event['start']) & (events_df.end == event['end']) ].index[0]))
+        events_df.loc[(events_df.start == event['start']) & (events_df.end == event['end']), 'ereignis' ] = event['ereignis']
+        #st.write(events_df)
+
+    selected_events = events_df.iloc[inxexes_of_selected]
+
+## ende annotation bereich ###
+
+
+main_chart_container = st.container()
 
 chart_columns = main_chart_container.columns(len(energy_type_selections)) 
 
