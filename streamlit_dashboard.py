@@ -245,7 +245,7 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
     return summary
 
 #@st.cache(ttl=24*60*60)
-def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNormalized', seperation_value=12, date_interval=['2022-07-17', '2022-10-17'], widtht=1000, height=300,selected_variable='dataunit', events_df=None):
+def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNormalized', seperation_value=12, date_interval=['2022-07-17', '2022-10-17'], widtht=700, height=280,selected_variable='dataunit', events_df=None):
 
     ## Definitionsbereich der Y achse
     min = np.floor(summary[aggregation].min() - (0.025*summary[aggregation].min()))
