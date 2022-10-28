@@ -504,7 +504,8 @@ row1_1, row1_2 = st.columns((2, 3))
 
 
 with row1_1:
-    st.title("Strom- und Gas Dashboard")
+    st.title(" Strom 🔌 &  Gas 🔥 Dashboard")
+    
     
 with row1_2:
     st.write(
@@ -549,7 +550,7 @@ date_interval = selection_dropdown_column[0].date_input(label='Zeitraum: ',
 
 energy_type_selections = selection_dropdown_column[0].multiselect(
     'What are your favorite colors',
-    ['Strom','Gas'],
+    ['Strom','Gas', 'Wetter', 'Spotmarktpreise', 'Börsenpreise', 'Erzeugung Enerneuerbare'],
     default=['Strom', 'Gas'])
 
 selection_dropdown_column[1].write("**Attributauswahl für Aggregierung**")
