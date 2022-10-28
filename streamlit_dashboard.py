@@ -320,7 +320,7 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
     base = alt.Chart(source).mark_line(size=3).encode(
         #x= alt.X('date:T',axis= alt.Axis(grid=False, title='Datum')),
         y = alt.Y(aggregation+':Q', axis = alt.Axis(title=y_axis_title, offset= 5, format='.00'+axis_label)),
-        x= alt.X('date:T',axis= alt.Axis(grid=False, title='Datum')),
+        x= alt.X('date:T',axis= alt.Axis(grid=False, title='📅')),
         #y = alt.Y('median:Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)')),
         color='beschreibung:N'
     )
