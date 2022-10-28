@@ -329,7 +329,7 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
         #x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
         #y=alt.Y('mean:Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)')),
         x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
-        y=alt.Y(aggregation+':Q', axis = alt.Axis(title=y_axis_title),scale=alt.Scale(domain=list(domain2),  offset= 5, format='.0 ct/kWh')),
+        y=alt.Y(aggregation+':Q', axis = alt.Axis(title=y_axis_title), scale=alt.Scale(domain=list(domain2),  offset= 5)),
         tooltip = alt.Tooltip(['date:T', aggregation+':Q', 'count:Q', 'beschreibung:N']),
         opacity=alt.condition(selection, alt.value(1), alt.value(0.2))
     ).properties(
