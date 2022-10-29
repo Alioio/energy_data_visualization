@@ -631,11 +631,13 @@ chart_columns = main_chart_container.columns(len(energy_type_selections))
 for i, energy_selection in enumerate(energy_type_selections):
     if((energy_selection == 'Strom')):
         chart_header = "**Preisentwicklung - {energy_selection}verträge ({selected_variable})**".format(selected_variable=selected_variable, energy_selection=energy_selection)
+        aggregierung_strom=st.radio("Aggregirung",("Durchschnitt","Median"))
         summary_3000 = summarize(electricity_results_3000, seperation_var, int(selection_slider),'3000',selected_variable)
         summary_1300 = summarize(electricity_results_1300, seperation_var, int(selection_slider),'1300', selected_variable)
         summary = pd.concat([summary_3000, summary_1300])
     elif((energy_selection == 'Gas')):
         chart_header = "**Preisentwicklung - {energy_selection}verträge ({selected_variable})**".format(selected_variable=selected_variable, energy_selection=energy_selection)
+        aggregierung_gas=st.radio("Aggregirung",("Durchschnitt","Median"))
         summary_9000 = summarize(gas_results_9000, seperation_var,int(selection_slider),'9000',selected_variable)
         summary_15000 = summarize(gas_results_15000, seperation_var,int(selection_slider),'15000',selected_variable)
         summary = pd.concat([summary_9000, summary_15000])
