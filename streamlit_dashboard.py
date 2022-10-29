@@ -628,6 +628,10 @@ main_chart_container = st.container()
 
 chart_columns = main_chart_container.columns(len(energy_type_selections)) 
 
+st.write('<style>div.row-widget.stRadio > div{flex-direction:row;justify-content: left;} </style>', unsafe_allow_html=True)
+st.write('<style>div.st-bf{flex-direction:column;} div.st-ag{font-weight:bold;padding-left:2px;}</style>', unsafe_allow_html=True)
+choose=chart_columns[i].radio("Aggregirung",("Durchschnitt","Median"))
+
 for i, energy_selection in enumerate(energy_type_selections):
     if((energy_selection == 'Strom')):
         chart_header = "**Preisentwicklung - {energy_selection}verträge ({selected_variable})**".format(selected_variable=selected_variable, energy_selection=energy_selection)
@@ -653,10 +657,6 @@ for i, energy_selection in enumerate(energy_type_selections):
                     """
 
             st.write(chart_header)
-
-            #st.write('<style>div.row-widget.stRadio > div{flex-direction:row;justify-content: left;} </style>', unsafe_allow_html=True)
-            #st.write('<style>div.st-bf{flex-direction:column;} div.st-ag{font-weight:bold;padding-left:2px;}</style>', unsafe_allow_html=True)
-            choose=chart_columns[i].radio("Aggregirung",("Durchschnitt","Median"))
 
             energy_line_chart_e = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events)
 
