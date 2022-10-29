@@ -654,11 +654,11 @@ for i, energy_selection in enumerate(energy_type_selections):
 
             header_column, radio_column = st.columns((4,1))
 
-            with header_column:
-                st.write(chart_header)
+            #with header_column:
+            #    st.write(chart_header)
             
-            with radio_column:
-                st.write('hallo')
+            #with radio_column:
+            #    st.write('hallo')
                 #st.write('<style>div.row-widget.stRadio > div{flex-direction:row;justify-content: center;} </style>', unsafe_allow_html=True)
                 #st.write('<style>div.st-bf{flex-direction:column;} div.st-ag{font-weight:bold;padding-left:2px;}</style>', unsafe_allow_html=True)
                 #choose=st.radio("导航",("视频","图片","音乐"))
