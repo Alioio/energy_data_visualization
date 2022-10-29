@@ -652,7 +652,7 @@ for i, energy_selection in enumerate(energy_type_selections):
                     </style>
                     """
 
-            st.write(chart_header)
+            st.write(chart_header, help='bla')
             energy_line_chart_e = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events)
 
             st.altair_chart(energy_line_chart_e, use_container_width=True)
