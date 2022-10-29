@@ -652,7 +652,7 @@ for i, energy_selection in enumerate(energy_type_selections):
                     </style>
                     """
 
-            header_column, radio_column = st.columns((4,1))
+            #header_column, radio_column = st.columns((4,1))
 
             #with header_column:
             #    st.write(chart_header)
