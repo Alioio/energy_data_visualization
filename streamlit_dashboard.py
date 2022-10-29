@@ -652,17 +652,7 @@ for i, energy_selection in enumerate(energy_type_selections):
                     </style>
                     """
 
-            #header_column, radio_column = st.columns((4,1))
-
-            #with header_column:
-            #    st.write(chart_header)
-            
-            #with radio_column:
-            #    st.write('hallo')
-                #st.write('<style>div.row-widget.stRadio > div{flex-direction:row;justify-content: center;} </style>', unsafe_allow_html=True)
-                #st.write('<style>div.st-bf{flex-direction:column;} div.st-ag{font-weight:bold;padding-left:2px;}</style>', unsafe_allow_html=True)
-                #choose=st.radio("导航",("视频","图片","音乐"))
-
+            st.write(chart_header)
             energy_line_chart_e = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events)
 
             st.altair_chart(energy_line_chart_e, use_container_width=True)
@@ -674,18 +664,7 @@ for i, energy_selection in enumerate(energy_type_selections):
 
 
 
-html3 = f"""
-        <div class="column" style="background-color:red;">
-            <div class="col1">
-                <h2>Column 1</h2>
-            </div>
-            <div class="col2">
-                <h2>Column 2</h2>
-            </div>
-        </div>
-         """
 
-st.markdown(html3, unsafe_allow_html=True)
 
 #print(high_consume.dtypes)
 #tariff_summary, boxplot = summarize_tariffs(high_consume)
