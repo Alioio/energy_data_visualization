@@ -307,9 +307,9 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
     ## Visualisierung:
     y_axis_title = selected_variable
 
-    if(selected_variable == 'dataunit'):
+    if(selected_variable == 'Arbeitspreis'):
         y_axis_title = y_axis_title+'in ct/kWh'
-    elif(selected_variable == 'datafixed'):
+    elif(selected_variable == 'Grundpreis'):
         y_axis_title = y_axis_title+'in €/Monat'
     elif(selected_variable == 'Jahreskosten'):
         y_axis_title = '€ im ersten Jahr'
@@ -320,7 +320,7 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
     base = alt.Chart(source).mark_line(size=3).encode(
         #x= alt.X('date:T',axis= alt.Axis(grid=False, title='Datum')),
         y = alt.Y(aggregation+':Q', axis = alt.Axis(title=y_axis_title, offset= 5)),
-        x= alt.X('date:T',axis= alt.Axis(grid=False, title='📅')),
+        x= alt.X('date:T',axis= alt.Axis(grid=False, title='Datum 📅')),
         #y = alt.Y('median:Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)')),
         color='beschreibung:N'
     )
@@ -442,7 +442,6 @@ def summarize_tariffs(results, date='2022-02-24'):
               jitter_width=0.5)
 
     return tariff_summary, boxplot
-
 
 def load_events_df():
     events_df = pd.DataFrame([
