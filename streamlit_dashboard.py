@@ -676,12 +676,14 @@ for i, energy_selection in enumerate(energy_type_selections):
 
 html3 = f"""
         <div class="total-dc"">
-            <p>Total DC: £{selected_variable}<p>
-            <p>TEST<p>
+            <div class="bla">
+                <p>column
+            </div>
+            <div class="bla">
+                <p>Other column
+            </div>
         </div>
-        <div class="bla">
-            <p>Other column
-        </div>
+        
 
         """
 
