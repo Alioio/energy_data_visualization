@@ -308,9 +308,9 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
     y_axis_title = selected_variable
 
     if(selected_variable == 'Arbeitspreis'):
-        y_axis_title = y_axis_title+'in ct/kWh'
+        y_axis_title = 'ct/kWh'
     elif(selected_variable == 'Grundpreis'):
-        y_axis_title = y_axis_title+'in €/Monat'
+        y_axis_title = '€/Monat'
     elif(selected_variable == 'Jahreskosten'):
         y_axis_title = '€ im ersten Jahr'
     else:
