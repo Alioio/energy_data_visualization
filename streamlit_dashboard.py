@@ -652,7 +652,14 @@ for i, energy_selection in enumerate(energy_type_selections):
                     </style>
                     """
 
-            st.write(chart_header, help='bla')
+            header_column, radio_column = st.columns([4,1])
+
+            with header_column:
+                st.write(chart_header, help='bla')
+            
+            with radio_column:
+                st.write('div.row-widget.stRadio > div{flex-direction:row;}', unsafe_allow_html=True)
+
             energy_line_chart_e = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events)
 
             st.altair_chart(energy_line_chart_e, use_container_width=True)
