@@ -652,11 +652,10 @@ for i, energy_selection in enumerate(energy_type_selections):
                     </style>
                     """
 
-
-            header_column, radio_column = chart_columns[i].columns((4,1))
+            header_column, radio_column = st.columns((4,1))
 
             with header_column:
-                st.write(chart_header, help='bla')
+                st.write(chart_header)
             
             with radio_column:
                 st.write('hallo')
@@ -675,7 +674,15 @@ for i, energy_selection in enumerate(energy_type_selections):
 
 
 
+html3 = f"""
+        <div class="total-dc"">
+            <p>Total DC: £{selected_variable}<p>
+            <p>TEST<p>
+        </div>
 
+        """
+
+st.markdown(html3, unsafe_allow_html=True)
 
 #print(high_consume.dtypes)
 #tariff_summary, boxplot = summarize_tariffs(high_consume)
