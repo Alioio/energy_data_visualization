@@ -630,7 +630,7 @@ chart_columns = main_chart_container.columns(len(energy_type_selections))
 
 st.write('<style>div.row-widget.stRadio > div{flex-direction:row;justify-content: left;} </style>', unsafe_allow_html=True)
 st.write('<style>div.st-bf{flex-direction:column;} div.st-ag{font-weight:bold;padding-left:2px;}</style>', unsafe_allow_html=True)
-st.radio(("Durchschnitt","Median"))
+st.radio("",("Durchschnitt","Median"))
 
 for i, energy_selection in enumerate(energy_type_selections):
     if((energy_selection == 'Strom')):
