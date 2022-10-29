@@ -679,6 +679,9 @@ html3 = f"""
             <p>Total DC: £{selected_variable}<p>
             <p>TEST<p>
         </div>
+        <div class="bla">
+            <p>Other column
+        </div>
 
         """
 
