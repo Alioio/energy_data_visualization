@@ -675,17 +675,15 @@ for i, energy_selection in enumerate(energy_type_selections):
 
 
 html3 = f"""
-        <div class="total-dc"">
-            <div class="bla">
-                <p>column
-            </div>
-            <div class="bla">
-                <p>Other column
-            </div>
+        <div class="column" style="background-color:red;">
+            <h2>Column 1</h2>
+            <p>Data..</p>
         </div>
-        
-
-        """
+        <div class="column" style="background-color:blue;">
+            <h2>Column 2</h2>
+            <p>Data..</p>
+        </div>
+         """
 
 st.markdown(html3, unsafe_allow_html=True)
 
