@@ -630,7 +630,7 @@ chart_columns = main_chart_container.columns(len(energy_type_selections))
 
 for i, energy_selection in enumerate(energy_type_selections):
     if((energy_selection == 'Strom')):
-        chart_header = "**Preisentwicklung ({selected_variable})**".format(selected_variable=selected_variable)
+        chart_header = "**Preisentwicklung für {energy_selection}verträge ({selected_variable})**".format(selected_variable=selected_variable, energy_selection=energy_selection)
         summary_3000 = summarize(electricity_results_3000, seperation_var, int(selection_slider),'3000',selected_variable)
         summary_1300 = summarize(electricity_results_1300, seperation_var, int(selection_slider),'1300', selected_variable)
         summary = pd.concat([summary_3000, summary_1300])
