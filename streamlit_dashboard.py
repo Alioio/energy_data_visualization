@@ -507,8 +507,10 @@ def load_events_df():
     ])
     return events_df
 
-row1_1, row1_2 = st.columns((2, 3))
 
+#### HEADER REGION
+
+row1_1, row1_2 = st.columns((2, 3))
 
 with row1_1:
     st.title(" Strom 🔌 &  Gas 🔥 Dashboard :bar_chart:")
@@ -531,61 +533,85 @@ with row1_2:
         """
         )
 
+### END HEADER REGION
+
 st.markdown("""---""")
 
-events_df = load_events_df()
-
-#df = events_df.copy()
-
+### MENU AUSWAHL REGION
 selection_menu_container = st.container()
-selection_dropdown_column = selection_menu_container.columns([2,1,2])
+time_selection_column, attribute_selection_column = selection_menu_container.columns([1,3])
 
-    ##GEhe alle Elemente in der List durch und suche im ereinnis DF nach genau gleiche start, end, ereinis und lösche diese zeilen. 
+#attribute_selection_menu_container = st.container()
+#attribute_selection_column, attribute_aggregation_type_column = selection_menu_container.columns([1,3])
 
+#division_selection_container = st.container()
+division_selection_column, division_value_selection_column = selection_menu_container.columns([1,3])
+
+##Zeitintervallauswahl
 today = date.today()
 tree_months_ago = today - timedelta(days=90)
 date_interval = [tree_months_ago, today]
 
-
-selection_dropdown_column[0].write('**Energieart und Zeitraum**')
-date_interval = selection_dropdown_column[0].date_input(label='Zeitraum: ',
+time_selection_column.write('**Zeitraum**')
+date_interval = time_selection_column.date_input(label='Zeitraum: ',
             value=(tree_months_ago, 
                     today),
             key='#date_range',
             help="Start-und End Datum: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
 
-energy_type_selections = selection_dropdown_column[0].multiselect(
-    'What are your favorite colors',
-    ['Strom','Gas', 'Wetter', 'Spotmarktpreise', 'Börsenpreise', 'Erzeugung Enerneuerbare'],
-    default=['Strom', 'Gas'])
+#Energietypauswahl
+#energy_type_selections = selection_dropdown_column[0].multiselect(
+#    'What are your favorite colors',
+#    ['Strom','Gas', 'Wetter', 'Spotmarktpreise', 'Börsenpreise', 'Erzeugung Enerneuerbare'],
+#    default=['Strom', 'Gas'])
 
-selection_dropdown_column[1].write("**Attributauswahl für Aggregierung**")
+attribute_selection_column.write("**Attributauswahl**")
 
-selected_variable = selection_dropdown_column[1].selectbox(
+selected_variable = attribute_selection_column.selectbox(
     'Welches Attribut möchtest du anschauen?',
     ('Arbeitspreis', 'Grundpreis', 'Jahreskosten'))
 
-mean_median_btn = selection_dropdown_column[1].radio(
+
+mean_median_btn = attribute_selection_column.radio(
         "Wie möchtest du die Tarifdaten aggregieren?",
-        options=["mean", "median"],
+        options=["mean", "median", "min", "max", "std"],
     )
 
-selection_dropdown_column[2].write('**Aufteilung zum Vergleich**')
+division_expander = st.expander('Teile auf um zu vergleichen 🍎🍐', expanded=False)
 
-seperation_var = selection_dropdown_column[2].selectbox(
-    'Nach welches Attribut möchtest du trennen?',
-    ('Vertragslaufzeit', 'Preisgarantie', 'Öko Tarif/ Konventioneller Tarif'),
+with division_expander:
+
+    sep_var_col, sep_val_col = st.columns(2)
+        
+    seperation_var = sep_var_col.selectbox('Nach welches Attribut möchtest du aufteilen?',
+    ('Vertragslaufzeit', 'Preisgarantie', 'Öko Tarif/ Konventioneller Tarif', 'Anbieter'),
     help="Gebe hier ein nach welhes Attribut du trennen möchtest: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
+            
+    selection_slider = 12
 
-selection_slider = 12
-
-if(seperation_var !='Öko Tarif/ Konventioneller Tarif'):
-    selection_slider = selection_dropdown_column[2].slider('Ab welchen Wert für die Variable '+seperation_var+ ' möchtest die Daten trennen?', 0, 24, 12, step=3,
+    if( (seperation_var =='Vertragslaufzeit') |(seperation_var =='Preisgarantie')  ):
+        selection_slider = sep_val_col.slider('Ab welchen Wert für das Attribut '+seperation_var+ ' teilen?', 0, 24, 12, step=3,
         help="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
+    elif((seperation_var =='Anbieter')):
+        col1, col2 = st.columns(2)
+
+        gas = gas_results_15000.copy()
+        gas['type'] = 'gas'
+        electricity = electricity_results_3000.copy()
+        electricity['type'] = 'electricity'
+
+        all = pd.concat([gas, electricity]).drop_duplicates(['providerName'])
+
+        col1.write(all)
+        col2.write(len(all))
+
+### ENDE MENU AUSWAHL REGION
 
 st.markdown("""---""")
 
-#### Annotaion bereich ####
+#### AnNNOTATION REGION
+
+events_df = load_events_df()
 annotation_container = st.expander('Ereignisse', expanded=False)
 
 with annotation_container:
@@ -621,52 +647,50 @@ with annotation_container:
 
     selected_events = events_df.iloc[inxexes_of_selected]
 
-## ende annotation bereich ###
+## ENDE ANNOTATION REGION
 
+##DAS hier verschieben
 
 main_chart_container = st.container()
-
-chart_columns = main_chart_container.columns(len(energy_type_selections)) 
+energy_type_selections = ['Strom', 'Gas']
+electricity_chart_column, gas_chart_column = main_chart_container.columns(2) 
 
 st.write('<style>div.row-widget.stRadio > div{flex-direction:row;justify-content: left;} </style>', unsafe_allow_html=True)
 st.write('<style>div.st-bf{flex-direction:column;} div.st-ag{font-weight:bold;padding-left:2px;}</style>', unsafe_allow_html=True)
 #st.radio("",("Durchschnitt","Median"))
 
-for i, energy_selection in enumerate(energy_type_selections):
-    if((energy_selection == 'Strom')):
-        chart_header = "**Preisentwicklung - {energy_selection}verträge ({selected_variable})**".format(selected_variable=selected_variable, energy_selection=energy_selection)
-        summary_3000 = summarize(electricity_results_3000, seperation_var, int(selection_slider),'3000',selected_variable)
-        summary_1300 = summarize(electricity_results_1300, seperation_var, int(selection_slider),'1300', selected_variable)
-        summary = pd.concat([summary_3000, summary_1300])
-    elif((energy_selection == 'Gas')):
-        chart_header = "**Preisentwicklung - {energy_selection}verträge ({selected_variable})**".format(selected_variable=selected_variable, energy_selection=energy_selection)
-        summary_9000 = summarize(gas_results_9000, seperation_var,int(selection_slider),'9000',selected_variable)
-        summary_15000 = summarize(gas_results_15000, seperation_var,int(selection_slider),'15000',selected_variable)
-        summary = pd.concat([summary_9000, summary_15000])
 
-#summary = summarize(high_consume, seperation_var,int(selection_slider))
+with electricity_chart_column:
+    chart_header = "**Preisentwicklung - {energy_selection}verträge ({selected_variable})**".format(selected_variable=selected_variable, energy_selection='Strom')
+    summary_3000 = summarize(electricity_results_3000, seperation_var, int(selection_slider),'3000',selected_variable)
+    summary_1300 = summarize(electricity_results_1300, seperation_var, int(selection_slider),'1300', selected_variable)
+    summary = pd.concat([summary_3000, summary_1300])
+    st.write(chart_header)
+    energy_line_chart_e = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events)
+    st.altair_chart(energy_line_chart_e, use_container_width=True)
 
-    if(len(date_interval) == 2):
-        with chart_columns[i]:
-            title_alignment="""
-                    <style>
-                    #the-title {
-                    text-align: center
-                    }
-                    </style>
-                    """
+    tariff_list_expander = st.expander('Tarife', expanded=False)
 
-            st.write(chart_header)
+    with tariff_list_expander:
+        st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
+with gas_chart_column:
+    chart_header = "**Preisentwicklung - {energy_selection}verträge ({selected_variable})**".format(selected_variable=selected_variable, energy_selection='Gas')
+    summary_9000 = summarize(gas_results_9000, seperation_var,int(selection_slider),'9000',selected_variable)
+    summary_15000 = summarize(gas_results_15000, seperation_var,int(selection_slider),'15000',selected_variable)
+    summary = pd.concat([summary_9000, summary_15000])
+    st.write(chart_header)
+    energy_line_chart_e = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events)
+    st.altair_chart(energy_line_chart_e, use_container_width=True)
 
-            energy_line_chart_e = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events)
+    tariff_list_expander = st.expander('Tarife', expanded=False)
 
-            st.altair_chart(energy_line_chart_e, use_container_width=True)
+    with tariff_list_expander:
+        st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
 
-            tariff_list_expander = st.expander('Tarife', expanded=False)
 
-            with tariff_list_expander:
-                st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
+container_width = main_chart_container.get_container_width
 
+st.write(container_width)
 
 #javascript integriegen um screen weite zu lesen:
 #https://www.youtube.com/watch?v=TqOGBOHHxrU
