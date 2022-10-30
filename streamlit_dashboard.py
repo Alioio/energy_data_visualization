@@ -572,14 +572,12 @@ with time_selection_column:
         tree_months_ago = today - timedelta(days=365)
         date_interval = [tree_months_ago, today]
     elif(time_selection == 'Eigener Zeitraum'):
-        time_expander = st.expander('', expanded=True)
-
-        with time_expander:
-            date_interval = st.date_input(label='',
-                        value=(tree_months_ago, 
-                                today),
-                        key='#date_range',
-                        help="Start-und End Datum: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
+        
+        date_interval = st.date_input(label='',
+                    value=(tree_months_ago, 
+                            today),
+                    key='#date_range',
+                    help="Start-und End Datum: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
 
 #Energietypauswahl
 #energy_type_selections = selection_dropdown_column[0].multiselect(
