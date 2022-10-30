@@ -557,8 +557,7 @@ date_interval = [tree_months_ago, today]
 with time_selection_column:
     time_selection = st.selectbox(
         label='Zeitraum: ',
-        options=('1 Monat', '3 Monat', '1 Jahr', 'Eigener Zeitraum'),
-        default='3 Monat')
+        options=('1 Monat', '3 Monat', '1 Jahr', 'Eigener Zeitraum'))
 
     if(time_selection == '1 Monat'):
         today = date.today()
@@ -576,7 +575,7 @@ with time_selection_column:
         time_expander = st.expander('', expanded=True)
 
         with time_expander:
-            date_interval = st.date_input(label='Zeitraum: ',
+            date_interval = st.date_input(label='',
                         value=(tree_months_ago, 
                                 today),
                         key='#date_range',
