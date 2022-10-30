@@ -554,25 +554,25 @@ date_interval = [tree_months_ago, today]
 
 #time_selection_column.write('**Zeitraum**')
 
-with time_selection_column:
-    time_selection = st.selectbox(
-        label='Zeitraum: ',
-        options=('1 Monat', '3 Monat', '1 Jahr', 'Eigener Zeitraum'))
 
-    if(time_selection == '1 Monat'):
-        today = date.today()
+time_selection = st.selectbox(
+    label='Zeitraum: ',
+    options=('1 Monat', '3 Monat', '1 Jahr', 'Eigener Zeitraum'))
+
+if(time_selection == '1 Monat'):
+    with time_selection_column:
         tree_months_ago = today - timedelta(days=90)
         date_interval = [tree_months_ago, today]
-    elif(time_selection == '3 Monat'):
-        today = date.today()
+elif(time_selection == '3 Monat'):
+    with time_selection_column:
         tree_months_ago = today - timedelta(days=90)
         date_interval = [tree_months_ago, today]
-    elif(time_selection == '1 Jahr'):
-        today = date.today()
+elif(time_selection == '1 Jahr'):
+    with time_selection_column:
         tree_months_ago = today - timedelta(days=365)
         date_interval = [tree_months_ago, today]
-    elif(time_selection == 'Eigener Zeitraum'):
-        
+elif(time_selection == 'Eigener Zeitraum'):
+    with time_selection_column:
         date_interval = st.date_input(label='',
                     value=(tree_months_ago, 
                             today),
