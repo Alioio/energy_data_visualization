@@ -592,16 +592,10 @@ selected_variable = attribute_selection_column.selectbox(
     ('Arbeitspreis', 'Grundpreis', 'Jahreskosten'))
 
 
-with attribute_selection_column:
-    aggeregierung = 'mean'
-    agg_expander = st.expander('Wie möchtest du die Tarifdaten aggregieren?'+aggeregierung, expanded=False)
-    
-    with agg_expander:
-        mean_median_btn = st.radio(
-                "",
-                options=["mean", "median", "min", "max", "std"],
-            )
-        aggeregierung = mean_median_btn
+mean_median_btn = attribute_selection_column.radio(
+        "Wie möchtest du die Tarifdaten aggregieren?",
+        options=["mean", "median", "min", "max", "std"],
+    )
 
 division_expander = st.expander('Teile auf um zu vergleichen 🍎🍐', expanded=False)
 
