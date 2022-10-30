@@ -561,7 +561,7 @@ time_selection = time_selection_column.selectbox(
 
 if(time_selection == '1 Monat'):
     with time_selection_column:
-        tree_months_ago = today - timedelta(days=90)
+        tree_months_ago = today - timedelta(days=30)
         date_interval = [tree_months_ago, today]
 elif(time_selection == '3 Monat'):
     with time_selection_column:
