@@ -597,7 +597,7 @@ with attribute_selection_column:
     agg_expander = st.expander('Aggregierung: '+aggeregierung, expanded=False)
     
     with agg_expander:
-        mean_median_btn = attribute_selection_column.radio(
+        mean_median_btn = st.radio(
                 "Wie möchtest du die Tarifdaten aggregieren?",
                 options=["mean", "median", "min", "max", "std"],
             )
