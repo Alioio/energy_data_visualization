@@ -555,7 +555,7 @@ date_interval = [tree_months_ago, today]
 #time_selection_column.write('**Zeitraum**')
 
 
-time_selection = st.selectbox(
+time_selection = time_selection_column.selectbox(
     label='Zeitraum: ',
     options=('1 Monat', '3 Monat', '1 Jahr', 'Eigener Zeitraum'))
 
