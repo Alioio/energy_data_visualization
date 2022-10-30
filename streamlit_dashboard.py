@@ -74,7 +74,7 @@ def set_plz(ID):
   elif(ID==19):
     return '71771'
 
-@st.cache(ttl=24*60*60)
+@st.cache(ttl=7*24*60*60)
 def read_energy_data(energy_type, verbrauch):
     ## Lese alle Dateien und füge sie zu einer Liste zusammen
 
