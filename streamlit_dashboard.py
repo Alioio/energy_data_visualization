@@ -339,7 +339,7 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
         tooltip = alt.Tooltip(['date:T', aggregation+':Q', 'count:Q', 'beschreibung:N']),
         opacity=alt.condition(selection, alt.value(1), alt.value(0.2)),
         strokeDash=alt.condition(
-        alt.datum.date > '2022-05-19' & alt.datum.date < '2022-07-05' ,
+        alt.datum.date > '2022-05-19',
         alt.value([5, 5]),  # dashed line: 5 pixels  dash + 5 pixels space
         alt.value([0]),  # solid line
     )
