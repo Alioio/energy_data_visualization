@@ -78,7 +78,7 @@ def set_plz(ID):
 def read_energy_data(energy_type, verbrauch):
     ## Lese alle Dateien und füge sie zu einer Liste zusammen
 
-    '''
+    
     gas_path = 'D:\energy_data_visualization\data\{energy_type}'.format(energy_type=energy_type)
     files = os.listdir(gas_path)
     print(files)
@@ -86,7 +86,6 @@ def read_energy_data(energy_type, verbrauch):
     dfs = list([])
     names = list([])
 
-    
     for file in files:
         if(re.search("[15|9|13|3]+[0]{3}.csv$", str(file))):
             f = open(os.path.join(gas_path, file),'r')
@@ -112,13 +111,25 @@ def read_energy_data(energy_type, verbrauch):
 
         all_dates = all_dates.append(df)
 
+    all_dates = all_dates[(all_dates.plz == '10245') | 
+                        (all_dates.plz == '99425') |  
+                        (all_dates.plz == '33100')  |  
+                        (all_dates.plz == '50670') |  
+                        (all_dates.plz == '49661')]
+
     ## Filter nach Verbrauch und wandle dataunit in float um
     all_dates = all_dates.drop_duplicates(['date', 'providerName', 'tariffName', 'signupPartner', 'plz'])
     all_dates = all_dates[['date', 'providerName','tariffName', 'signupPartner', 'dataunit', 'contractDurationNormalized', 'priceGuaranteeNormalized', 'dataeco']]
     
     all_dates['dataunit'] = all_dates['dataunit'].str.replace(',','.').astype(float)
+
+
+
+
     print('MIT DEM EINLESEN DER 100 PLZ DATEN FERTIG')
-    '''
+    
+
+
     #### lese die Daten der wöchentlichen Abfrage zu den 5 Städten
 
     #path = Path(__file__).parents[1] / 'data/wa_{energy_type}.xlsx'
@@ -153,7 +164,7 @@ def read_energy_data(energy_type, verbrauch):
 
     print('danach: ',wa_df.columns)
     wa_df['plz'] = wa_df.apply(lambda row : set_plz(row['ID']), axis = 1)
-    #wa_df = wa_df[wa_df.date < all_dates.date.min()]
+    wa_df = wa_df[wa_df.date < all_dates.date.min()]
     wa_df = wa_df.drop_duplicates(['date', 'providerName', 'tariffName', 'signupPartner', 'plz'])
     
     #all_dates = pd.concat([wa_df, all_dates])
