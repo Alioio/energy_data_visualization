@@ -163,8 +163,8 @@ def read_energy_data(energy_type, verbrauch):
     wa_df = wa_df[wa_df.date < all_dates.date.min()]
     wa_df = wa_df.drop_duplicates(['date', 'providerName', 'tariffName', 'signupPartner', 'plz'])
     
-    #all_dates = pd.concat([wa_df, all_dates])
-    all_dates = wa_df.copy()
+    all_dates = pd.concat([wa_df, all_dates])
+    #all_dates = wa_df.copy()
     ###
 
     data_types_dict = {'date':'<M8[ns]', 'providerName':str, 'tariffName':str,'signupPartner':str, 'dataunit':float, 'dataeco':bool, 'plz':str, 'datafixed':float, 'Jahreskosten':float}
