@@ -331,22 +331,23 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
         x= alt.X('date:T',axis= alt.Axis(grid=False, title='Datum 📅')),
         #y = alt.Y('median:Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)')),
         color='beschreibung:N',
-        strokeDash=alt.condition(
-        alt.datum.date < alt.expr.toDate('2022-05-19T00:00sadfs:00'),
-        alt.value([3, 3]),  # dashed line: 5 pixels  dash + 5 pixels space
-        alt.value([0])
-    ))
+       # strokeDash=alt.condition(
+       # alt.datum.date < alt.expr.toDate('2022-05-19T00:00sadfs:00'),
+       # alt.value([3, 3]),  # dashed line: 5 pixels  dash + 5 pixels space
+       # alt.value([0])
+    #)
+    )
 
     chart = base.encode(
         x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
         y=alt.Y(aggregation+':Q', axis = alt.Axis(title=y_axis_title,  offset= 5), scale=alt.Scale(domain=list(domain2))),
         tooltip = alt.Tooltip(['date:T', aggregation+':Q', 'count:Q', 'beschreibung:N']),
         opacity=alt.condition(selection, alt.value(1), alt.value(0.2)),
-        strokeDash=alt.condition(
-        alt.datum.date < alt.expr.toDate('2022-05-19T00:00:fasdf00'),
-        alt.value([3, 3]),  # dashed line: 5 pixels  dash + 5 pixels space
-        alt.value([0])
-    )
+      #  strokeDash=alt.condition(
+      #  alt.datum.date < alt.expr.toDate('2022-05-19T00:00:fasdf00'),
+      #  alt.value([3, 3]),  # dashed line: 5 pixels  dash + 5 pixels space
+      #  alt.value([0])
+   # )
     ).properties(
         width=widtht,
         height=height
