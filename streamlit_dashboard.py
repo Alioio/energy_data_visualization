@@ -332,7 +332,7 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
         #y = alt.Y('median:Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)')),
         color='beschreibung:N',
         strokeDash=alt.condition(
-        alt.datum.mean > '2022-05-19',
+        alt.datum.date > '2022-05-19',
         alt.value([5, 5]),  # dashed line: 5 pixels  dash + 5 pixels space
         alt.value([0])
     ))
