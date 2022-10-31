@@ -333,7 +333,7 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
         color='beschreibung:N',
         strokeDash=alt.condition(
         alt.datum.mean > 40,
-        alt.value([5, 5]),  # dashed line: 5 pixels  dash + 5 pixels space
+        alt.value([3, 3]),  # dashed line: 5 pixels  dash + 5 pixels space
         alt.value([0])
     ))
 
@@ -344,7 +344,7 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
         opacity=alt.condition(selection, alt.value(1), alt.value(0.2)),
         strokeDash=alt.condition(
         alt.datum.mean > 40,
-        alt.value([5, 5]),  # dashed line: 5 pixels  dash + 5 pixels space
+        alt.value([3, 3]),  # dashed line: 5 pixels  dash + 5 pixels space
         alt.value([0])
     )
     ).properties(
