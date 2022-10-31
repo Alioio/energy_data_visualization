@@ -116,6 +116,7 @@ def read_energy_data(energy_type, verbrauch):
                         (all_dates.plz == '33100')  |  
                         (all_dates.plz == '50670') |  
                         (all_dates.plz == '49661')]
+    print('DATASET 1 UNIQUE PLZs: ',all_dates.plz.unique())
 
     ## Filter nach Verbrauch und wandle dataunit in float um
     all_dates = all_dates.drop_duplicates(['date', 'providerName', 'tariffName', 'signupPartner', 'plz'])
