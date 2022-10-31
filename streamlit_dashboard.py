@@ -328,19 +328,18 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
     base = alt.Chart(source).mark_line(size=3).encode(
         #x= alt.X('date:T',axis= alt.Axis(grid=False, title='Datum')),
         y = alt.Y(aggregation+':Q', axis = alt.Axis(title=y_axis_title, offset= 5)),
-        x= alt.X('date:T',axis= alt.Axis(grid=False, title='Datum 📅')),
-        strokeDash=alt.condition(
-        alt.datum.mean > 40,
-        alt.value([2, 2]),  # dashed line: 5 pixels  dash + 5 pixels space
-        alt.value([0]), 
-        color='beschreibung:N'
-    ))
+        x= alt.X('date:T',axis= alt.Axis(grid=False, title='Datum 📅')))
 
     chart = base.encode(
         x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
         y=alt.Y(aggregation+':Q', axis = alt.Axis(title=y_axis_title,  offset= 5), scale=alt.Scale(domain=list(domain2))),
         tooltip = alt.Tooltip(['date:T', aggregation+':Q', 'count:Q', 'beschreibung:N']),
-        opacity=alt.condition(selection, alt.value(1), alt.value(0.2))
+        opacity=alt.condition(selection, alt.value(1), alt.value(0.2)),
+        strokeDash=alt.condition(
+        alt.datum.mean > 40,
+        alt.value([5, 5]),  # dashed line: 5 pixels  dash + 5 pixels space
+        alt.value([0])  # solid line
+    )
     ).properties(
         width=widtht,
         height=height
