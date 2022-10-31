@@ -330,7 +330,7 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
         y = alt.Y(aggregation+':Q', axis = alt.Axis(title=y_axis_title, offset= 5)),
         x= alt.X('date:T',axis= alt.Axis(grid=False, title='Datum 📅')),
         strokeDash=alt.condition(
-        alt.datum.date > '2022-05-19',
+        alt.datum.mean > 40,
         alt.value([5, 5]),  # dashed line: 5 pixels  dash + 5 pixels space
         alt.value([0]), 
         color='beschreibung:N'
