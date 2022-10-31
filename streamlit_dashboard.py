@@ -335,7 +335,7 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
         alt.datum.mean > '2022-05-19',
         alt.value([5, 5]),  # dashed line: 5 pixels  dash + 5 pixels space
         alt.value([0])
-    )
+    ))
 
     chart = base.encode(
         x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
