@@ -161,7 +161,7 @@ def read_energy_data(energy_type, verbrauch):
 
     print('danach: ',wa_df.columns)
     wa_df['plz'] = wa_df.apply(lambda row : set_plz(row['ID']), axis = 1)
-    wa_df = wa_df[wa_df.date < all_dates.date.min()]
+    #wa_df = wa_df[wa_df.date < all_dates.date.min()]
     wa_df = wa_df.drop_duplicates(['date', 'providerName', 'tariffName', 'signupPartner', 'plz'])
     
     #all_dates = pd.concat([wa_df, all_dates])
