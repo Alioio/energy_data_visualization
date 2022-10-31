@@ -341,7 +341,6 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
         y=alt.Y(aggregation+':Q', axis = alt.Axis(title=y_axis_title,  offset= 5), scale=alt.Scale(domain=list(domain2))),
         tooltip = alt.Tooltip(['date:T', aggregation+':Q', 'count:Q', 'beschreibung:N']),
         opacity=alt.condition(selection, alt.value(1), alt.value(0.2))
-    )
     ).properties(
         width=widtht,
         height=height
