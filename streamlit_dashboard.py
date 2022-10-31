@@ -78,7 +78,7 @@ def set_plz(ID):
 def read_energy_data(energy_type, verbrauch):
     ## Lese alle Dateien und füge sie zu einer Liste zusammen
 
-    
+    '''
     gas_path = 'data/{energy_type}'.format(energy_type=energy_type)
     files = os.listdir(gas_path)
     print(files)
@@ -111,11 +111,11 @@ def read_energy_data(energy_type, verbrauch):
 
         all_dates = all_dates.append(df)
 
-    all_dates = all_dates[(all_dates.plz == '10245') | 
-                        (all_dates.plz == '99425') |  
-                        (all_dates.plz == '33100')  |  
-                        (all_dates.plz == '50670') |  
-                        (all_dates.plz == '49661')]
+    all_dates = all_dates[(all_dates.plz == 10245) | 
+                        (all_dates.plz == 99425) |  
+                        (all_dates.plz == 33100)  |  
+                        (all_dates.plz == 50670) |  
+                        (all_dates.plz == 49661)]
     print('DATASET 1 UNIQUE PLZs: ',all_dates.plz.unique())
 
     ## Filter nach Verbrauch und wandle dataunit in float um
@@ -125,7 +125,8 @@ def read_energy_data(energy_type, verbrauch):
     all_dates['dataunit'] = all_dates['dataunit'].str.replace(',','.').astype(float)
 
     print('MIT DEM EINLESEN DER 100 PLZ DATEN FERTIG')
-    
+    ''''
+
     #### lese die Daten der wöchentlichen Abfrage zu den 5 Städten
 
     #path = Path(__file__).parents[1] / 'data/wa_{energy_type}.xlsx'
@@ -163,8 +164,8 @@ def read_energy_data(energy_type, verbrauch):
     wa_df = wa_df[wa_df.date < all_dates.date.min()]
     wa_df = wa_df.drop_duplicates(['date', 'providerName', 'tariffName', 'signupPartner', 'plz'])
     
-    all_dates = pd.concat([wa_df, all_dates])
-    #all_dates = wa_df.copy()
+    #all_dates = pd.concat([wa_df, all_dates])
+    all_dates = wa_df.copy()
     ###
 
     data_types_dict = {'date':'<M8[ns]', 'providerName':str, 'tariffName':str,'signupPartner':str, 'dataunit':float, 'dataeco':bool, 'plz':str, 'datafixed':float, 'Jahreskosten':float}
