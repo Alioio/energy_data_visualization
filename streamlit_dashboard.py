@@ -79,7 +79,7 @@ def read_energy_data(energy_type, verbrauch):
     ## Lese alle Dateien und füge sie zu einer Liste zusammen
 
     
-    gas_path = 'D:\energy_data_visualization\data\{energy_type}'.format(energy_type=energy_type)
+    gas_path = 'data/{energy_type}'.format(energy_type=energy_type)
     files = os.listdir(gas_path)
     print(files)
 
@@ -123,13 +123,8 @@ def read_energy_data(energy_type, verbrauch):
     
     all_dates['dataunit'] = all_dates['dataunit'].str.replace(',','.').astype(float)
 
-
-
-
     print('MIT DEM EINLESEN DER 100 PLZ DATEN FERTIG')
     
-
-
     #### lese die Daten der wöchentlichen Abfrage zu den 5 Städten
 
     #path = Path(__file__).parents[1] / 'data/wa_{energy_type}.xlsx'
