@@ -125,7 +125,7 @@ def read_energy_data(energy_type, verbrauch):
     all_dates['dataunit'] = all_dates['dataunit'].str.replace(',','.').astype(float)
 
     print('MIT DEM EINLESEN DER 100 PLZ DATEN FERTIG')
-    ''''
+    '''
 
     #### lese die Daten der wöchentlichen Abfrage zu den 5 Städten
 
