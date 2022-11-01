@@ -728,9 +728,6 @@ with gas_chart_column:
         st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
 
 
-container_width = main_chart_container.get_container_width
-
-st.write(container_width)
 
 #javascript integriegen um screen weite zu lesen:
 #https://www.youtube.com/watch?v=TqOGBOHHxrU
