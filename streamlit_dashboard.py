@@ -617,7 +617,7 @@ mean_median_btn = attribute_selection_column.radio(
         options=["mean", "median", "min", "max", "std"],
     )
 
-division_expander = st.expander('Weiteres unterscheidungsmerkmal 🍎🍏', expanded=False)
+division_expander = st.expander('Weiteres Unterscheidungsmerkmal 🍎🍏', expanded=False)
 
 with division_expander:
 
