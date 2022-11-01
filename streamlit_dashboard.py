@@ -515,8 +515,8 @@ def load_events_df():
             "intervall":True
         },
         {
-            "start": "2022-08-26",
-            "end":"2022-08-29",
+            "start": "2022-09-26",
+            "end":"2022-09-29",
             "ereignis": "Explosionen NordStream 1 & 2",
             "tooltip":"In der Nacht zum Montag, dem 26. September 2022, fiel der Druck in einer der beiden Röhren der Pipeline NordStream 2 stark ab. Montagabend meldete dann auch der Betreiber von NordStream 1 einen Druckabfall – in diesem Fall für beide Röhren der Pipeline. Am Dienstag teilte die dänische Energiebehörde mit, es gebe insgesamt drei Gaslecks nahe der Insel Bornholm – zwei Lecks an NordStream 1 nordöstlich der Ostsee-Insel sowie eines an NordStream 2 südöstlich der Insel. Zudem zeichneten Messstationen auf schwedischem und dänischem Hoheitsgebiet am Montag mächtige Unterwasser-Explosionen auf. Die Schwedische Küstenwache teilte am 29. September 20022 mit, dass ein viertes Leck in den NordStream-Pipelines entdeckt wurde. [Quelle: WWF]",
             "intervall":False
