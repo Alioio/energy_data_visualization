@@ -515,7 +515,7 @@ def load_events_df():
         {
             "start": "2022-09-01",
             "end":"2022-09-01",
-            "ereignis": "Keine Gasimporte aus Russland",
+            "ereignis": "Keine Gasimporte mehr aus Russland",
             "tooltip":"Keine Gasimporte aus Russland. https://www.bundesnetzagentur.de/DE/Gasversorgung/aktuelle_gasversorgung/_svg/Gasimporte/Gasimporte.html;jsessionid=BC4D6020F61B843F1C0FB52C4384DE6E",
             "intervall":False
         },
