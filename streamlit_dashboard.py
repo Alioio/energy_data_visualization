@@ -609,7 +609,8 @@ attribute_selection_column.write("**Attributauswahl**")
 
 selected_variable = attribute_selection_column.selectbox(
     'Welches Attribut möchtest du anschauen?',
-    ('Arbeitspreis', 'Grundpreis', 'Jahreskosten'))
+    ('Arbeitspreis', 'Grundpreis', 'Jahreskosten'),
+    index=1)
 
 
 mean_median_btn = attribute_selection_column.radio(
