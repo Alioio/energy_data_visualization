@@ -42,8 +42,8 @@ alt.themes.enable('my_theme')
 
 
 st.set_page_config(page_title="Energy Dashboard",
-                    page_icon=":bar_chart:")
-                    #layout="wide")
+                    page_icon=":bar_chart:",
+                    layout="wide")
 
 st.markdown('<style>body{background-color: Blue;}</style>',unsafe_allow_html=True)
 
@@ -253,7 +253,7 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
     return summary
 
 #@st.cache(ttl=24*60*60)
-def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNormalized', seperation_value=12, date_interval=['2022-07-17', '2022-10-17'], widtht=450, height=180,selected_variable='dataunit', events_df=None):
+def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNormalized', seperation_value=12, date_interval=['2022-07-17', '2022-10-17'], widtht=700, height=280,selected_variable='dataunit', events_df=None):
 
     ## Definitionsbereich der Y achse
     min = np.floor(summary[aggregation].min() - (0.025*summary[aggregation].min()))
@@ -362,7 +362,7 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
         tooltip = alt.Tooltip(['date:T', aggregation+':Q', 'count:Q', 'beschreibung:N'])
     ).properties(
         width=widtht,
-        height=45
+        height=60
     )
     
     view = base.encode(
@@ -371,7 +371,7 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
         interval
     ).properties(
         width=widtht,
-        height=45,
+        height=60,
     )
 
     ###############
