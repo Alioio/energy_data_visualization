@@ -483,8 +483,14 @@ def load_events_df():
             "ereignis": "Mehrwertsteuersenkung für Gas",
             "tooltip":"Mehrwertsteuer für Gas wurde von 19% auf 7% gesenkt.",
             "intervall":False
-        }
-        ,
+        },
+        {
+            "start": "2022-06-30",
+            "end":"2022-06-30",
+            "ereignis": "Alarmstufe des Notfallplans Gas",
+            "tooltip":"Seit dem 23.06.2022 gilt die Alarmstufe des Notfallplans.",
+            "intervall":False
+        },
         {
             "start": "2022-06-05",
             "end":"2022-07-09",
@@ -505,11 +511,17 @@ def load_events_df():
             "ereignis": "Gasliefermenge nach Wartung weiterhin auf 40% gedrosselt",
             "tooltip":"Gasliefermenge nach Wartung weiterhin auf 40% gedrosselt",
             "intervall":True
-        }
-        ,
+        },
+        {
+            "start": "2022-09-01",
+            "end":"2022-09-01",
+            "ereignis": "Keine Gasimporte aus Russland",
+            "tooltip":"Keine Gasimporte aus Russland. https://www.bundesnetzagentur.de/DE/Gasversorgung/aktuelle_gasversorgung/_svg/Gasimporte/Gasimporte.html;jsessionid=BC4D6020F61B843F1C0FB52C4384DE6E",
+            "intervall":True
+        },
         {
             "start": "2022-07-28",
-            "end":"2022-08-29",
+            "end":"2022-08-30",
             "ereignis": "Weitere Drosselung der Gasliefermenge auf 20% reduziert",
             "tooltip":"Weitere Drosselung der Gasliefermenge auf 20% reduziert",
             "intervall":True
