@@ -265,7 +265,7 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
         }
 
     aggregation = aggregation_dict[aggregation]
-    
+
     ## Definitionsbereich der Y achse
     min = np.floor(summary[aggregation].min() - (0.025*summary[aggregation].min()))
     max = np.ceil( summary[aggregation].max() + (0.025*summary[aggregation].max()))
@@ -638,7 +638,7 @@ selected_variable = attribute_selection_column.selectbox(
 
 
 mean_median_btn = attribute_selection_column.radio(
-        "Wie möchtest du die Tarifdaten aggregieren?",
+        ("Wie möchtest du den {selected_variable} der Tarife aggregieren?").format(selected_variable=selected_variable),
         options=["Durchschnitt", "Median", "Minimum", "Maximum", "Standardabweichung"],
     )
 
