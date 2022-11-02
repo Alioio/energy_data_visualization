@@ -379,18 +379,18 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
     )
     #.add_selection(count_selector)
 
-    '''
+    
     # Base chart for data tables
-    ranked_text = alt.Chart(source).mark_text(align='right').encode(
-        y=alt.Y('row_number:O',axis=None)
-    ).transform_filter(
-        count_selector
-    ).transform_window(
-        row_number='row_number()'
-    ).transform_filter(
-        'datum.row_number < 15'
-    )
-    '''
+    #ranked_text = alt.Chart(source).mark_text(align='right').encode(
+    #    y=alt.Y('row_number:O',axis=None)
+    #).transform_filter(
+    #    count_selector
+    #).transform_window(
+    #    row_number='row_number()'
+    #).transform_filter(
+    #    'datum.row_number < 15'
+    #)
+    
     view = base.encode(
         y = alt.Y(aggregation+':Q', axis = alt.Axis(title=y_axis_title),scale=alt.Scale(domain=list(domain1))),
     ).add_selection(
