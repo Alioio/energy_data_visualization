@@ -363,8 +363,8 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
         height=height
     )
 
-    '''
-    count_selector = alt.selection(type='single', encodings=['x'])
+    
+    #count_selector = alt.selection(type='single', encodings=['x'])
 
     count_chart = base.mark_bar(size=6).encode(
         #x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
@@ -376,9 +376,10 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
     ).properties(
         width=widtht,
         height=60
-    ).add_selection(count_selector)
+    )
+    #.add_selection(count_selector)
 
-
+    '''
     # Base chart for data tables
     ranked_text = alt.Chart(source).mark_text(align='right').encode(
         y=alt.Y('row_number:O',axis=None)
