@@ -727,7 +727,7 @@ st.write('<style>div.st-bf{flex-direction:column;} div.st-ag{font-weight:bold;pa
 
 main_chart_container.write(('#### Preisentwicklung - {selected_variable} und {seperation_var} der Strom - und Gastarife.').format(selected_variable=selected_variable, seperation_var=seperation_var))
 main_chart_container.write(('Die oberen zwei Grafiken zeigen die Entwicklung der Tarife bezüglich {selected_variable} und {seperation_var}. Im dritten Grafik ist die Anzahl der Suchanfragenergebnisse visualisiert.').format(selected_variable=selected_variable, seperation_var=seperation_var))
-
+st.empty()
 if(len(date_interval) == 2):
     with electricity_chart_column:
         chart_header = "**{energy_selection}verträge ({selected_variable})**".format(selected_variable=selected_variable, energy_selection='Strom')
