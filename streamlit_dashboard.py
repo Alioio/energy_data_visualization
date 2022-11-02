@@ -18,7 +18,7 @@ def my_theme():
   return {
     'config': {
       'view': {"stroke": "transparent",'continuousHeight': 300, 'continuousWidth': 400},  # from the default theme
-      'range': {'category': ['#4650DF','#FC6E44','#CCF6E5', '#006E78', '#20B679', '#929898','#EBB5C5', '#54183E', '#CDE9FF', '#FAB347', '#E3D1FF']},
+      'range': {'category': ['#4650DF','#FC6E44', '#006E78', '#20B679', '#929898','#EBB5C5', '#54183E', '#CDE9FF', '#FAB347', '#E3D1FF']},
       "axisY": {
                 "size":'1px',
                 "color":'lightgray',
@@ -260,7 +260,12 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
         "Median": "median",
         "Standardabweichung": "std",
         "Minimum":"min",
-        "Maximum":"max"
+        "Maximum":"max",
+        "mean":"Durchschnitt",
+        "Median":"median",
+        "min":"Minimum",
+        "max":"Maximum",
+        "std":"Standardabweichung"
         }
 
     aggregation = aggregation_dict[aggregation]
@@ -375,7 +380,7 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
         tooltip = alt.Tooltip(['date:T', aggregation+':Q', 'count:Q', 'beschreibung:N'])
     ).properties(
         width=widtht,
-        height=60
+        height=200
     )
     #.add_selection(count_selector)
 
@@ -426,9 +431,30 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
         text=alt.condition(nearest, 'median:Q', alt.value(' '))
     )
 
-    count_text = count_chart.mark_text(align='left', dx=5, dy=-5).encode(
+    count_text = alt.Chart(source).mark_text(align='left', size=15).encode(
         text=alt.condition(nearest, 'count:Q', alt.value(' ')),
+        y=alt.Y('row_number:O',axis=None),
         color='beschreibung:N'
+    ).transform_filter(
+        nearest
+    ).transform_window(
+        row_number='row_number()'
+    ).properties(
+        width=80,
+        height=80
+    )
+
+
+    count_text_date = alt.Chart(source).mark_text(align='left', size=25).encode(
+        text=alt.condition(nearest, 'date:T', alt.value(' ')),
+        #y=alt.Y('row_number:O',axis=None)
+    ).transform_filter(
+        nearest
+    ).transform_window(
+        row_number='row_number()'
+    ).properties(
+        width=80,
+        height=80
     )
 
     # Draw a rule at the location of the selection
@@ -447,12 +473,8 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
         height=height
     )
 
-    count_chart_view = alt.layer(
-        count_chart , selectors,  rules, count_text
-    ).properties(
-        width=widtht,
-        height=height
-    )
+    count_chart_view = alt.vconcat(count_chart ,count_text_date ,(count_text.properties(title=alt.TitleParams(text='Anzahl Anfragenergebnisse', align='left')) | count_text.encode(text=aggregation).properties(title=alt.TitleParams(text=aggregation_dict[aggregation], align='left')) | count_text.encode(text='beschreibung:N').properties(title=alt.TitleParams(text='Beschreibung', align='left'))))
+    
 
     annotationen = rule + events_text + rect
 
@@ -742,7 +764,7 @@ st.write('<style>div.row-widget.stRadio > div{flex-direction:row;justify-content
 st.write('<style>div.st-bf{flex-direction:column;} div.st-ag{font-weight:bold;padding-left:2px;}</style>', unsafe_allow_html=True)
 #st.radio("",("Durchschnitt","Median"))
 
-main_chart_container.write(('**Preisentwicklung - {selected_variable} und {seperation_var} der Strom - und Gastarife.**').format(selected_variable=selected_variable, seperation_var=seperation_var))
+main_chart_container.write(('**Preisentwicklung - {selected_variable} und {seperation_var} der Strom - und Gastarife.**').format(selected_variable=selected_variable, seperation_var=seperation_var).upper())
 main_chart_container.write(('Die oberen zwei Grafiken zeigen die Entwicklung der Tarife bezüglich {selected_variable} und {seperation_var}. Im dritten Grafik ist die Anzahl der Suchanfragenergebnisse visualisiert.').format(selected_variable=selected_variable, seperation_var=seperation_var))
 
 if(len(date_interval) == 2):
