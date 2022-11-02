@@ -253,7 +253,7 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
     return summary
 
 #@st.cache(ttl=24*60*60)
-def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNormalized', seperation_value=12, date_interval=['2022-07-17', '2022-10-17'], widtht=700, height=280,selected_variable='dataunit', events_df=None):
+def create_chart(summary,  aggregation='mean', seperation_value=12, date_interval=['2022-07-17', '2022-10-17'], widtht=700, height=280,selected_variable='dataunit', events_df=None, energy_type='gas', seperation_var='priceGuaranteeNormalized'):
 
     aggregation_dict = {
         "Durchschnitt": "mean",
@@ -339,13 +339,41 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
     else:
         y_axis_title = 'etwas anderes'
 
+    print('SEP VAR: ',seperation_var,'   ',seperation_value)
+    if((energy_type == 'gas') & (seperation_var != 'Öko Tarif/ Konventioneller Tarif')):
+        rng = ['#4650DF','#FC6E44', '#006E78', '#20B679']
+        dom = [source[source.beschreibung.str.contains('15000') & source.beschreibung.str.contains('<')].iloc[0].beschreibung,
+              source[source.beschreibung.str.contains('15000') & source.beschreibung.str.contains('>=')].iloc[0].beschreibung,
+              source[source.beschreibung.str.contains('9000') & source.beschreibung.str.contains('<')].iloc[0].beschreibung,
+              source[source.beschreibung.str.contains('9000') & source.beschreibung.str.contains('>=')].iloc[0].beschreibung]
+    elif((energy_type == 'electricity') & (seperation_var != 'Öko Tarif/ Konventioneller Tarif')):
+        rng = ['#4650DF','#FC6E44', '#006E78', '#20B679']
+        dom = [source[source.beschreibung.str.contains('3000') & source.beschreibung.str.contains('<')].iloc[0].beschreibung,
+              source[source.beschreibung.str.contains('3000') & source.beschreibung.str.contains('>=')].iloc[0].beschreibung,
+              source[source.beschreibung.str.contains('1300') & source.beschreibung.str.contains('<')].iloc[0].beschreibung,
+              source[source.beschreibung.str.contains('1300') & source.beschreibung.str.contains('>=')].iloc[0].beschreibung]
+    elif((energy_type == 'gas') & (seperation_var == 'Öko Tarif/ Konventioneller Tarif')):
+        rng = ['#4650DF','#FC6E44', '#006E78', '#20B679']
+        dom = [source[source.beschreibung.str.contains('15000') & ~source.beschreibung.str.contains('Nicht-Öko')].iloc[0].beschreibung,
+              source[source.beschreibung.str.contains('15000') & source.beschreibung.str.contains('Nicht-Öko')].iloc[0].beschreibung,
+              source[source.beschreibung.str.contains('9000') & ~source.beschreibung.str.contains('Nicht-Öko')].iloc[0].beschreibung,
+              source[source.beschreibung.str.contains('9000') & source.beschreibung.str.contains('Nicht-Öko')].iloc[0].beschreibung]
+    elif((energy_type == 'electricity')  & (seperation_var == 'Öko Tarif/ Konventioneller Tarif')):
+        rng = ['#4650DF','#FC6E44', '#006E78', '#20B679']
+        dom = [source[source.beschreibung.str.contains('3000') & ~source.beschreibung.str.contains('Nicht-Öko')].iloc[0].beschreibung,
+              source[source.beschreibung.str.contains('3000') & source.beschreibung.str.contains('Nicht-Öko')].iloc[0].beschreibung,
+              source[source.beschreibung.str.contains('1300') & ~source.beschreibung.str.contains('Nicht-Öko')].iloc[0].beschreibung,
+              source[source.beschreibung.str.contains('1300') & source.beschreibung.str.contains('Nicht-Öko')].iloc[0].beschreibung]
+
+    print('Zeilen: ', dom)
 
     base = alt.Chart(source).mark_line(size=3).encode(
         #x= alt.X('date:T',axis= alt.Axis(grid=False, title='Datum')),
         y = alt.Y(aggregation+':Q', axis = alt.Axis(title=y_axis_title, offset= 5)),
         x= alt.X('date:T',axis= alt.Axis(grid=False, title='Datum 📅')),
         #y = alt.Y('median:Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)')),
-        color='beschreibung:N',
+        color=alt.Color('beschreibung:N', scale=alt.
+                    Scale(domain=dom, range=rng))
        # strokeDash=alt.condition(
        # alt.datum.date < alt.expr.toDate('2022-05-19T00:00sadfs:00'),
        # alt.value([3, 3]),  # dashed line: 5 pixels  dash + 5 pixels space
@@ -376,7 +404,7 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
         #y=alt.Y('mean:Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)')),
         x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
         y=alt.Y('count:Q', axis = alt.Axis(title='Anzahl Ergenbisse'),scale=alt.Scale(domain=list(domain3))),
-        color='beschreibung:N',
+        color=alt.Color('beschreibung:N', scale=alt.Scale(domain=dom, range=rng)),
         tooltip = alt.Tooltip(['date:T', aggregation+':Q', 'count:Q', 'beschreibung:N'])
     ).properties(
         width=widtht,
@@ -428,13 +456,14 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
 
     # Draw text labels near the points, and highlight based on selection
     text = chart.mark_text(align='left', dx=5, dy=-5).encode(
-        text=alt.condition(nearest, 'median:Q', alt.value(' '))
+        text=alt.condition(nearest, aggregation+':Q', alt.value(' '), format=".2f")
     )
 
     count_text = alt.Chart(source).mark_text(align='left', size=15).encode(
         text=alt.condition(nearest, 'count:Q', alt.value(' ')),
         y=alt.Y('row_number:O',axis=None),
-        color='beschreibung:N'
+        color=alt.Color('beschreibung:N', scale=alt.
+                    Scale(domain=dom, range=rng))
     ).transform_filter(
         nearest
     ).transform_window(
@@ -473,7 +502,7 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
         height=height
     )
 
-    count_chart_view = alt.vconcat(count_chart ,count_text_date ,(count_text.properties(title=alt.TitleParams(text='Anzahl Anfragenergebnisse', align='left')) | count_text.encode(text=aggregation).properties(title=alt.TitleParams(text=aggregation_dict[aggregation], align='left')) | count_text.encode(text='beschreibung:N').properties(title=alt.TitleParams(text='Beschreibung', align='left'))))
+    count_chart_view = alt.vconcat(count_chart ,count_text_date ,(count_text.properties(title=alt.TitleParams(text='Anzahl Anfragenergebnisse', align='left')) | count_text.encode(text=alt.condition(nearest, aggregation+':Q', alt.value(' '), format=".2f")).properties(title=alt.TitleParams(text=aggregation_dict[aggregation], align='left')) | count_text.encode(text='beschreibung:N').properties(title=alt.TitleParams(text='Beschreibung', align='left'))))
     
 
     annotationen = rule + events_text + rect
@@ -774,7 +803,7 @@ if(len(date_interval) == 2):
         summary_1300 = summarize(electricity_results_1300, seperation_var, int(selection_slider),'1300', selected_variable)
         summary = pd.concat([summary_3000, summary_1300])
         st.write(chart_header)
-        energy_line_chart_e = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events)
+        energy_line_chart_e = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events,energy_type='electricity', seperation_var=seperation_var)
         st.altair_chart(energy_line_chart_e, use_container_width=True)
 
         tariff_list_expander = st.expander('Tarife', expanded=False)
@@ -787,7 +816,7 @@ if(len(date_interval) == 2):
         summary_15000 = summarize(gas_results_15000, seperation_var,int(selection_slider),'15000',selected_variable)
         summary = pd.concat([summary_9000, summary_15000])
         st.write(chart_header)
-        energy_line_chart_e = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events)
+        energy_line_chart_e = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events,energy_type='gas', seperation_var=seperation_var)
         st.altair_chart(energy_line_chart_e, use_container_width=True)
 
         tariff_list_expander = st.expander('Tarife', expanded=False)
