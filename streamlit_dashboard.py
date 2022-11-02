@@ -582,7 +582,7 @@ st.markdown("""---""")
 
 ### MENU AUSWAHL REGION
 selection_menu_container = st.container()
-time_selection_column, attribute_selection_column, division_column= selection_menu_container.columns([1,1,2])
+time_selection_column, attribute_selection_column = selection_menu_container.columns([1,2])
 
 #attribute_selection_menu_container = st.container()
 #attribute_selection_column, attribute_aggregation_type_column = selection_menu_container.columns([1,3])
@@ -642,37 +642,35 @@ mean_median_btn = attribute_selection_column.radio(
         options=["Durchschnitt", "Median", "Minimum", "Maximum", "Standardabweichung"],
     )
 
+division_expander = st.expander('Weiteres Unterscheidungsmerkmal 🍎🍏 - Hier kannst du ein weiteres Unterscheidungsmerkmal an welches du die Tarife aufteilen möchtest.', expanded=False)
 
+with division_expander:
+    st.info(('Gebe ein weiteres Unterscheidungsmerkmal ein welchest du betrachten möchtest. \nZ.B.: Vergleiche die Entwicklung von {selected_variable} für Tarife mit **mit langer Preisgarantie** Tarife **mit kurzer Preisgarantie**.').format(selected_variable=selected_variable))
 
-with division_column:
-    division_expander = st.expander('Weiteres Unterscheidungsmerkmal 🍎🍏 - Hier kannst du ein weiteres Unterscheidungsmerkmal an welches du die Tarife aufteilen möchtest.', expanded=False)
-    with division_expander:
-        st.info(('Gebe ein weiteres Unterscheidungsmerkmal ein welchest du betrachten möchtest. \nZ.B.: Vergleiche die Entwicklung von {selected_variable} für Tarife mit **mit langer Preisgarantie** Tarife **mit kurzer Preisgarantie**.').format(selected_variable=selected_variable))
-
-        sep_var_col, sep_val_col = st.columns(2)
+    sep_var_col, sep_val_col = st.columns(2)
+        
+    seperation_var = sep_var_col.selectbox('Nach welches Attribut möchtest du aufteilen?',
+    ('Vertragslaufzeit', 'Preisgarantie', 'Öko Tarif/ Konventioneller Tarif', 'Anbieter'),
+    index=1,
+    help="Gebe hier ein nach welhes Attribut du trennen möchtest: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
             
-        seperation_var = sep_var_col.selectbox('Nach welches Attribut möchtest du aufteilen?',
-        ('Vertragslaufzeit', 'Preisgarantie', 'Öko Tarif/ Konventioneller Tarif', 'Anbieter'),
-        index=1,
-        help="Gebe hier ein nach welhes Attribut du trennen möchtest: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
-                
-        selection_slider = 12
+    selection_slider = 12
 
-        if( (seperation_var =='Vertragslaufzeit') |(seperation_var =='Preisgarantie')  ):
-            selection_slider = sep_val_col.slider('Ab welchen Wert für das Attribut '+seperation_var+ ' teilen?', 0, 24, 12, step=3,
-            help="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
-        elif((seperation_var =='Anbieter')):
-            col1, col2 = st.columns(2)
+    if( (seperation_var =='Vertragslaufzeit') |(seperation_var =='Preisgarantie')  ):
+        selection_slider = sep_val_col.slider('Ab welchen Wert für das Attribut '+seperation_var+ ' teilen?', 0, 24, 12, step=3,
+        help="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
+    elif((seperation_var =='Anbieter')):
+        col1, col2 = st.columns(2)
 
-            gas = gas_results_15000.copy()
-            gas['type'] = 'gas'
-            electricity = electricity_results_3000.copy()
-            electricity['type'] = 'electricity'
+        gas = gas_results_15000.copy()
+        gas['type'] = 'gas'
+        electricity = electricity_results_3000.copy()
+        electricity['type'] = 'electricity'
 
-            all = pd.concat([gas, electricity]).drop_duplicates(['providerName'])
+        all = pd.concat([gas, electricity]).drop_duplicates(['providerName'])
 
-            col1.write(all)
-            col2.write(len(all))
+        col1.write(all)
+        col2.write(len(all))
 
 ### ENDE MENU AUSWAHL REGION
 
