@@ -642,8 +642,9 @@ mean_median_btn = attribute_selection_column.radio(
         options=["Durchschnitt", "Median", "Minimum", "Maximum", "Standardabweichung"],
     )
 
-division_expander = st.expander('Weiteres Unterscheidungsmerkmal 🍎🍏', expanded=False)
+division_expander = st.expander('Weiteres Unterscheidungsmerkmal 🍎🍏 - Hier kannst du ein weiteres Unterscheidungsmerkmal an welches du die Tarife aufteilen möchtest.', expanded=False)
 
+st.info(('Gebe ein weiteres Unterscheidungsmerkmal welchest du betrachten möchtest z.B.: Vergleiche die Entwicklung des {selected_variable} der Tarifen mit langer Preisgarange und kurzer oder keiner Preisgarantie.').format(selected_variable=selected_variable))
 with division_expander:
 
     sep_var_col, sep_val_col = st.columns(2)
@@ -713,6 +714,7 @@ with annotation_container:
 
     selected_events = events_df.iloc[inxexes_of_selected]
 
+st.markdown("""---""")
 ## ENDE ANNOTATION REGION
 
 main_chart_container = st.container()
