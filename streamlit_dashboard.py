@@ -255,7 +255,6 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
 #@st.cache(ttl=24*60*60)
 def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNormalized', seperation_value=12, date_interval=['2022-07-17', '2022-10-17'], widtht=700, height=280,selected_variable='dataunit', events_df=None):
 
-
     aggregation_dict = {
         "Durchschnitt": "mean",
         "Median": "median",
@@ -364,6 +363,8 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
         height=height
     )
 
+    count_selector = alt.selection(type='single', encodings=['x'])
+
     count_chart = base.mark_bar(size=6).encode(
         #x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
         #y=alt.Y('mean:Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)')),
@@ -374,6 +375,18 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
     ).properties(
         width=widtht,
         height=60
+    ).add_selection(count_selector)
+
+
+    # Base chart for data tables
+    ranked_text = alt.Chart(source).mark_text(align='right').encode(
+        y=alt.Y('row_number:O',axis=None)
+    ).transform_filter(
+        count_selector
+    ).transform_window(
+        row_number='row_number()'
+    ).transform_filter(
+        'datum.row_number < 15'
     )
     
     view = base.encode(
@@ -444,7 +457,7 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
 
     final_view = main_view.add_selection(
     selection
-    ).interactive(bind_x=False)  & view & count_chart_view
+    ).interactive(bind_x=False)  & view & count_chart_view & ranked_text
 
     final_view = final_view.configure_legend(
   orient='bottom',
