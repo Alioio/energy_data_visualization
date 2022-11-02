@@ -664,7 +664,7 @@ with division_expander:
 
 st.markdown("""---""")
 
-#### AnNNOTATION REGION
+#### ANNOTATION REGION
 
 events_df = load_events_df()
 annotation_container = st.expander('Ereignisse', expanded=False)
@@ -704,8 +704,6 @@ with annotation_container:
 
 ## ENDE ANNOTATION REGION
 
-##DAS hier verschieben
-
 main_chart_container = st.container()
 energy_type_selections = ['Strom', 'Gas']
 electricity_chart_column, gas_chart_column = main_chart_container.columns(2) 
@@ -715,20 +713,21 @@ st.write('<style>div.st-bf{flex-direction:column;} div.st-ag{font-weight:bold;pa
 #st.radio("",("Durchschnitt","Median"))
 
 
-with electricity_chart_column:
-    chart_header = "**Preisentwicklung - {energy_selection}verträge ({selected_variable})**".format(selected_variable=selected_variable, energy_selection='Strom')
-    summary_3000 = summarize(electricity_results_3000, seperation_var, int(selection_slider),'3000',selected_variable)
-    summary_1300 = summarize(electricity_results_1300, seperation_var, int(selection_slider),'1300', selected_variable)
-    summary = pd.concat([summary_3000, summary_1300])
-    st.write(chart_header)
-    energy_line_chart_e = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events)
-    st.altair_chart(energy_line_chart_e, use_container_width=True)
+if(len(date_interval) == 2):
+    with electricity_chart_column:
+        chart_header = "**Preisentwicklung - {energy_selection}verträge ({selected_variable})**".format(selected_variable=selected_variable, energy_selection='Strom')
+        summary_3000 = summarize(electricity_results_3000, seperation_var, int(selection_slider),'3000',selected_variable)
+        summary_1300 = summarize(electricity_results_1300, seperation_var, int(selection_slider),'1300', selected_variable)
+        summary = pd.concat([summary_3000, summary_1300])
+        st.write(chart_header)
+        energy_line_chart_e = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events)
+        st.altair_chart(energy_line_chart_e, use_container_width=True)
 
-    tariff_list_expander = st.expander('Tarife', expanded=False)
+        tariff_list_expander = st.expander('Tarife', expanded=False)
 
-    with tariff_list_expander:
-        st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
-with gas_chart_column:
+        with tariff_list_expander:
+            st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
+    with gas_chart_column:
     chart_header = "**Preisentwicklung - {energy_selection}verträge ({selected_variable})**".format(selected_variable=selected_variable, energy_selection='Gas')
     summary_9000 = summarize(gas_results_9000, seperation_var,int(selection_slider),'9000',selected_variable)
     summary_15000 = summarize(gas_results_15000, seperation_var,int(selection_slider),'15000',selected_variable)
