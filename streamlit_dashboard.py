@@ -589,7 +589,7 @@ date_interval = [tree_months_ago, today]
 time_selection_column.write("**Zeitraum:**")
 time_selection = time_selection_column.selectbox(
     label=' ',
-    options=('1 Monat', '3 Monat', '1 Jahr', 'Eigener Zeitraum')
+    options=('1 Monat', '3 Monat', '1 Jahr', 'Eigener Zeitraum'),
     index=1)
 
 if(time_selection == '1 Monat'):
