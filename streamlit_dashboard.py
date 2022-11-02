@@ -590,7 +590,7 @@ time_selection_column.write("**Zeitraum:**")
 time_selection = time_selection_column.selectbox(
     label=' ',
     options=('1 Monat', '3 Monat', '1 Jahr', 'Eigener Zeitraum')
-    index=2)
+    index=1)
 
 if(time_selection == '1 Monat'):
     with time_selection_column:
@@ -623,7 +623,7 @@ attribute_selection_column.write("**Attributauswahl**")
 selected_variable = attribute_selection_column.selectbox(
     'Welches Attribut möchtest du anschauen?',
     ('Arbeitspreis', 'Grundpreis', 'Jahreskosten'),
-    index=2)
+    index=1)
 
 
 mean_median_btn = attribute_selection_column.radio(
