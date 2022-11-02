@@ -642,7 +642,7 @@ mean_median_btn = attribute_selection_column.radio(
         options=["Durchschnitt", "Median", "Minimum", "Maximum", "Standardabweichung"],
     )
 
-division_expander = st.expander('Weiteres Unterscheidungsmerkmal 🍎🍏 - Hier kannst du ein weiteres Unterscheidungsmerkmal an welches du die Tarife aufteilen möchtest.', expanded=False)
+division_expander = st.expander('Weiteres Unterscheidungsmerkmal 🍎🍏 - Hier kannst du ein weiteres Unterscheidungsmerkmal an welches du die Tarife aufteilen möchtest auswählen.', expanded=False)
 
 with division_expander:
     st.info(('Gebe ein weiteres Unterscheidungsmerkmal ein welchest du betrachten möchtest. \nZ.B.: Vergleiche die Entwicklung von {selected_variable} für Tarife mit **mit langer Preisgarantie** Tarife **mit kurzer Preisgarantie**.').format(selected_variable=selected_variable))
