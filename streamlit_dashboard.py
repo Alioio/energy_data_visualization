@@ -728,18 +728,18 @@ if(len(date_interval) == 2):
         with tariff_list_expander:
             st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
     with gas_chart_column:
-    chart_header = "**Preisentwicklung - {energy_selection}verträge ({selected_variable})**".format(selected_variable=selected_variable, energy_selection='Gas')
-    summary_9000 = summarize(gas_results_9000, seperation_var,int(selection_slider),'9000',selected_variable)
-    summary_15000 = summarize(gas_results_15000, seperation_var,int(selection_slider),'15000',selected_variable)
-    summary = pd.concat([summary_9000, summary_15000])
-    st.write(chart_header)
-    energy_line_chart_e = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events)
-    st.altair_chart(energy_line_chart_e, use_container_width=True)
+        chart_header = "**Preisentwicklung - {energy_selection}verträge ({selected_variable})**".format(selected_variable=selected_variable, energy_selection='Gas')
+        summary_9000 = summarize(gas_results_9000, seperation_var,int(selection_slider),'9000',selected_variable)
+        summary_15000 = summarize(gas_results_15000, seperation_var,int(selection_slider),'15000',selected_variable)
+        summary = pd.concat([summary_9000, summary_15000])
+        st.write(chart_header)
+        energy_line_chart_e = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events)
+        st.altair_chart(energy_line_chart_e, use_container_width=True)
 
-    tariff_list_expander = st.expander('Tarife', expanded=False)
+        tariff_list_expander = st.expander('Tarife', expanded=False)
 
-    with tariff_list_expander:
-        st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
+        with tariff_list_expander:
+            st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
 
 
 
