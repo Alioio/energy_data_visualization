@@ -623,7 +623,7 @@ attribute_selection_column.write("**Attributauswahl**")
 selected_variable = attribute_selection_column.selectbox(
     'Welches Attribut möchtest du anschauen?',
     ('Arbeitspreis', 'Grundpreis', 'Jahreskosten'),
-    index=1)
+    index=0)
 
 
 mean_median_btn = attribute_selection_column.radio(
@@ -639,6 +639,7 @@ with division_expander:
         
     seperation_var = sep_var_col.selectbox('Nach welches Attribut möchtest du aufteilen?',
     ('Vertragslaufzeit', 'Preisgarantie', 'Öko Tarif/ Konventioneller Tarif', 'Anbieter'),
+    index=1,
     help="Gebe hier ein nach welhes Attribut du trennen möchtest: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
             
     selection_slider = 12
