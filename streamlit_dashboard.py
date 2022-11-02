@@ -255,6 +255,17 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
 #@st.cache(ttl=24*60*60)
 def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNormalized', seperation_value=12, date_interval=['2022-07-17', '2022-10-17'], widtht=700, height=280,selected_variable='dataunit', events_df=None):
 
+
+    aggregation_dict = {
+        "Durchschnitt": "mean",
+        "Median": "median",
+        "Standardabweichung": "std",
+        "Minimum":"min",
+        "Maximum":"max"
+        }
+
+    aggregation = aggregation_dict[aggregation]
+    
     ## Definitionsbereich der Y achse
     min = np.floor(summary[aggregation].min() - (0.025*summary[aggregation].min()))
     max = np.ceil( summary[aggregation].max() + (0.025*summary[aggregation].max()))
@@ -628,7 +639,7 @@ selected_variable = attribute_selection_column.selectbox(
 
 mean_median_btn = attribute_selection_column.radio(
         "Wie möchtest du die Tarifdaten aggregieren?",
-        options=["mean", "median", "min", "max", "std"],
+        options=["Durchschnitt", "Median", "Minimum", "Maximum", "Standardabweichung"],
     )
 
 division_expander = st.expander('Weiteres Unterscheidungsmerkmal 🍎🍏', expanded=False)
