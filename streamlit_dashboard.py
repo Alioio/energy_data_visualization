@@ -363,6 +363,7 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
         height=height
     )
 
+    '''
     count_selector = alt.selection(type='single', encodings=['x'])
 
     count_chart = base.mark_bar(size=6).encode(
@@ -388,7 +389,7 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
     ).transform_filter(
         'datum.row_number < 15'
     )
-    
+    '''
     view = base.encode(
         y = alt.Y(aggregation+':Q', axis = alt.Axis(title=y_axis_title),scale=alt.Scale(domain=list(domain1))),
     ).add_selection(
@@ -397,6 +398,7 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
         width=widtht,
         height=60,
     )
+    
 
     ###############
 
@@ -457,7 +459,8 @@ def create_chart(summary,  aggregation='mean', seperation_var='priceGuaranteeNor
 
     final_view = main_view.add_selection(
     selection
-    ).interactive(bind_x=False)  & view & count_chart_view & ranked_text
+    ).interactive(bind_x=False)  & view & count_chart_view 
+    #& ranked_text
 
     final_view = final_view.configure_legend(
   orient='bottom',
