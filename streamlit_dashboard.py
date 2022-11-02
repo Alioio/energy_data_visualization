@@ -589,7 +589,8 @@ date_interval = [tree_months_ago, today]
 time_selection_column.write("**Zeitraum:**")
 time_selection = time_selection_column.selectbox(
     label=' ',
-    options=('1 Monat', '3 Monat', '1 Jahr', 'Eigener Zeitraum'))
+    options=('1 Monat', '3 Monat', '1 Jahr', 'Eigener Zeitraum')
+    index=2)
 
 if(time_selection == '1 Monat'):
     with time_selection_column:
@@ -753,3 +754,5 @@ with gas_chart_column:
 
 #gasimportdaten
 #https://www.bundesnetzagentur.de/DE/Fachthemen/ElektrizitaetundGas/Versorgungssicherheit/aktuelle_gasversorgung_/_svg/Gasimporte/Gasimporte.html
+#wetter und verbrauch daten
+#https://www.bundesnetzagentur.de/DE/Gasversorgung/aktuelle_gasversorgung/_svg/GasverbrauchSLP_monatlich/Gasverbrauch_SLP_M.html;jsessionid=BC4D6020F61B843F1C0FB52C4384DE6E
