@@ -725,8 +725,8 @@ st.write('<style>div.row-widget.stRadio > div{flex-direction:row;justify-content
 st.write('<style>div.st-bf{flex-direction:column;} div.st-ag{font-weight:bold;padding-left:2px;}</style>', unsafe_allow_html=True)
 #st.radio("",("Durchschnitt","Median"))
 
-st.write(('#### Preisentwicklung - {selected_variable} und {seperation_var} der Strom - und Gastarife.').format(selected_variable=selected_variable, seperation_var=seperation_var))
-st.write('Die oberen zwei Grafiken zeigen die Entwicklung der Tarife bezüglich {selected_variable} und {seperation_var}. Im dritten Grafik ist die Anzahl der Suchanfragenergebnisse visualisiert.')
+main_chart_container.write(('#### Preisentwicklung - {selected_variable} und {seperation_var} der Strom - und Gastarife.').format(selected_variable=selected_variable, seperation_var=seperation_var))
+main_chart_container.write(('Die oberen zwei Grafiken zeigen die Entwicklung der Tarife bezüglich {selected_variable} und {seperation_var}. Im dritten Grafik ist die Anzahl der Suchanfragenergebnisse visualisiert.').format(selected_variable=selected_variable, seperation_var=seperation_var))
 
 if(len(date_interval) == 2):
     with electricity_chart_column:
