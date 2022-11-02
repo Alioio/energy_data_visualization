@@ -582,7 +582,7 @@ st.markdown("""---""")
 
 ### MENU AUSWAHL REGION
 selection_menu_container = st.container()
-time_selection_column, attribute_selection_column = selection_menu_container.columns([1,3])
+time_selection_column, attribute_selection_column = selection_menu_container.columns([1,2])
 
 #attribute_selection_menu_container = st.container()
 #attribute_selection_column, attribute_aggregation_type_column = selection_menu_container.columns([1,3])
