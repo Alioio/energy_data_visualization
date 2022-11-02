@@ -554,7 +554,7 @@ def load_events_df():
 row1_1, row1_2 = st.columns((2, 3))
 
 with row1_1:
-    st.title(" Strom 🔌 &  Gas 🔥 Dashboard :bar_chart:")
+    st.title(" Strom 🔌 & 🔥 Gas Dashboard ")
     
 with row1_2:
     st.write(
@@ -679,10 +679,10 @@ st.markdown("""---""")
 #### ANNOTATION REGION
 
 events_df = load_events_df()
-annotation_container = st.expander('Ereignisse', expanded=False)
+annotation_container = st.expander('Ereignisse 📰🌟 - Hier kannst du Ereinisse in die Zeitachse der Grafiken einblenden oder entfernen', expanded=False)
 
 with annotation_container:
-    st.info('Hier kannst du Ereinisse in die Zeitachse der Grafiken einfügen oder entfernen.')
+    st.info('Ereignisse werden als vertikale Annotationslienien auf die Zeitachse der Grafiken eingeblendet. Dies unterschtüzt das Storrytelling Charater der Grafik und das Betrachten von Ereignissen zusemmen mit bestimmten Ereignissen.')
 
     gd = GridOptionsBuilder.from_dataframe(events_df)
     gd.configure_pagination(enabled=True)
