@@ -7,6 +7,7 @@ from datetime import datetime as dt
 from datetime import date, timedelta
 import altair as alt
 import altair_catplot as altcat
+alt.renderers.set_embed_options(tooltip={"theme": "dark"})
 import streamlit as st
 from st_aggrid import AgGrid, GridUpdateMode, JsCode
 from st_aggrid.grid_options_builder import GridOptionsBuilder
@@ -400,7 +401,7 @@ def create_chart(summary,  aggregation='mean', seperation_value=12, date_interva
     
     #count_selector = alt.selection(type='single', encodings=['x'])
 
-    count_chart = base.mark_bar(size=6).encode(
+    count_chart = base.mark_bar(size=6.8).encode(
         #x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
         #y=alt.Y('mean:Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)')),
         x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
