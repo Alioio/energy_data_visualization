@@ -1,4 +1,9 @@
+#[theme]
+#base="light"
+#primaryColor="#fc6e44"
+#textColor="#243039"
 [theme]
-base="light"
+base="dark"
 primaryColor="#fc6e44"
-textColor="#243039"
+textColor="#ffffff"
+
