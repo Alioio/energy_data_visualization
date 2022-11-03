@@ -387,7 +387,7 @@ def create_chart(summary,  aggregation='mean', seperation_value=12, date_interva
         x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
         y=alt.Y(aggregation+':Q', axis = alt.Axis(title=y_axis_title,  offset= 5), scale=alt.Scale(domain=list(domain2))),
         tooltip = alt.Tooltip(['date:T', aggregation+':Q', 'count:Q', 'beschreibung:N']),
-        opacity=alt.condition(selection, alt.value(1), alt.value(0.5)),
+        opacity=alt.condition(selection, alt.value(1), alt.value(0.2)),
       #  strokeDash=alt.condition(
       #  alt.datum.date < alt.expr.toDate('2022-05-19T00:00:fasdf00'),
       #  alt.value([3, 3]),  # dashed line: 5 pixels  dash + 5 pixels space
