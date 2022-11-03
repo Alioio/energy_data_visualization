@@ -479,6 +479,7 @@ def create_chart(summary,  aggregation='mean', seperation_value=12, date_interva
 
     count_text_date = alt.Chart(source).mark_text(align='left', size=25).encode(
         text=alt.condition(nearest, 'date:T', alt.value(' ')),
+        color=alt.value('#243039')
         #y=alt.Y('row_number:O',axis=None)
     ).transform_filter(
         nearest
