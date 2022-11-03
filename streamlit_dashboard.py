@@ -518,7 +518,7 @@ def create_chart(summary,  aggregation='mean', seperation_value=12, date_interva
     #& ranked_text
 
     final_view = final_view.configure_legend(
-  orient='bottom',
+  orient='top',
   labelFontSize=10
 )
 
