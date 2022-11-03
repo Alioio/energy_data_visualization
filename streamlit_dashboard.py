@@ -294,6 +294,9 @@ def create_chart(summary,  aggregation='mean', seperation_value=12, date_interva
     x_init = pd.to_datetime(date_interval).astype(int) / 1E6
     interval = alt.selection_interval(encodings=['x'],init = {'x':x_init.to_list()})
     selection = alt.selection_multi(fields=['beschreibung'], bind='legend')
+    # Create a selection that chooses the nearest point & selects based on x-value
+    nearest = alt.selection(type='single', nearest=True, on='mouseover',
+                            fields=['date'], empty='none')
     
     interval_y = alt.selection_interval(encodings=['y'], bind="scales")
 
@@ -365,8 +368,6 @@ def create_chart(summary,  aggregation='mean', seperation_value=12, date_interva
               source[source.beschreibung.str.contains('1300') & ~source.beschreibung.str.contains('Nicht-Öko')].iloc[0].beschreibung,
               source[source.beschreibung.str.contains('1300') & source.beschreibung.str.contains('Nicht-Öko')].iloc[0].beschreibung]
 
-    print('Zeilen: ', dom)
-
     base = alt.Chart(source).mark_line(size=3).encode(
         #x= alt.X('date:T',axis= alt.Axis(grid=False, title='Datum')),
         y = alt.Y(aggregation+':Q', axis = alt.Axis(title=y_axis_title, offset= 5)),
@@ -385,7 +386,7 @@ def create_chart(summary,  aggregation='mean', seperation_value=12, date_interva
         x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
         y=alt.Y(aggregation+':Q', axis = alt.Axis(title=y_axis_title,  offset= 5), scale=alt.Scale(domain=list(domain2))),
         tooltip = alt.Tooltip(['date:T', aggregation+':Q', 'count:Q', 'beschreibung:N']),
-        opacity=alt.condition(selection, alt.value(1), alt.value(0.2)),
+        opacity=alt.condition(selection, alt.value(1), alt.value(0.5)),
       #  strokeDash=alt.condition(
       #  alt.datum.date < alt.expr.toDate('2022-05-19T00:00:fasdf00'),
       #  alt.value([3, 3]),  # dashed line: 5 pixels  dash + 5 pixels space
@@ -405,6 +406,7 @@ def create_chart(summary,  aggregation='mean', seperation_value=12, date_interva
         x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
         y=alt.Y('count:Q', axis = alt.Axis(title='Anzahl Ergenbisse'),scale=alt.Scale(domain=list(domain3))),
         color=alt.Color('beschreibung:N', scale=alt.Scale(domain=dom, range=rng)),
+        opacity=alt.condition(nearest, alt.value(1), alt.value(0.3)),
         tooltip = alt.Tooltip(['date:T', aggregation+':Q', 'count:Q', 'beschreibung:N'])
     ).properties(
         width=widtht,
@@ -435,10 +437,6 @@ def create_chart(summary,  aggregation='mean', seperation_value=12, date_interva
     
 
     ###############
-
-    # Create a selection that chooses the nearest point & selects based on x-value
-    nearest = alt.selection(type='single', nearest=True, on='mouseover',
-                            fields=['date'], empty='none')
 
     # Transparent selectors across the chart. This is what tells us
     # the x-value of the cursor
