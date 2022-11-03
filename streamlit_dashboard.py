@@ -262,7 +262,7 @@ def create_chart(summary,  aggregation='mean', seperation_value=12, date_interva
         "Minimum":"min",
         "Maximum":"max",
         "mean":"Durchschnitt",
-        "Median":"median",
+        "median":"Median",
         "min":"Minimum",
         "max":"Maximum",
         "std":"Standardabweichung"
