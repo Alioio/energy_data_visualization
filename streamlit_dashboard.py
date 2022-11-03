@@ -406,8 +406,13 @@ def create_chart(summary,  aggregation='mean', seperation_value=12, date_interva
         x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
         y=alt.Y('count:Q', axis = alt.Axis(title='Anzahl Ergenbisse'),scale=alt.Scale(domain=list(domain3))),
         color=alt.Color('beschreibung:N', scale=alt.Scale(domain=dom, range=rng)),
-        opacity=alt.condition(nearest, alt.value(1), alt.value(0.3)),
-        tooltip = alt.Tooltip(['date:T', aggregation+':Q', 'count:Q', 'beschreibung:N'])
+        opacity=alt.condition(nearest, alt.value(1), alt.value(0.5)),
+        tooltip = alt.Tooltip(['date:T', aggregation+':Q', 'count:Q', 'beschreibung:N']),
+        order=alt.Order(
+        # Sort the segments of the bars by this field
+        'count:Q',
+      sort='descending'
+    )
     ).properties(
         width=widtht,
         height=200
