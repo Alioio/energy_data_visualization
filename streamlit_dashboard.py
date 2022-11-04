@@ -8,6 +8,7 @@ from datetime import date, timedelta
 import altair as alt
 import altair_catplot as altcat
 alt.renderers.set_embed_options(tooltip={"theme": "dark"})
+alt.data_transformers.disable_max_rows()
 import streamlit as st
 from st_aggrid import AgGrid, GridUpdateMode, JsCode
 from st_aggrid.grid_options_builder import GridOptionsBuilder
@@ -398,7 +399,6 @@ def create_chart(summary,  aggregation='mean', seperation_value=12, date_interva
         height=height
     )
 
-    
     #count_selector = alt.selection(type='single', encodings=['x'])
 
     count_chart = base.mark_bar(size=6.8).encode(
@@ -491,6 +491,38 @@ def create_chart(summary,  aggregation='mean', seperation_value=12, date_interva
         height=80
     )
 
+    count_text_date = alt.Chart(source).mark_text(align='left', size=25).encode(
+        text=alt.condition(nearest, 'date:T', alt.value(' ')),
+        color=alt.value('#243039')
+        #y=alt.Y('row_number:O',axis=None)
+    ).transform_filter(
+        nearest
+    ).transform_window(
+        row_number='row_number()'
+    ).properties(
+        width=80,
+        height=80
+    )
+
+
+    #print(electricity_results_3000.head())
+    #print(source.columns)
+    
+    #results = electricity_results_3000.drop_duplicates(['date', 'providerName', 'tariffName'])
+
+    #test_chart = alt.Chart(source).mark_point().encode(
+    #    x='dataunit:Q',
+    #    y='datafixed:Q',
+    #    tooltip='date:T'
+    #    #color='proroviderName:N'
+    #).transform_filter(
+    #    nearest
+    #).transform_lookup(
+    #    lookup='date',
+    #    from_=alt.LookupData(data=electricity_results_3000, key='date',
+    #    fields=['dataunit', 'datafixed','providerName'])
+#)
+
     # Draw a rule at the location of the selection
     rules = alt.Chart(source).mark_rule(color='gray').encode(
         x='date:T',
@@ -509,7 +541,6 @@ def create_chart(summary,  aggregation='mean', seperation_value=12, date_interva
 
     count_chart_view = alt.vconcat(count_chart ,count_text_date ,(count_text.properties(title=alt.TitleParams(text='Anzahl Anfragenergebnisse', align='left')) | count_text.encode(text=alt.condition(nearest, aggregation+':Q', alt.value(' '), format=".2f")).properties(title=alt.TitleParams(text=aggregation_dict[aggregation], align='left')) | count_text.encode(text='beschreibung:N').properties(title=alt.TitleParams(text='Beschreibung', align='left'))))
     
-
     annotationen = rule + events_text + rect
 
     main_view = (main_view + annotationen)
@@ -696,6 +727,16 @@ elif(time_selection == 'Eigener Zeitraum'):
                     key='#date_range',
                     help="Start-und End Datum: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
 
+plz_list = electricity_results_3000['plz'].unique().tolist()
+print(electricity_results_3000['plz'].unique())
+plz_list.append('Alle')
+
+with time_selection_column:
+    st.multiselect(
+            'Tarife aus welchen Postleitzahlen soll enthalten sein?',
+            plz_list,
+            default=['Alle'])
+
 #Energietypauswahl
 #energy_type_selections = selection_dropdown_column[0].multiselect(
 #    'What are your favorite colors',
@@ -836,7 +877,8 @@ if(len(date_interval) == 2):
 
 
 #print(high_consume.dtypes)
-#tariff_summary, boxplot = summarize_tariffs(high_consume)
+#tariff_summary, boxplot = summarize_tariffs(electricity_results_3000)
+#st.write(tariff_summary)
 
 #main_chart_container.altair_chart(boxplot)
 
