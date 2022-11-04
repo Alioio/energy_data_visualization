@@ -16,6 +16,7 @@ import threading
 import concurrent.futures
 import json
 
+
 def my_theme():
   return {
     'config': {
@@ -249,6 +250,7 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         summary_mit_laufzeit.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
         summary_mit_laufzeit['date'] = summary_mit_laufzeit.index
         summary_mit_laufzeit['beschreibung'] = 'Verbrauch: '+consumption+' und Nicht-Öko Tarif'
+        summary = pd.concat([summary_mit_laufzeit, summary_ohne_laufzeit])
     elif(seperation_var == 'signupPartner'):
         ohne_laufzeit  = results[results[seperation_var] == 'vx']
         summary_ohne_laufzeit = ohne_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
@@ -305,7 +307,7 @@ def create_chart(summary,  aggregation='mean', seperation_value=12, date_interva
     domain3 = np.linspace(0, chart_max, 2, endpoint = True)
     
     source = summary.copy()
-    
+    #, color='#4650DF'
     x_init = pd.to_datetime(date_interval).astype(int) / 1E6
     interval = alt.selection_interval(encodings=['x'],init = {'x':x_init.to_list()})
     selection = alt.selection_multi(fields=['beschreibung'], bind='legend')
@@ -503,7 +505,6 @@ def create_chart(summary,  aggregation='mean', seperation_value=12, date_interva
         height=80
     )
 
-
     count_text_date = alt.Chart(source).mark_text(align='left', size=25).encode(
         text=alt.condition(nearest, 'date:T', alt.value(' ')),
         color=alt.value('#243039')
@@ -530,24 +531,6 @@ def create_chart(summary,  aggregation='mean', seperation_value=12, date_interva
         height=80
     )
 
-
-    #print(electricity_results_3000.head())
-    #print(source.columns)
-    
-    #results = electricity_results_3000.drop_duplicates(['date', 'providerName', 'tariffName'])
-
-    #test_chart = alt.Chart(source).mark_point().encode(
-    #    x='dataunit:Q',
-    #    y='datafixed:Q',
-    #    tooltip='date:T'
-    #    #color='proroviderName:N'
-    #).transform_filter(
-    #    nearest
-    #).transform_lookup(
-    #    lookup='date',
-    #    from_=alt.LookupData(data=electricity_results_3000, key='date',
-    #    fields=['dataunit', 'datafixed','providerName'])
-#)
 
     # Draw a rule at the location of the selection
     rules = alt.Chart(source).mark_rule(color='gray').encode(
@@ -573,7 +556,7 @@ def create_chart(summary,  aggregation='mean', seperation_value=12, date_interva
 
     final_view = main_view.add_selection(
     selection
-    ).interactive(bind_x=False)  & view & count_chart_view 
+    ).interactive(bind_x=False)  & view & count_chart_view
     #& ranked_text
 
     final_view = final_view.configure_legend(
@@ -690,7 +673,7 @@ with row1_2:
     st.write(
         """
     ##
-    **Dieses Dashboard ist zum Explorieren von Strom- und Gaspreisdaten**. Hier einen kuzen Abschnitt einfügen welches diesen Dashboard beschreibt.
+    **Dieses Dashboard ist zum Explorieren von Strom- und Gastarifdaten**. Hier einen kuzen Abschnitt einfügen welches diesen Dashboard beschreibt.
     Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
     At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
     """
@@ -896,7 +879,6 @@ if(len(date_interval) == 2):
         with tariff_list_expander:
             st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
 
-print(electricity_results_3000.signupPartner.unique())
 
 #javascript integriegen um screen weite zu lesen:
 #https://www.youtube.com/watch?v=TqOGBOHHxrU
