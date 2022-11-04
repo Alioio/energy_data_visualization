@@ -180,8 +180,6 @@ def read_energy_data(energy_type, verbrauch):
 #gas_loader_thread = threading.Thread(target=read_energy_data, args = ('gas'), name='gas_loader_thread')
 #high_consume = electricity_loader_thread.start()
 
-
-
 with concurrent.futures.ThreadPoolExecutor() as executor:
     electricity_reader_thread_3000 = executor.submit(read_energy_data, 'electricity', '3000')
     electricity_reader_thread_1300 = executor.submit(read_energy_data, 'electricity', '1300')
@@ -208,6 +206,8 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         seperation_var='priceGuaranteeNormalized'
     elif(seperation_var == 'Öko Tarif/ Konventioneller Tarif'):
         seperation_var = 'dataeco'
+    elif(seperation_var == 'Partner'):
+        seperation_var = 'signupPartner'
     
     variables_dict = {
         "Arbeitspreis": "dataunit",
@@ -221,7 +221,7 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
     }
     
 
-    if(seperation_var != 'dataeco'):
+    if( (seperation_var == 'contractDurationNormalized') | (seperation_var == 'priceGuaranteeNormalized') ):
         ohne_laufzeit  = results[results[seperation_var] < seperation_value]
         summary_ohne_laufzeit = ohne_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
         summary_ohne_laufzeit.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
@@ -236,7 +236,7 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         summary_mit_laufzeit['beschreibung'] = 'Verbrauch: '+consumption+'\n'+sep_var_readable+' >= '+str(seperation_value)
 
         summary = pd.concat([summary_mit_laufzeit, summary_ohne_laufzeit])
-    else:
+    elif(seperation_var == 'dataeco'):
         ohne_laufzeit  = results[results[seperation_var] == True]
         summary_ohne_laufzeit = ohne_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
         summary_ohne_laufzeit.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
@@ -249,6 +249,19 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         summary_mit_laufzeit.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
         summary_mit_laufzeit['date'] = summary_mit_laufzeit.index
         summary_mit_laufzeit['beschreibung'] = 'Verbrauch: '+consumption+' und Nicht-Öko Tarif'
+    elif(seperation_var == 'signupPartner'):
+        ohne_laufzeit  = results[results[seperation_var] == 'vx']
+        summary_ohne_laufzeit = ohne_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
+        summary_ohne_laufzeit.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
+        summary_ohne_laufzeit['date'] = summary_ohne_laufzeit.index
+        summary_ohne_laufzeit['beschreibung'] = 'Verbrauch: '+consumption+' Verivox' 
+        
+        #mit_laufzeit  = high_consume[high_consume['contractDurationNormalized'] > 11]
+        mit_laufzeit  = results[results[seperation_var] ==  'c24']
+        summary_mit_laufzeit = mit_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
+        summary_mit_laufzeit.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
+        summary_mit_laufzeit['date'] = summary_mit_laufzeit.index
+        summary_mit_laufzeit['beschreibung'] = 'Verbrauch: '+consumption+' Check24'
 
         summary = pd.concat([summary_mit_laufzeit, summary_ohne_laufzeit])
 
@@ -345,13 +358,13 @@ def create_chart(summary,  aggregation='mean', seperation_value=12, date_interva
         y_axis_title = 'etwas anderes'
 
     print('SEP VAR: ',seperation_var,'   ',seperation_value)
-    if((energy_type == 'gas') & (seperation_var != 'Öko Tarif/ Konventioneller Tarif')):
+    if((energy_type == 'gas') & (seperation_var != 'Öko Tarif/ Konventioneller Tarif') & (seperation_var != 'Partner')):
         rng = ['#4650DF','#FC6E44', '#006E78', '#20B679']
         dom = [source[source.beschreibung.str.contains('15000') & source.beschreibung.str.contains('<')].iloc[0].beschreibung,
               source[source.beschreibung.str.contains('15000') & source.beschreibung.str.contains('>=')].iloc[0].beschreibung,
               source[source.beschreibung.str.contains('9000') & source.beschreibung.str.contains('<')].iloc[0].beschreibung,
               source[source.beschreibung.str.contains('9000') & source.beschreibung.str.contains('>=')].iloc[0].beschreibung]
-    elif((energy_type == 'electricity') & (seperation_var != 'Öko Tarif/ Konventioneller Tarif')):
+    elif((energy_type == 'electricity') & (seperation_var != 'Öko Tarif/ Konventioneller Tarif') & (seperation_var != 'Partner')):
         rng = ['#4650DF','#FC6E44', '#006E78', '#20B679']
         dom = [source[source.beschreibung.str.contains('3000') & source.beschreibung.str.contains('<')].iloc[0].beschreibung,
               source[source.beschreibung.str.contains('3000') & source.beschreibung.str.contains('>=')].iloc[0].beschreibung,
@@ -369,6 +382,19 @@ def create_chart(summary,  aggregation='mean', seperation_value=12, date_interva
               source[source.beschreibung.str.contains('3000') & source.beschreibung.str.contains('Nicht-Öko')].iloc[0].beschreibung,
               source[source.beschreibung.str.contains('1300') & ~source.beschreibung.str.contains('Nicht-Öko')].iloc[0].beschreibung,
               source[source.beschreibung.str.contains('1300') & source.beschreibung.str.contains('Nicht-Öko')].iloc[0].beschreibung]
+    elif((energy_type == 'gas') & (seperation_var == 'Partner')):
+        rng = ['#4650DF','#FC6E44', '#006E78', '#20B679']
+        dom = [source[source.beschreibung.str.contains('15000') & source.beschreibung.str.contains('Check24')].iloc[0].beschreibung,
+              source[source.beschreibung.str.contains('15000') & source.beschreibung.str.contains('Verivox')].iloc[0].beschreibung,
+              source[source.beschreibung.str.contains('9000') & source.beschreibung.str.contains('Check24')].iloc[0].beschreibung,
+              source[source.beschreibung.str.contains('9000') & source.beschreibung.str.contains('Verivox')].iloc[0].beschreibung]
+    elif((energy_type == 'electricity')  & (seperation_var == 'Partner')):
+        rng = ['#4650DF','#FC6E44', '#006E78', '#20B679']
+        dom = [source[source.beschreibung.str.contains('3000') & source.beschreibung.str.contains('Check24')].iloc[0].beschreibung,
+              source[source.beschreibung.str.contains('3000') & source.beschreibung.str.contains('Verivox')].iloc[0].beschreibung,
+              source[source.beschreibung.str.contains('1300') & source.beschreibung.str.contains('Check24')].iloc[0].beschreibung,
+              source[source.beschreibung.str.contains('1300') & source.beschreibung.str.contains('Verivox')].iloc[0].beschreibung]
+
 
     base = alt.Chart(source).mark_line(size=3).encode(
         #x= alt.X('date:T',axis= alt.Axis(grid=False, title='Datum')),
@@ -764,7 +790,7 @@ with division_expander:
     sep_var_col, sep_val_col = st.columns(2)
         
     seperation_var = sep_var_col.selectbox('Nach welches Attribut möchtest du aufteilen?',
-    ('Vertragslaufzeit', 'Preisgarantie', 'Öko Tarif/ Konventioneller Tarif', 'Anbieter'),
+    ('Vertragslaufzeit', 'Preisgarantie', 'Öko Tarif/ Konventioneller Tarif','Partner', 'Anbieter'),
     index=1,
     help="Gebe hier ein nach welhes Attribut du trennen möchtest: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
             
@@ -870,7 +896,7 @@ if(len(date_interval) == 2):
         with tariff_list_expander:
             st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
 
-
+print(electricity_results_3000.signupPartner.unique())
 
 #javascript integriegen um screen weite zu lesen:
 #https://www.youtube.com/watch?v=TqOGBOHHxrU
