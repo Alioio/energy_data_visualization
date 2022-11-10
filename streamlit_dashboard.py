@@ -351,7 +351,7 @@ def create_chart(summary, summary_global, aggregation='mean', seperation_value=1
     chart_max = summary_global[(summary_global.date >= pd.to_datetime(date_interval[0])) & (summary_global.date <= pd.to_datetime(date_interval[1])) ]['count'].max()
     
     st.write('Chart max: ',chart_max,'  ',date_interval)
-    chart_max = np.ceil( chart_max + (1.05*chart_max))
+    chart_max = np.ceil( chart_max + (0.2*chart_max))
     domain3 = np.linspace(0, chart_max, 2, endpoint = True)
     
     source = summary.copy()
@@ -477,7 +477,7 @@ def create_chart(summary, summary_global, aggregation='mean', seperation_value=1
 
     #count_selector = alt.selection(type='single', encodings=['x'])
 
-    count_chart = base.mark_bar(size=6.8).encode(
+    count_chart = alt.Chart(summary_global).mark_bar(size=6.8).encode(
         #x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
         #y=alt.Y('mean:Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)')),
         x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
@@ -539,7 +539,7 @@ def create_chart(summary, summary_global, aggregation='mean', seperation_value=1
         text=alt.condition(nearest, aggregation+':Q', alt.value(' '), format=".2f")
     )
 
-    count_text = alt.Chart(source).mark_text(align='left', size=15).encode(
+    count_text = alt.Chart(summary_global).mark_text(align='left', size=15).encode(
         text=alt.condition(nearest, 'count:Q', alt.value(' ')),
         y=alt.Y('row_number:O',axis=None),
         color=alt.Color('beschreibung:N', scale=alt.
@@ -553,7 +553,7 @@ def create_chart(summary, summary_global, aggregation='mean', seperation_value=1
         height=80
     )
 
-    count_text_date = alt.Chart(source).mark_text(align='left', size=25).encode(
+    count_text_date = alt.Chart(summary_global).mark_text(align='left', size=25).encode(
         text=alt.condition(nearest, 'date:T', alt.value(' ')),
         color=alt.value('#243039')
         #y=alt.Y('row_number:O',axis=None)
@@ -566,7 +566,7 @@ def create_chart(summary, summary_global, aggregation='mean', seperation_value=1
         height=80
     )
 
-    count_text_date = alt.Chart(source).mark_text(align='left', size=25).encode(
+    count_text_date = alt.Chart(summary_global).mark_text(align='left', size=25).encode(
         text=alt.condition(nearest, 'date:T', alt.value(' ')),
         color=alt.value('#243039')
         #y=alt.Y('row_number:O',axis=None)
