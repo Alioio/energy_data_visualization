@@ -541,11 +541,11 @@ def create_chart(summary, summary_global, aggregation='mean', seperation_value=1
         text=alt.condition(nearest, aggregation+':Q', alt.value(' '), format=".2f")
     )
 
-
-    count_text_date = alt.Chart(summary_global).mark_text(align='left', size=25).encode(
-        text=alt.condition(nearest, 'date:T', alt.value(' ')),
-        color=alt.value('#243039')
-        #y=alt.Y('row_number:O',axis=None)
+    count_text = alt.Chart(summary_global).mark_text(align='left', size=15).encode(
+        text=alt.condition(nearest, 'count:Q', alt.value(' ')),
+        y=alt.Y('row_number:O',axis=None),
+        color=alt.Color('beschreibung:N', scale=alt.
+                    Scale(domain=dom, range=rng))
     ).transform_filter(
         nearest
     ).transform_window(
@@ -554,6 +554,7 @@ def create_chart(summary, summary_global, aggregation='mean', seperation_value=1
         width=80,
         height=80
     )
+
 
     count_text_date = alt.Chart(summary_global).mark_text(align='left', size=25).encode(
         text=alt.condition(nearest, 'date:T', alt.value(' ')),
