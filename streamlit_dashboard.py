@@ -344,6 +344,7 @@ def create_chart(summary,  aggregation='mean', seperation_value=12, date_interva
     #count view scaling
     chart_max = summary[(summary.date >= pd.to_datetime(date_interval[0])) & (summary.date <= pd.to_datetime(date_interval[1])) ]['count'].max()
     
+    st.write('Chart max: ',chart_max)
     chart_max = np.ceil( chart_max + (1.05*chart_max))
     domain3 = np.linspace(0, chart_max, 2, endpoint = True)
     
