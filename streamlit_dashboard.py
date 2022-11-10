@@ -200,10 +200,6 @@ with concurrent.futures.ThreadPoolExecutor() as executor:
 #@st.cache(ttl=24*60*60)
 def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_value=12, consumption='unknown',selected_variable='dataunit'):
 
-    results = results.groupby(['date','plz']).apply(
-        lambda df: df.nsmallest(10, columns='dataunit')
-        ).reset_index(drop=True)
-
     sep_var_readable = seperation_var
     if(seperation_var == 'Vertragslaufzeit'):
         seperation_var = 'contractDurationNormalized'
@@ -227,7 +223,14 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
     
 
     if( (seperation_var == 'contractDurationNormalized') | (seperation_var == 'priceGuaranteeNormalized') ):
+
+
         ohne_laufzeit  = results[results[seperation_var] < seperation_value]
+
+        ohne_laufzeit = ohne_laufzeit.groupby(['date','plz']).apply(
+        lambda df: df.nsmallest(10, columns='dataunit')
+        ).reset_index(drop=True)
+
         summary_ohne_laufzeit = ohne_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
         summary_ohne_laufzeit.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
         summary_ohne_laufzeit['date'] = summary_ohne_laufzeit.index
@@ -235,6 +238,10 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         
         #mit_laufzeit  = high_consume[high_consume['contractDurationNormalized'] > 11]
         mit_laufzeit  = results[results[seperation_var] >= seperation_value]
+        mit_laufzeit = mit_laufzeit.groupby(['date','plz']).apply(
+        lambda df: df.nsmallest(10, columns='dataunit')
+        ).reset_index(drop=True)
+
         summary_mit_laufzeit = mit_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
         summary_mit_laufzeit.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
         summary_mit_laufzeit['date'] = summary_mit_laufzeit.index
@@ -243,6 +250,12 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         summary = pd.concat([summary_mit_laufzeit, summary_ohne_laufzeit])
     elif(seperation_var == 'dataeco'):
         ohne_laufzeit  = results[results[seperation_var] == True]
+
+        ohne_laufzeit = ohne_laufzeit.groupby(['date','plz']).apply(
+        lambda df: df.nsmallest(10, columns='dataunit')
+        ).reset_index(drop=True)
+
+        
         summary_ohne_laufzeit = ohne_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
         summary_ohne_laufzeit.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
         summary_ohne_laufzeit['date'] = summary_ohne_laufzeit.index
@@ -250,6 +263,12 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         
         #mit_laufzeit  = high_consume[high_consume['contractDurationNormalized'] > 11]
         mit_laufzeit  = results[results[seperation_var] ==  False]
+
+        mit_laufzeit  = results[results[seperation_var] >= seperation_value]
+        mit_laufzeit = mit_laufzeit.groupby(['date','plz']).apply(
+        lambda df: df.nsmallest(10, columns='dataunit')
+        ).reset_index(drop=True)
+
         summary_mit_laufzeit = mit_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
         summary_mit_laufzeit.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
         summary_mit_laufzeit['date'] = summary_mit_laufzeit.index
@@ -257,6 +276,11 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         summary = pd.concat([summary_mit_laufzeit, summary_ohne_laufzeit])
     elif(seperation_var == 'signupPartner'):
         ohne_laufzeit  = results[results[seperation_var] == 'vx']
+
+        ohne_laufzeit = ohne_laufzeit.groupby(['date','plz']).apply(
+        lambda df: df.nsmallest(10, columns='dataunit')
+        ).reset_index(drop=True)
+
         summary_ohne_laufzeit = ohne_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
         summary_ohne_laufzeit.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
         summary_ohne_laufzeit['date'] = summary_ohne_laufzeit.index
@@ -264,6 +288,12 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         
         #mit_laufzeit  = high_consume[high_consume['contractDurationNormalized'] > 11]
         mit_laufzeit  = results[results[seperation_var] ==  'c24']
+
+        mit_laufzeit  = results[results[seperation_var] >= seperation_value]
+        mit_laufzeit = mit_laufzeit.groupby(['date','plz']).apply(
+        lambda df: df.nsmallest(10, columns='dataunit')
+        ).reset_index(drop=True)
+        
         summary_mit_laufzeit = mit_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
         summary_mit_laufzeit.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
         summary_mit_laufzeit['date'] = summary_mit_laufzeit.index
