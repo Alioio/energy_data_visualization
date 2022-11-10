@@ -229,7 +229,7 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
 
         if(top_n != 'Alle'):
             ohne_laufzeit = ohne_laufzeit.groupby(['date','plz']).apply(
-            lambda df: df.nsmallest(int(top)_n, columns='dataunit')
+            lambda df: df.nsmallest(int(top_n), columns='dataunit')
             ).reset_index(drop=True)
 
         summary_ohne_laufzeit = ohne_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
