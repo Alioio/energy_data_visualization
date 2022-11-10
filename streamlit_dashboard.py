@@ -200,6 +200,10 @@ with concurrent.futures.ThreadPoolExecutor() as executor:
 #@st.cache(ttl=24*60*60)
 def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_value=12, consumption='unknown',selected_variable='dataunit'):
 
+    results = results.groupby(['date','plz']).apply(
+        lambda df: df.nsmallest(1, columns='dataunit')
+        ).reset_index(drop=True)
+
     sep_var_readable = seperation_var
     if(seperation_var == 'Vertragslaufzeit'):
         seperation_var = 'contractDurationNormalized'
