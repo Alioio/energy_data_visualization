@@ -542,7 +542,7 @@ def create_chart(summary, summary_global, aggregation='mean', seperation_value=1
     )
 
     count_text = alt.Chart(summary_global).mark_text(align='left', size=15).encode(
-        text=alt.condition(nearest, 'count:Q', alt.value(' ')),
+        text=alt.condition(nearest, 'date:T', alt.value(' ')),
         y=alt.Y('row_number:O',axis=None),
         color=alt.Color('beschreibung:N', scale=alt.
                     Scale(domain=dom, range=rng))
