@@ -222,7 +222,7 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
     }
 
 
-    summary_global = results[ ['date','providerName','tariffName','signupPartner' variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
+    summary_global = results[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
     summary_global.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
     summary_global['date'] = summary_global.index
     summary_global['beschreibung'] = 'Verbrauch: '+consumption
