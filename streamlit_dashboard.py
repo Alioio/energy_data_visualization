@@ -222,7 +222,7 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
     }
 
 
-    summary_global = results[ ['date','providerName','tariffName','signupPartner']].groupby(['date']).agg(agg_functions)
+    summary_global = results[ ['date','providerName','tariffName','signupPartner' variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
     summary_global.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
     summary_global['date'] = summary_global.index
     summary_global['beschreibung'] = 'Verbrauch: '+consumption
@@ -348,7 +348,7 @@ def create_chart(summary, summary_global, aggregation='mean', seperation_value=1
     domain2 = np.linspace(chart_min, chart_max, 2, endpoint = True)
 
     #count view scaling
-    chart_max = summary[(summary.date >= pd.to_datetime(date_interval[0])) & (summary.date <= pd.to_datetime(date_interval[1])) ].groupby(['beschreibung']).reset_index(drop=True)['count'].max()
+    chart_max = summary_global[(summary_global.date >= pd.to_datetime(date_interval[0])) & (summary_global.date <= pd.to_datetime(date_interval[1])) ]['count'].max()
     
     st.write('Chart max: ',chart_max,'  ',date_interval)
     chart_max = np.ceil( chart_max + (1.05*chart_max))
