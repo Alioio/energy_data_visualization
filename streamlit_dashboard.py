@@ -723,7 +723,6 @@ with row1_2:
         )
 
 ### END HEADER REGION
-
 st.markdown("""---""")
 
 ### MENU AUSWAHL REGION
@@ -800,8 +799,8 @@ mean_median_btn = attribute_selection_column.radio(
 
 with attribute_selection_column:
     top_n = st.multiselect(
-                'Tarife aus welchen Postleitzahlen soll enthalten sein?',
-                [1, 5, 10, 15],
+                'Top N?',
+                [1, 5, 10, 15, 'Alle'],
                 default=['Alle'])
 
 division_expander = st.expander('Weiteres Unterscheidungsmerkmal 🍎🍏 - Hier kannst du ein weiteres Unterscheidungsmerkmal an welches du die Tarife aufteilen möchtest auswählen.', expanded=False)
