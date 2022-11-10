@@ -201,7 +201,7 @@ with concurrent.futures.ThreadPoolExecutor() as executor:
 def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_value=12, consumption='unknown',selected_variable='dataunit'):
 
     results = results.groupby(['date','plz']).apply(
-        lambda df: df.nsmallest(1, columns='dataunit')
+        lambda df: df.nsmallest(10, columns='dataunit')
         ).reset_index(drop=True)
 
     sep_var_readable = seperation_var
@@ -664,7 +664,6 @@ def load_events_df():
 
     ])
     return events_df
-
 
 #### HEADER REGION
 
