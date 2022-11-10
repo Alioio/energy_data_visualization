@@ -220,7 +220,14 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         variables_dict[selected_variable]:
         [ 'mean', 'median','std', 'min', 'max', 'count']
     }
+
+
+    summary_global = results[ ['date','providerName','tariffName','signupPartner']].groupby(['date']).agg(agg_functions)
+    summary_global.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
+    summary_global['date'] = summary_global.index
+    summary_global['beschreibung'] = 'Verbrauch: '+consumption
     
+
     if( (seperation_var == 'contractDurationNormalized') | (seperation_var == 'priceGuaranteeNormalized') ):
 
 
@@ -307,10 +314,10 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
 
         summary = pd.concat([summary_mit_laufzeit, summary_ohne_laufzeit])
 
-    return summary
+    return summary, summary_global
 
 #@st.cache(ttl=24*60*60)
-def create_chart(summary,  aggregation='mean', seperation_value=12, date_interval=['2022-07-17', '2022-10-17'], widtht=700, height=280,selected_variable='dataunit', events_df=None, energy_type='gas', seperation_var='priceGuaranteeNormalized'):
+def create_chart(summary, summary_global, aggregation='mean', seperation_value=12, date_interval=['2022-07-17', '2022-10-17'], widtht=700, height=280,selected_variable='dataunit', events_df=None, energy_type='gas', seperation_var='priceGuaranteeNormalized'):
 
     aggregation_dict = {
         "Durchschnitt": "mean",
@@ -899,11 +906,12 @@ if(len(date_interval) == 2):
     with electricity_chart_column:
         print(top_n,'  ',type(top_n))
         chart_header = "**{energy_selection}verträge ({selected_variable})**".format(selected_variable=selected_variable, energy_selection='Strom')
-        summary_3000 = summarize(electricity_results_3000, seperation_var, int(selection_slider),'3000',selected_variable, top_n=top_n)
-        summary_1300 = summarize(electricity_results_1300, seperation_var, int(selection_slider),'1300', selected_variable, top_n=top_n)
+        summary_3000, summary_global_3000 = summarize(electricity_results_3000, seperation_var, int(selection_slider),'3000',selected_variable, top_n=top_n)
+        summary_1300, summary_global_1300 = summarize(electricity_results_1300, seperation_var, int(selection_slider),'1300', selected_variable, top_n=top_n) 
+        summary_global = pd.concat([summary_global_3000,summary_global_1300])      
         summary = pd.concat([summary_3000, summary_1300])
         st.write(chart_header)
-        energy_line_chart_e = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events,energy_type='electricity', seperation_var=seperation_var)
+        energy_line_chart_e = create_chart(summary, summary_global, mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events,energy_type='electricity', seperation_var=seperation_var)
         st.altair_chart(energy_line_chart_e, use_container_width=True)
 
         tariff_list_expander = st.expander('Tarife', expanded=False)
@@ -912,11 +920,12 @@ if(len(date_interval) == 2):
             st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
     with gas_chart_column:
         chart_header = "**{energy_selection}verträge ({selected_variable})**".format(selected_variable=selected_variable, energy_selection='Gas')
-        summary_9000 = summarize(gas_results_9000, seperation_var,int(selection_slider),'9000',selected_variable, top_n=top_n)
-        summary_15000 = summarize(gas_results_15000, seperation_var,int(selection_slider),'15000',selected_variable, top_n=top_n)
+        summary_9000, summary_global_9000 = summarize(gas_results_9000, seperation_var,int(selection_slider),'9000',selected_variable, top_n=top_n)
+        summary_15000, summary_global_15000 = summarize(gas_results_15000, seperation_var,int(selection_slider),'15000',selected_variable, top_n=top_n)
+        summary_global = pd.concat([summary_global_9000,summary_global_15000])
         summary = pd.concat([summary_9000, summary_15000])
         st.write(chart_header)
-        energy_line_chart_e = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events,energy_type='gas', seperation_var=seperation_var)
+        energy_line_chart_e = create_chart(summary, summary_global, mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events,energy_type='gas', seperation_var=seperation_var)
         st.altair_chart(energy_line_chart_e, use_container_width=True)
 
         tariff_list_expander = st.expander('Tarife', expanded=False)
