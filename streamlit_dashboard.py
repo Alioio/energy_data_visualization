@@ -807,8 +807,7 @@ mean_median_btn = attribute_selection_column.radio(
 with attribute_selection_column:
     top_n = st.selectbox(
                 'Top N?',
-                ['1', '5', '10', '15', 'Alle'],
-                default=['Alle'])
+                ['1', '5', '10', '15', 'Alle'])
 
 division_expander = st.expander('Weiteres Unterscheidungsmerkmal 🍎🍏 - Hier kannst du ein weiteres Unterscheidungsmerkmal an welches du die Tarife aufteilen möchtest auswählen.', expanded=False)
 
