@@ -493,6 +493,8 @@ def create_chart(summary, summary_global, aggregation='mean', seperation_value=1
     ).properties(
         width=widtht,
         height=200
+    ).add_selection(
+        nearest
     )
     #.add_selection(count_selector)
 
