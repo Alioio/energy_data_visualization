@@ -198,7 +198,7 @@ with concurrent.futures.ThreadPoolExecutor() as executor:
 #high_consume = read_energy_data('gas')
 
 #@st.cache(ttl=24*60*60)
-def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_value=12, consumption='unknown',selected_variable='dataunit'):
+def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_value=12, consumption='unknown',selected_variable='dataunit', top_n = 10):
 
     sep_var_readable = seperation_var
     if(seperation_var == 'Vertragslaufzeit'):
@@ -798,6 +798,12 @@ mean_median_btn = attribute_selection_column.radio(
         options=["Durchschnitt", "Median", "Minimum", "Maximum", "Standardabweichung"],
     )
 
+with attribute_selection_column:
+    top_n = st.multiselect(
+                'Tarife aus welchen Postleitzahlen soll enthalten sein?',
+                [1, 5, 10, 15],
+                default=['Alle'])
+
 division_expander = st.expander('Weiteres Unterscheidungsmerkmal 🍎🍏 - Hier kannst du ein weiteres Unterscheidungsmerkmal an welches du die Tarife aufteilen möchtest auswählen.', expanded=False)
 
 with division_expander:
@@ -887,8 +893,8 @@ main_chart_container.write(('Die oberen zwei Grafiken zeigen die Entwicklung der
 if(len(date_interval) == 2):
     with electricity_chart_column:
         chart_header = "**{energy_selection}verträge ({selected_variable})**".format(selected_variable=selected_variable, energy_selection='Strom')
-        summary_3000 = summarize(electricity_results_3000, seperation_var, int(selection_slider),'3000',selected_variable)
-        summary_1300 = summarize(electricity_results_1300, seperation_var, int(selection_slider),'1300', selected_variable)
+        summary_3000 = summarize(electricity_results_3000, seperation_var, int(selection_slider),'3000',selected_variable, top_n=top_n)
+        summary_1300 = summarize(electricity_results_1300, seperation_var, int(selection_slider),'1300', selected_variable, top_n=top_n)
         summary = pd.concat([summary_3000, summary_1300])
         st.write(chart_header)
         energy_line_chart_e = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events,energy_type='electricity', seperation_var=seperation_var)
@@ -900,8 +906,8 @@ if(len(date_interval) == 2):
             st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
     with gas_chart_column:
         chart_header = "**{energy_selection}verträge ({selected_variable})**".format(selected_variable=selected_variable, energy_selection='Gas')
-        summary_9000 = summarize(gas_results_9000, seperation_var,int(selection_slider),'9000',selected_variable)
-        summary_15000 = summarize(gas_results_15000, seperation_var,int(selection_slider),'15000',selected_variable)
+        summary_9000 = summarize(gas_results_9000, seperation_var,int(selection_slider),'9000',selected_variable, top_n=top_n)
+        summary_15000 = summarize(gas_results_15000, seperation_var,int(selection_slider),'15000',selected_variable, top_n=top_n)
         summary = pd.concat([summary_9000, summary_15000])
         st.write(chart_header)
         energy_line_chart_e = create_chart(summary,mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events,energy_type='gas', seperation_var=seperation_var)
