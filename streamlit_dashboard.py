@@ -805,7 +805,7 @@ mean_median_btn = attribute_selection_column.radio(
     )
 
 with attribute_selection_column:
-    top_n = st.multiselect(
+    top_n = st.selectbox(
                 'Top N?',
                 ['1', '5', '10', '15', 'Alle'],
                 default=['Alle'])
@@ -898,6 +898,7 @@ main_chart_container.write(('Die oberen zwei Grafiken zeigen die Entwicklung der
 
 if(len(date_interval) == 2):
     with electricity_chart_column:
+        print(top_n,'  ',type(top_n))
         chart_header = "**{energy_selection}verträge ({selected_variable})**".format(selected_variable=selected_variable, energy_selection='Strom')
         summary_3000 = summarize(electricity_results_3000, seperation_var, int(selection_slider),'3000',selected_variable, top_n=top_n)
         summary_1300 = summarize(electricity_results_1300, seperation_var, int(selection_slider),'1300', selected_variable, top_n=top_n)
