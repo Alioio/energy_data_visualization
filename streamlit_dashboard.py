@@ -198,7 +198,7 @@ with concurrent.futures.ThreadPoolExecutor() as executor:
 #high_consume = read_energy_data('gas')
 
 #@st.cache(ttl=24*60*60)
-def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_value=12, consumption='unknown',selected_variable='dataunit', top_n = 10):
+def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_value=12, consumption='unknown',selected_variable='dataunit', top_n = '10'):
 
     sep_var_readable = seperation_var
     if(seperation_var == 'Vertragslaufzeit'):
