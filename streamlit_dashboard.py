@@ -805,7 +805,7 @@ with attribute_selection_column:
     top_n = st.selectbox(
                 'Top N?',
                 ['1','3', '5', '10', '15', 'Alle'],
-                index=2)
+                index=3)
 
 division_expander = st.expander('Weiteres Unterscheidungsmerkmal 🍎🍏 - Hier kannst du ein weiteres Unterscheidungsmerkmal an welches du die Tarife aufteilen möchtest auswählen.', expanded=False)
 
