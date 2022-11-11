@@ -445,7 +445,6 @@ def create_chart(summary, summary_global, aggregation='mean', seperation_value=1
               source[source.beschreibung.str.contains('1300') & source.beschreibung.str.contains('Check24')].iloc[0].beschreibung,
               source[source.beschreibung.str.contains('1300') & source.beschreibung.str.contains('Verivox')].iloc[0].beschreibung]
 
-
     base = alt.Chart(source).mark_line(size=3).encode(
         #x= alt.X('date:T',axis= alt.Axis(grid=False, title='Datum')),
         y = alt.Y(aggregation+':Q', axis = alt.Axis(title=y_axis_title, offset= 5)),
@@ -542,7 +541,7 @@ def create_chart(summary, summary_global, aggregation='mean', seperation_value=1
     )
 
     count_text = alt.Chart(summary_global).mark_text(align='left', size=15).encode(
-        text=alt.condition(nearest, 'date:T', alt.value(' ')),
+        text=alt.condition(nearest, 'count:Q', alt.value(' ')),
         y=alt.Y('row_number:O',axis=None),
         color=alt.Color('beschreibung:N', scale=alt.
                     Scale(domain=dom, range=rng))
@@ -554,6 +553,7 @@ def create_chart(summary, summary_global, aggregation='mean', seperation_value=1
         width=80,
         height=80
     )
+
 
 
     count_text_date = alt.Chart(summary_global).mark_text(align='left', size=25).encode(
@@ -804,7 +804,8 @@ mean_median_btn = attribute_selection_column.radio(
 with attribute_selection_column:
     top_n = st.selectbox(
                 'Top N?',
-                ['1', '5', '10', '15', 'Alle'])
+                ['1','3', '5', '10', '15', 'Alle'],
+                index=2)
 
 division_expander = st.expander('Weiteres Unterscheidungsmerkmal 🍎🍏 - Hier kannst du ein weiteres Unterscheidungsmerkmal an welches du die Tarife aufteilen möchtest auswählen.', expanded=False)
 
