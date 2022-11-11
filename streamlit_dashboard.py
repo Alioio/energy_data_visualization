@@ -221,13 +221,11 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         [ 'mean', 'median','std', 'min', 'max', 'count']
     }
 
-
     summary_global = results[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
     summary_global.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
     summary_global['date'] = summary_global.index
     summary_global['beschreibung'] = 'Verbrauch: '+consumption
     
-
     if( (seperation_var == 'contractDurationNormalized') | (seperation_var == 'priceGuaranteeNormalized') ):
 
 
@@ -350,7 +348,7 @@ def create_chart(summary, summary_global, aggregation='mean', seperation_value=1
     #count view scaling
     chart_max = summary_global[(summary_global.date >= pd.to_datetime(date_interval[0])) & (summary_global.date <= pd.to_datetime(date_interval[1])) ]['count'].max()
     
-    st.write('Chart max: ',chart_max,'  ',date_interval)
+    #st.write('Chart max: ',chart_max,'  ',date_interval)
     chart_max = np.ceil( chart_max + (0.2*chart_max))
     domain3 = np.linspace(0, chart_max, 2, endpoint = True)
     
@@ -517,7 +515,6 @@ def create_chart(summary, summary_global, aggregation='mean', seperation_value=1
         width=widtht,
         height=60,
     )
-    
 
     ###############
 
@@ -553,8 +550,6 @@ def create_chart(summary, summary_global, aggregation='mean', seperation_value=1
         width=80,
         height=80
     )
-
-
 
     count_text_date = alt.Chart(summary_global).mark_text(align='left', size=25).encode(
         text=alt.condition(nearest, 'date:T', alt.value(' ')),
