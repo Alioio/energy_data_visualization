@@ -53,13 +53,13 @@ st.markdown('<style>body{background-color: Blue;}</style>',unsafe_allow_html=Tru
 def unit_to_month(currentunit, value_with_current_unit):
       #  ['month', 'once', 'year', 'week', 'nan', 'day', 'indefinitely'],
     if(currentunit == 'month'):
-        return value_with_current_unit
+        return np.abs(value_with_current_unit)
     elif(currentunit == 'year'):
-        return value_with_current_unit *12
+        return np.abs(value_with_current_unit *12)
     if(currentunit == 'week'):
-        return value_with_current_unit *0.25
+        return np.abs(value_with_current_unit *0.25)
     if(currentunit == 'day'):
-        return value_with_current_unit / 30
+        return np.abs(value_with_current_unit / 30)
     if( (( currentunit == 'nan' or currentunit == 'once' or currentunit == 'indefinitely') & value_with_current_unit == 0)):
         return value_with_current_unit
     else:
