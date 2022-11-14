@@ -66,15 +66,15 @@ def unit_to_month(currentunit, value_with_current_unit):
         return int(-1)
 
 def set_plz(ID):
-  if(ID==3):
+  if((ID==3) | (ID==1)):
     return '10245'
-  elif(ID==7):
+  elif((ID==7) | (ID==5)):
     return '99425'
-  elif(ID==11):
+  elif((ID==11)| (ID==9)):
     return '33100'
-  elif(ID==15):
+  elif((ID==15) |(ID==13)):
     return '50670'
-  elif(ID==19):
+  elif((ID==19) |(ID==17)):
     return '71771'
 
 @st.cache(ttl=7*24*60*60)
