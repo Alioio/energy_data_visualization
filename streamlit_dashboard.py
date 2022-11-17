@@ -61,7 +61,7 @@ def unit_to_month(currentunit, value_with_current_unit):
     if(currentunit == 'day'):
         return np.abs(value_with_current_unit / 30)
     if( (( currentunit == 'nan' or currentunit == 'once' or currentunit == 'indefinitely') & value_with_current_unit == 0)):
-        return value_with_current_unit
+        return 0
     else:
         return int(-1)
 
@@ -216,24 +216,33 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         "Jahreskosten": "Jahreskosten"
         }
 
+    global_summary = results.groupby(['date']).count()
+    global_summary['date'] = global_summary.index
+    global_summary['count_global'] = global_summary.providerName
+    global_summary = global_summary[['date', 'count_global']].reset_index(drop=True).copy()
+    
+    print(global_summary.head())
+    #summary_global['beschreibung'] = 'Verbrauch: '+consumption
+    print('global: ',len(global_summary))
+
     agg_functions = {
         variables_dict[selected_variable]:
         [ 'mean', 'median','std', 'min', 'max', 'count']
     }
-
-    summary_global = results[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
-    summary_global.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
-    summary_global['date'] = summary_global.index
-    summary_global['beschreibung'] = 'Verbrauch: '+consumption
     
     if( (seperation_var == 'contractDurationNormalized') | (seperation_var == 'priceGuaranteeNormalized') ):
 
-
         ohne_laufzeit  = results[results[seperation_var] < seperation_value]
+
+        summary_ohne_laufzeit_all = ohne_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
+        summary_ohne_laufzeit_all.columns =  [ 'mean_all', 'median_all','std_all', 'min_all', 'max_all', 'count_all']
+        #summary_ohne_laufzeit_all['date'] = summary_ohne_laufzeit_all.index
+        #summary_ohne_laufzeit_all['beschreibung'] = 'Verbrauch: '+consumption+'\n'+sep_var_readable+' < '+str(seperation_value) 
+        
 
         if(top_n != 'Alle'):
             ohne_laufzeit = ohne_laufzeit.groupby(['date','plz']).apply(
-            lambda df: df.nsmallest(int(top_n), columns='dataunit')
+            lambda column: column.nsmallest(int(top_n), columns='dataunit')
             ).reset_index(drop=True)
 
         summary_ohne_laufzeit = ohne_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
@@ -243,6 +252,9 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         
         #mit_laufzeit  = high_consume[high_consume['contractDurationNormalized'] > 11]
         mit_laufzeit  = results[results[seperation_var] >= seperation_value]
+        summary_mit_laufzeit_all = mit_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
+        summary_mit_laufzeit_all.columns =  [ 'mean_all', 'median_all','std_all', 'min_all', 'max_all', 'count_all']
+
         if(top_n != 'Alle'):
             mit_laufzeit = mit_laufzeit.groupby(['date','plz']).apply(
             lambda df: df.nsmallest(int(top_n), columns='dataunit')
@@ -254,6 +266,24 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         summary_mit_laufzeit['beschreibung'] = 'Verbrauch: '+consumption+'\n'+sep_var_readable+' >= '+str(seperation_value)
 
         summary = pd.concat([summary_mit_laufzeit, summary_ohne_laufzeit])
+        summary_all = pd.concat([summary_mit_laufzeit_all, summary_ohne_laufzeit_all])
+        print('all: ',len(summary_all))
+        print('summary: ',len(summary))
+        summary = pd.concat([summary, summary_all], axis=1)
+
+        print('summary before merge: ',len(summary),'   ',summary.columns)
+
+        summary = summary.reset_index(drop=True).copy()
+
+        summary = pd.merge(left=summary,
+                 right=global_summary,
+                 how='left',
+                 on='date')
+
+        print('summary after merge: ',len(summary),'   ',summary.columns)
+
+        
+
     elif(seperation_var == 'dataeco'):
         ohne_laufzeit  = results[results[seperation_var] == True]
 
@@ -312,10 +342,10 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
 
         summary = pd.concat([summary_mit_laufzeit, summary_ohne_laufzeit])
 
-    return summary, summary_global
+    return summary
 
 #@st.cache(ttl=24*60*60)
-def create_chart(summary, summary_global, aggregation='mean', seperation_value=12, date_interval=['2022-07-17', '2022-10-17'], widtht=700, height=280,selected_variable='dataunit', events_df=None, energy_type='gas', seperation_var='priceGuaranteeNormalized'):
+def create_chart(summary, aggregation='mean', seperation_value=12, date_interval=['2022-07-17', '2022-10-17'], widtht=700, height=280,selected_variable='dataunit', events_df=None, energy_type='gas', seperation_var='priceGuaranteeNormalized'):
 
     aggregation_dict = {
         "Durchschnitt": "mean",
@@ -346,16 +376,19 @@ def create_chart(summary, summary_global, aggregation='mean', seperation_value=1
     domain2 = np.linspace(chart_min, chart_max, 2, endpoint = True)
 
     #count view scaling
-    chart_max = summary_global[(summary_global.date >= pd.to_datetime(date_interval[0])) & (summary_global.date <= pd.to_datetime(date_interval[1])) ]['count'].max()
+    
+    x_init = pd.to_datetime(date_interval).astype(int) / 1E6
+    interval = alt.selection_interval(encodings=['x'],init = {'x':x_init.to_list()})
     
     #st.write('Chart max: ',chart_max,'  ',date_interval)
-    chart_max = np.ceil( chart_max + (0.2*chart_max))
+    chart_max = summary['count_global'].max()
+    chart_max = np.ceil( chart_max + (3.5*chart_max))
     domain3 = np.linspace(0, chart_max, 2, endpoint = True)
     
     source = summary.copy()
     #, color='#4650DF'
-    x_init = pd.to_datetime(date_interval).astype(int) / 1E6
-    interval = alt.selection_interval(encodings=['x'],init = {'x':x_init.to_list()})
+   
+    
     selection = alt.selection_multi(fields=['beschreibung'], bind='legend')
     # Create a selection that chooses the nearest point & selects based on x-value
     nearest = alt.selection(type='single', nearest=True, on='mouseover',
@@ -474,11 +507,11 @@ def create_chart(summary, summary_global, aggregation='mean', seperation_value=1
 
     #count_selector = alt.selection(type='single', encodings=['x'])
 
-    count_chart = alt.Chart(summary_global).mark_bar(size=6.8).encode(
+    count_chart = base.mark_bar(size=6.8).encode(
         #x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
         #y=alt.Y('mean:Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)')),
         x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
-        y=alt.Y('count:Q', axis = alt.Axis(title='Anzahl Ergenbisse'),scale=alt.Scale(domain=list(domain3))),
+        y=alt.Y('count_global:Q', axis = alt.Axis(title='Anzahl Ergenbisse'), scale=alt.Scale(domain=domain3)),
         color=alt.Color('beschreibung:N', scale=alt.Scale(domain=dom, range=rng)),
         opacity=alt.condition(nearest, alt.value(1), alt.value(0.5)),
         tooltip = alt.Tooltip(['date:T', aggregation+':Q', 'count:Q', 'beschreibung:N']),
@@ -537,8 +570,8 @@ def create_chart(summary, summary_global, aggregation='mean', seperation_value=1
         text=alt.condition(nearest, aggregation+':Q', alt.value(' '), format=".2f")
     )
 
-    count_text = alt.Chart(summary_global).mark_text(align='left', size=15).encode(
-        text=alt.condition(nearest, 'count:Q', alt.value(' ')),
+    count_text = alt.Chart(source).mark_text(align='left', size=15).encode(
+        text=alt.condition(nearest, 'count_all:Q', alt.value(' ')),
         y=alt.Y('row_number:O',axis=None),
         color=alt.Color('beschreibung:N', scale=alt.
                     Scale(domain=dom, range=rng))
@@ -551,7 +584,7 @@ def create_chart(summary, summary_global, aggregation='mean', seperation_value=1
         height=80
     )
 
-    count_text_date = alt.Chart(summary_global).mark_text(align='left', size=25).encode(
+    count_text_date = alt.Chart(source).mark_text(align='left', size=25).encode(
         text=alt.condition(nearest, 'date:T', alt.value(' ')),
         color=alt.value('#243039')
         #y=alt.Y('row_number:O',axis=None)
@@ -892,12 +925,12 @@ if(len(date_interval) == 2):
     with electricity_chart_column:
         print(top_n,'  ',type(top_n))
         chart_header = "**{energy_selection}verträge ({selected_variable})**".format(selected_variable=selected_variable, energy_selection='Strom')
-        summary_3000, summary_global_3000 = summarize(electricity_results_3000, seperation_var, int(selection_slider),'3000',selected_variable, top_n=top_n)
-        summary_1300, summary_global_1300 = summarize(electricity_results_1300, seperation_var, int(selection_slider),'1300', selected_variable, top_n=top_n) 
-        summary_global = pd.concat([summary_global_3000,summary_global_1300])      
+        summary_3000 = summarize(electricity_results_3000, seperation_var, int(selection_slider),'3000',selected_variable, top_n=top_n)
+        summary_1300 = summarize(electricity_results_1300, seperation_var, int(selection_slider),'1300', selected_variable, top_n=top_n) 
+           
         summary = pd.concat([summary_3000, summary_1300])
         st.write(chart_header)
-        energy_line_chart_e = create_chart(summary, summary_global, mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events,energy_type='electricity', seperation_var=seperation_var)
+        energy_line_chart_e = create_chart(summary, mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events,energy_type='electricity', seperation_var=seperation_var)
         st.altair_chart(energy_line_chart_e, use_container_width=True)
 
         tariff_list_expander = st.expander('Tarife', expanded=False)
@@ -906,12 +939,12 @@ if(len(date_interval) == 2):
             st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
     with gas_chart_column:
         chart_header = "**{energy_selection}verträge ({selected_variable})**".format(selected_variable=selected_variable, energy_selection='Gas')
-        summary_9000, summary_global_9000 = summarize(gas_results_9000, seperation_var,int(selection_slider),'9000',selected_variable, top_n=top_n)
-        summary_15000, summary_global_15000 = summarize(gas_results_15000, seperation_var,int(selection_slider),'15000',selected_variable, top_n=top_n)
-        summary_global = pd.concat([summary_global_9000,summary_global_15000])
+        summary_9000 = summarize(gas_results_9000, seperation_var,int(selection_slider),'9000',selected_variable, top_n=top_n)
+        summary_15000 = summarize(gas_results_15000, seperation_var,int(selection_slider),'15000',selected_variable, top_n=top_n)
+        
         summary = pd.concat([summary_9000, summary_15000])
         st.write(chart_header)
-        energy_line_chart_e = create_chart(summary, summary_global, mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events,energy_type='gas', seperation_var=seperation_var)
+        energy_line_chart_e = create_chart(summary, mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events,energy_type='gas', seperation_var=seperation_var)
         st.altair_chart(energy_line_chart_e, use_container_width=True)
 
         tariff_list_expander = st.expander('Tarife', expanded=False)
