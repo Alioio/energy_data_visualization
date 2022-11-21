@@ -440,7 +440,7 @@ def create_chart(summary, aggregation='mean', seperation_value=12, date_interval
     interval = alt.selection_interval(encodings=['x'],init = {'x':x_init.to_list()})
     
     chart_max = summary['count_global'].max()
-    chart_max = np.ceil( chart_max + (1.1*chart_max))
+    chart_max = np.ceil( chart_max + (1.15*chart_max))
     domain3 = np.linspace(0, chart_max, 2, endpoint = True)
     
     source = summary.copy()
