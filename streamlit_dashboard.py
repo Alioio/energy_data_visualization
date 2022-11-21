@@ -444,8 +444,6 @@ def create_chart(summary, aggregation='mean', seperation_value=12, date_interval
     domain3 = np.linspace(0, chart_max, 2, endpoint = True)
     
     source = summary.copy()
-    #, color='#4650DF'
-   
     
     selection = alt.selection_multi(fields=['beschreibung'], bind='legend')
     # Create a selection that chooses the nearest point & selects based on x-value
@@ -573,7 +571,7 @@ def create_chart(summary, aggregation='mean', seperation_value=12, date_interval
         y=alt.Y('count_all:Q', axis = alt.Axis(title='Anzahl Ergenbisse'), scale=alt.Scale(domain=domain3)),
         color=alt.Color('beschreibung:N', scale=alt.Scale(domain=dom, range=rng)),
         opacity=alt.condition(nearest, alt.value(1), alt.value(0.5)),
-        tooltip = alt.Tooltip(['date:T', aggregation+':Q', 'count_all:Q', 'beschreibung:N']),
+        #tooltip = alt.Tooltip(['date:T', aggregation+':Q', 'count_all:Q', 'beschreibung:N']),
         order=alt.Order(
         # Sort the segments of the bars by this field
         'count_all:Q',
