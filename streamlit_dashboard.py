@@ -1117,7 +1117,7 @@ with gas_tarif_listchart_column:
         if( (seperation_var == 'Preisgarantie') | (seperation_var == 'Vertragslaufzeit') ):
             #st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
             st.write('Top {top_n} Tarife am {selected_date} mit {seperation_var} < {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(ohne_laufzeit_3000,selected_date_e)
+            get_table(ohne_laufzeit_15000,selected_date_e)
             st.write('Top {top_n} Tarife am {selected_date} mit {seperation_var} >= {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
             get_table(mit_laufzeit_15000,selected_date_e)
         elif(seperation_var =='Öko Tarif/ Konventioneller Tarif'):
