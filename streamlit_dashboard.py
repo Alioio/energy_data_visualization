@@ -578,7 +578,7 @@ def create_chart(summary, aggregation='mean', seperation_value=12, date_interval
         #x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
         #y=alt.Y('mean:Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)')),
         x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
-        y=alt.Y('count_all:Q', axis = alt.Axis(title='Anzahl Ergenbisse'), scale=alt.Scale(domain=domain3)),
+        y=alt.Y('count_all:Q', axis = alt.Axis(title='# Absolut'), scale=alt.Scale(domain=domain3)),
         color=alt.Color('beschreibung:N', scale=alt.Scale(domain=dom, range=rng)),
         opacity=alt.condition(nearest, alt.value(1), alt.value(0.5)),
         #tooltip = alt.Tooltip(['date:T', aggregation+':Q', 'count_all:Q', 'beschreibung:N']),
@@ -589,7 +589,27 @@ def create_chart(summary, aggregation='mean', seperation_value=12, date_interval
     )
     ).properties(
         width=widtht,
-        height=200
+        height=150
+    ).add_selection(
+        nearest
+    )
+
+    count_chart_normalized = base.mark_bar(size=6.8).encode(
+        #x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
+        #y=alt.Y('mean:Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)')),
+        x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
+        y=alt.Y('count_all:Q', axis = alt.Axis(title='# (Normalisiert)'), stack="normalize"),
+        color=alt.Color('beschreibung:N', scale=alt.Scale(domain=dom, range=rng)),
+        opacity=alt.condition(nearest, alt.value(1), alt.value(0.5)),
+        #tooltip = alt.Tooltip(['date:T', aggregation+':Q', 'count_all:Q', 'beschreibung:N']),
+        order=alt.Order(
+        # Sort the segments of the bars by this field
+        'count_all:Q',
+      sort='descending'
+    )
+    ).properties(
+        width=widtht,
+        height=150
     ).add_selection(
         nearest
     )
@@ -670,6 +690,7 @@ def create_chart(summary, aggregation='mean', seperation_value=12, date_interval
 
     print('im CREATE CHART: ',aggregation,'  ',aggregation_dict[aggregation])
     count_chart_view = alt.vconcat(count_chart ,
+                                   count_chart_normalized,
                                    count_text_date ,
                                     (count_text.properties(title=alt.TitleParams(text='Anzahl Anfragenergebnisse', align='left')) | 
                                         count_text.encode(text=alt.condition(nearest, aggregation+':Q', alt.value(' '), format=".2f")).properties(title=alt.TitleParams(text=aggregation_dict[aggregation], align='left')) | 
