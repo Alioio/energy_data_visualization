@@ -3,6 +3,7 @@ import pandas as pd
 import os
 import re
 import datetime
+import timeit
 from datetime import datetime as dt
 from datetime import date, timedelta
 import altair as alt
@@ -76,6 +77,7 @@ def set_plz(ID):
     return '50670'
   elif((ID==19) |(ID==17)):
     return '71771'
+
 
 @st.cache(ttl=7*24*60*60)
 def read_energy_data(energy_type, verbrauch):
@@ -188,7 +190,6 @@ with concurrent.futures.ThreadPoolExecutor() as executor:
     gas_results_15000 = gas_reader_thread_15000.result()
     gas_results_9000 = gas_reader_thread_9000.result()
 
-#@st.cache(ttl=24*60*60)
 def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_value=12, consumption='unknown',selected_variable='dataunit', top_n = '10'):
 
     sep_var_readable = seperation_var
@@ -233,9 +234,10 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
 
 
         if(top_n != 'Alle'):
-            ohne_laufzeit = ohne_laufzeit.groupby(['date','plz']).apply(
-            lambda column: column.nsmallest(int(top_n), columns='dataunit')
-            ).reset_index(drop=True)
+            ohne_laufzeit.sort_values(['date', 'plz', 'dataunit'], ascending=[True, True, True], inplace=True)
+            ohne_laufzeit['rank'] = 1
+            ohne_laufzeit['rank'] = ohne_laufzeit.groupby(['date', 'plz'])['rank'].cumsum()
+            ohne_laufzeit = ohne_laufzeit[ohne_laufzeit['rank'] <= int(top_n)]
 
         summary_ohne_laufzeit = ohne_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
         summary_ohne_laufzeit.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
@@ -248,9 +250,10 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         summary_mit_laufzeit_all.columns =  [ 'mean_all', 'median_all','std_all', 'min_all', 'max_all', 'count_all']
 
         if(top_n != 'Alle'):
-            mit_laufzeit = mit_laufzeit.groupby(['date','plz']).apply(
-            lambda df: df.nsmallest(int(top_n), columns='dataunit')
-            ).reset_index(drop=True)
+            mit_laufzeit.sort_values(['date', 'plz', 'dataunit'], ascending=[True, True, True], inplace=True)
+            mit_laufzeit['rank'] = 1
+            mit_laufzeit['rank'] = mit_laufzeit.groupby(['date', 'plz'])['rank'].cumsum()
+            mit_laufzeit = mit_laufzeit[mit_laufzeit['rank'] <= int(top_n)]
 
         summary_mit_laufzeit = mit_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
         summary_mit_laufzeit.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
@@ -281,9 +284,10 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
 
 
         if(top_n != 'Alle'):
-            ohne_laufzeit = ohne_laufzeit.groupby(['date','plz']).apply(
-            lambda column: column.nsmallest(int(top_n), columns='dataunit')
-            ).reset_index(drop=True)
+            ohne_laufzeit.sort_values(['date', 'plz', 'dataunit'], ascending=[True, True, True], inplace=True)
+            ohne_laufzeit['rank'] = 1
+            ohne_laufzeit['rank'] = ohne_laufzeit.groupby(['date', 'plz'])['rank'].cumsum()
+            ohne_laufzeit = ohne_laufzeit[ohne_laufzeit['rank'] <= int(top_n)]
 
         summary_ohne_laufzeit = ohne_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
         summary_ohne_laufzeit.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
@@ -296,9 +300,10 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         summary_mit_laufzeit_all.columns =  [ 'mean_all', 'median_all','std_all', 'min_all', 'max_all', 'count_all']
 
         if(top_n != 'Alle'):
-            mit_laufzeit = mit_laufzeit.groupby(['date','plz']).apply(
-            lambda df: df.nsmallest(int(top_n), columns='dataunit')
-            ).reset_index(drop=True)
+            mit_laufzeit.sort_values(['date', 'plz', 'dataunit'], ascending=[True, True, True], inplace=True)
+            mit_laufzeit['rank'] = 1
+            mit_laufzeit['rank'] = mit_laufzeit.groupby(['date', 'plz'])['rank'].cumsum()
+            mit_laufzeit = mit_laufzeit[mit_laufzeit['rank'] <= int(top_n)]
 
         summary_mit_laufzeit = mit_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
         summary_mit_laufzeit.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
@@ -329,9 +334,10 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
 
 
         if(top_n != 'Alle'):
-            ohne_laufzeit = ohne_laufzeit.groupby(['date','plz']).apply(
-            lambda column: column.nsmallest(int(top_n), columns='dataunit')
-            ).reset_index(drop=True)
+            ohne_laufzeit.sort_values(['date', 'plz', 'dataunit'], ascending=[True, True, True], inplace=True)
+            ohne_laufzeit['rank'] = 1
+            ohne_laufzeit['rank'] = ohne_laufzeit.groupby(['date', 'plz'])['rank'].cumsum()
+            ohne_laufzeit = ohne_laufzeit[ohne_laufzeit['rank'] <= int(top_n)]
 
         summary_ohne_laufzeit = ohne_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
         summary_ohne_laufzeit.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
@@ -344,9 +350,10 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         summary_mit_laufzeit_all.columns =  [ 'mean_all', 'median_all','std_all', 'min_all', 'max_all', 'count_all']
 
         if(top_n != 'Alle'):
-            mit_laufzeit = mit_laufzeit.groupby(['date','plz']).apply(
-            lambda df: df.nsmallest(int(top_n), columns='dataunit')
-            ).reset_index(drop=True)
+            mit_laufzeit.sort_values(['date', 'plz', 'dataunit'], ascending=[True, True, True], inplace=True)
+            mit_laufzeit['rank'] = 1
+            mit_laufzeit['rank'] = mit_laufzeit.groupby(['date', 'plz'])['rank'].cumsum()
+            mit_laufzeit = mit_laufzeit[mit_laufzeit['rank'] <= int(top_n)]
 
         summary_mit_laufzeit = mit_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
         summary_mit_laufzeit.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
@@ -368,14 +375,17 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
                  how='left',
                  on='date')
     elif(seperation_var=='None'):
+
+        ohne_laufzeit = None
         mit_laufzeit  = results.copy()
         summary_mit_laufzeit_all = mit_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
         summary_mit_laufzeit_all.columns =  [ 'mean_all', 'median_all','std_all', 'min_all', 'max_all', 'count_all']
 
         if(top_n != 'Alle'):
-            mit_laufzeit = mit_laufzeit.groupby(['date','plz']).apply(
-            lambda df: df.nsmallest(int(top_n), columns='dataunit')
-            ).reset_index(drop=True)
+            mit_laufzeit.sort_values(['date', 'plz', 'dataunit'], ascending=[True, True, True], inplace=True)
+            mit_laufzeit['rank'] = 1
+            mit_laufzeit['rank'] = mit_laufzeit.groupby(['date', 'plz'])['rank'].cumsum()
+            mit_laufzeit = mit_laufzeit[mit_laufzeit['rank'] <= int(top_n)]
 
         summary_mit_laufzeit = mit_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
         summary_mit_laufzeit.columns =  [ 'mean', 'median','std', 'min', 'max', 'count']
@@ -398,9 +408,9 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
                  on='date')
 
 
-    return summary
+    return ohne_laufzeit, mit_laufzeit, summary
 
-#@st.cache(ttl=24*60*60)
+
 def create_chart(summary, aggregation='mean', seperation_value=12, date_interval=['2022-07-17', '2022-10-17'], widtht=700, height=280,selected_variable='dataunit', events_df=None, energy_type='gas', seperation_var='priceGuaranteeNormalized'):
 
     if(seperation_var== 'Kein Unterscheidungsmerkmal'):
@@ -757,6 +767,43 @@ def load_events_df():
     ])
     return events_df
 
+
+def get_table(results, selected_date):
+
+    top_n_strom_tarife = results.copy()
+    top_n_strom_tarife = top_n_strom_tarife[top_n_strom_tarife.date == selected_date][['plz','rank', 'providerName', 'tariffName', 'signupPartner','dataunit', 'Jahreskosten',  'dataeco', 'priceGuaranteeNormalized', 'contractDurationNormalized']]
+        
+
+    gd = GridOptionsBuilder.from_dataframe(top_n_strom_tarife)
+    gd.configure_pagination(enabled=True)
+    gd.configure_default_column(editable=False, groupable=True)
+    #gd.configure_selection(selection_mode='multiple', use_checkbox=True)
+    #gd.configure_column("date", type=["customDateTimeFormat"], custom_format_string='yyyy-MM-dd')
+    gd.configure_column("rank", header_name="Rang")
+    gd.configure_column("plz", header_name="PLZ")
+    gd.configure_column("signupPartner", header_name="Partner")
+    gd.configure_column("providerName", header_name="Versorger")
+    gd.configure_column("tariffName", header_name="Tarif Name")
+    gd.configure_column('dataunit', header_name="Arbeitspreis")
+    gd.configure_column('dataeco', header_name="Öko")
+    gd.configure_column('priceGuaranteeNormalized', header_name="Preisgarantie")
+    gd.configure_column('contractDurationNormalized', header_name="Vertragslaufzeit")
+    #um date picker einzufügen: https://discuss.streamlit.io/t/ag-grid-component-with-input-support/8108/349?page=17
+    gridoptions = gd.build()
+
+    grid_table = AgGrid(top_n_strom_tarife, 
+        gridOptions=gridoptions, 
+        update_mode=GridUpdateMode.GRID_CHANGED, 
+        enable_enterprise_modules= True,
+        fit_columns_on_grid_load=True,
+        height = 350,
+        width=805,
+        allow_unsafe_jscode=True,
+        theme='alpine'
+        )
+
+    return grid_table
+
 #### HEADER REGION
 
 row1_1, row1_2 = st.columns((2, 3))
@@ -825,15 +872,15 @@ elif(time_selection == 'Eigener Zeitraum'):
                     key='#date_range',
                     help="Start-und End Datum: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
 
-plz_list = electricity_results_3000['plz'].unique().tolist()
-print(electricity_results_3000['plz'].unique())
-plz_list.append('Alle')
+#plz_list = electricity_results_3000['plz'].unique().tolist()
+#print(electricity_results_3000['plz'].unique())
+#plz_list.append('Alle')
 
-with time_selection_column:
-    st.multiselect(
-            'Tarife aus welchen Postleitzahlen soll enthalten sein?',
-            plz_list,
-            default=['Alle'])
+#with time_selection_column:
+#    st.multiselect(
+#            'Tarife aus welchen Postleitzahlen soll enthalten sein?',
+#            plz_list,
+#            default=['Alle'])
 
 
 attribute_selection_column.write("**Attributauswahl**")
@@ -849,10 +896,10 @@ mean_median_btn = attribute_selection_column.radio(
         options=["Durchschnitt", "Median", "Minimum", "Maximum", "Standardabweichung"],
     )
 
-with attribute_selection_column:
+with time_selection_column:
     top_n = st.selectbox(
-                'Top N?',
-                ['1','3', '5', '10', '15', 'Alle'],
+                'Agregiere über Top N günstigste Tarife?',
+                ['1','3', '5', '10', 'Alle'],
                 index=3)
 
 
@@ -864,8 +911,8 @@ with division_expander:
     sep_var_col, sep_val_col = st.columns(2)
         
     seperation_var = sep_var_col.selectbox('Nach welches Attribut möchtest du aufteilen?',
-    ('Vertragslaufzeit', 'Preisgarantie', 'Öko Tarif/ Konventioneller Tarif','Partner', 'Anbieter', 'Kein Unterscheidungsmerkmal'),
-    index=5,
+    ('Kein Unterscheidungsmerkmal', 'Vertragslaufzeit', 'Preisgarantie', 'Öko Tarif/ Konventioneller Tarif','Partner', 'Anbieter'),
+    index=0,
     help="Gebe hier ein nach welhes Attribut du trennen möchtest: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
             
     selection_slider = 12
@@ -939,39 +986,181 @@ st.write('<style>div.row-widget.stRadio > div{flex-direction:row;justify-content
 st.write('<style>div.st-bf{flex-direction:column;} div.st-ag{font-weight:bold;padding-left:2px;}</style>', unsafe_allow_html=True)
 #st.radio("",("Durchschnitt","Median"))
 
-main_chart_container.write(('**Preisentwicklung - {selected_variable} und {seperation_var} der Strom - und Gastarife.**').format(selected_variable=selected_variable, seperation_var=seperation_var).upper())
-main_chart_container.write(('Die oberen zwei Grafiken zeigen die Entwicklung der Tarife bezüglich {selected_variable} und {seperation_var}. Im dritten Grafik ist die Anzahl der Suchanfragenergebnisse visualisiert.').format(selected_variable=selected_variable, seperation_var=seperation_var))
+if(seperation_var != 'Kein Unterscheidungsmerkmal'):
+    main_chart_container.write(('**Preisentwicklung - {selected_variable} und {seperation_var} der Strom - und Gastarife**').format(selected_variable=selected_variable, seperation_var=seperation_var).upper())
+    main_chart_container.write(('Die oberen zwei Grafiken zeigen die Entwicklung der Tarife bezüglich {selected_variable} und {seperation_var}. Im dritten Grafik ist die Anzahl der Suchanfragenergebnisse visualisiert.').format(selected_variable=selected_variable, seperation_var=seperation_var))
+else:
+    main_chart_container.write(('**Preisentwicklung - {selected_variable}**').format(selected_variable=selected_variable).upper())
+    main_chart_container.write(('Die oberen zwei Grafiken zeigen die Entwicklung der Tarife bezüglich: {selected_variable}. Im dritten Grafik ist die Anzahl der Suchanfragenergebnisse visualisiert.').format(selected_variable=selected_variable))
 
+ohne_laufzeit_1300, ohne_laufzeit_9000, ohne_laufzeit_3000, ohne_laufzeit_15000 = None, None, None, None
+mit_laufzeit_1300, mit_laufzeit_9000, mit_laufzeit_3000, mit_laufzeit_15000 = None, None, None, None
 if(len(date_interval) == 2):
     with electricity_chart_column:
         print(top_n,'  ',type(top_n))
         chart_header = "**{energy_selection}verträge ({selected_variable})**".format(selected_variable=selected_variable, energy_selection='Strom')
-        summary_3000 = summarize(electricity_results_3000, seperation_var, int(selection_slider),'3000',selected_variable, top_n=top_n)
-        summary_1300 = summarize(electricity_results_1300, seperation_var, int(selection_slider),'1300', selected_variable, top_n=top_n) 
+        ohne_laufzeit_3000, mit_laufzeit_3000,summary_3000 = summarize(electricity_results_3000, seperation_var, int(selection_slider),'3000',selected_variable, top_n=top_n)
+        ohne_laufzeit_1300, mit_laufzeit_1300,summary_1300 = summarize(electricity_results_1300, seperation_var, int(selection_slider),'1300', selected_variable, top_n=top_n) 
            
         summary = pd.concat([summary_3000, summary_1300])
         st.write(chart_header)
         energy_line_chart_e = create_chart(summary, mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events,energy_type='electricity', seperation_var=seperation_var)
         st.altair_chart(energy_line_chart_e, use_container_width=True)
 
-        tariff_list_expander = st.expander('Tarife', expanded=False)
-
-        with tariff_list_expander:
-            st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
     with gas_chart_column:
         chart_header = "**{energy_selection}verträge ({selected_variable})**".format(selected_variable=selected_variable, energy_selection='Gas')
-        summary_9000 = summarize(gas_results_9000, seperation_var,int(selection_slider),'9000',selected_variable, top_n=top_n)
-        summary_15000 = summarize(gas_results_15000, seperation_var,int(selection_slider),'15000',selected_variable, top_n=top_n)
+        ohne_laufzeit_9000, mit_laufzeit_9000, summary_9000 = summarize(gas_results_9000, seperation_var,int(selection_slider),'9000',selected_variable, top_n=top_n)
+        ohne_laufzeit_15000, mit_laufzeit_15000,summary_15000 = summarize(gas_results_15000, seperation_var,int(selection_slider),'15000',selected_variable, top_n=top_n)
         
         summary = pd.concat([summary_9000, summary_15000])
         st.write(chart_header)
         energy_line_chart_e = create_chart(summary, mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events,energy_type='gas', seperation_var=seperation_var)
         st.altair_chart(energy_line_chart_e, use_container_width=True)
 
-        tariff_list_expander = st.expander('Tarife', expanded=False)
+## ENDE CHART REGION
 
-        with tariff_list_expander:
-            st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
+
+empty_colum1, tarif_list_menu_column_previous, tarif_list_menu_current, tarif_list_menu_next, empty_column2  = st.columns([6, 1, 2, 1, 6]) 
+electricity_tarif_list_column, gas_tarif_listchart_column = st.columns(2) 
+
+with empty_colum1:
+    st.write('   ')
+    st.markdown("""---""")
+with empty_column2:
+    st.write('   ')
+    st.markdown("""---""")
+    
+
+dates = electricity_results_3000[(electricity_results_3000.date >= pd.to_datetime(date_interval[0])) & (electricity_results_3000.date <= pd.to_datetime(date_interval[1]))].date.unique()
+dates = pd.to_datetime(dates).strftime("%b %d, %Y")
+
+with tarif_list_menu_current: 
+    selected_date_e = st.selectbox(
+                        'Wähle Tag für eine Tarifliste aus!',
+                        (dates))
+
+if(len(dates[np.where(np.asarray( dates)< selected_date_e)]) > 0):
+    with tarif_list_menu_column_previous:
+            st.write('   ')
+            #st.write('   ')
+            st.write('   ')
+            prev_date = dates[np.where(np.asarray( dates)< selected_date_e)][-1:][0]
+            prev_date = pd.to_datetime(prev_date).strftime("%b %d, %Y")
+            st.button(' {prev_date} << '.format(prev_date=prev_date), disabled=True)
+            
+
+if(len(dates[np.where(np.asarray( dates)> selected_date_e)]) > 0):
+    with tarif_list_menu_next:
+            st.write('   ')
+            #st.write('   ')
+            st.write('   ')
+            next_date = dates[np.where(np.asarray( dates)> selected_date_e)][:1][0]
+            next_date = pd.to_datetime(next_date).strftime("%b %d, %Y")
+            st.button(' >> {next_date} '.format(next_date=next_date), disabled=True)
+        
+st.markdown("""---""")
+
+with electricity_tarif_list_column:
+    tariff_list_expander_3000e = st.expander('Tarifliste - Stromtarife mit 3000 kWh Verbrauch', expanded=True)
+    
+    with tariff_list_expander_3000e:
+        if( (seperation_var == 'Preisgarantie') | (seperation_var == 'Vertragslaufzeit') ):
+            #st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
+            st.write('Top {top_n} Tarife am {selected_date} mit {seperation_var} < {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
+            get_table(ohne_laufzeit_3000,selected_date_e)
+            st.write('Top {top_n} Tarife am {selected_date} mit {seperation_var} >= {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
+            get_table(mit_laufzeit_3000,selected_date_e)
+        elif(seperation_var =='Öko Tarif/ Konventioneller Tarif'):
+            st.write('Top {top_n} Öko-Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
+            get_table(ohne_laufzeit_3000,selected_date_e)
+            st.write('Top {top_n} Nicht-Öko Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
+            get_table(mit_laufzeit_3000,selected_date_e)
+        elif(seperation_var =='Partner'):
+            st.write('Top {top_n} Tarife von Verivox am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
+            get_table(ohne_laufzeit_3000,selected_date_e)
+            st.write('Top {top_n} Tarife von Check24 am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
+            get_table(mit_laufzeit_3000,selected_date_e)
+        elif(seperation_var == 'Kein Unterscheidungsmerkmal'):
+            st.write('Top {top_n} Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
+            get_table(mit_laufzeit_3000,selected_date_e)
+
+    tariff_list_expander_1300e = st.expander('Tarifliste - Stromtarife mit 1300 kWh Verbrauch', expanded=False)
+    
+    with tariff_list_expander_1300e:
+        if( (seperation_var == 'Preisgarantie') | (seperation_var == 'Vertragslaufzeit') ):
+            #st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
+            st.write('Top {top_n} Tarife am {selected_date} mit {seperation_var} < {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
+            get_table(ohne_laufzeit_1300,selected_date_e)
+            st.write('Top {top_n} Tarife am {selected_date} mit {seperation_var} >= {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
+            get_table(mit_laufzeit_1300,selected_date_e)
+        elif(seperation_var =='Öko Tarif/ Konventioneller Tarif'):
+            st.write('Top {top_n} Öko-Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
+            get_table(ohne_laufzeit_1300,selected_date_e)
+            st.write('Top {top_n} Nicht-Öko Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
+            get_table(mit_laufzeit_1300,selected_date_e)
+        elif(seperation_var =='Partner'):
+            st.write('Top {top_n} Tarife von Verivox am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
+            get_table(ohne_laufzeit_1300,selected_date_e)
+            st.write('Top {top_n} Tarife von Check24 am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
+            get_table(mit_laufzeit_1300,selected_date_e)
+        elif(seperation_var == 'Kein Unterscheidungsmerkmal'):
+            st.write('Top {top_n} Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
+            get_table(mit_laufzeit_1300,selected_date_e)
+
+
+
+
+with gas_tarif_listchart_column:
+    tariff_list_expander_15000g = st.expander('Tarifliste - Gasarife mit 1500 kWh Verbrauch', expanded=True)
+    
+    with tariff_list_expander_15000g:
+        if( (seperation_var == 'Preisgarantie') | (seperation_var == 'Vertragslaufzeit') ):
+            #st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
+            st.write('Top {top_n} Tarife am {selected_date} mit {seperation_var} < {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
+            get_table(ohne_laufzeit_3000,selected_date_e)
+            st.write('Top {top_n} Tarife am {selected_date} mit {seperation_var} >= {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
+            get_table(mit_laufzeit_15000,selected_date_e)
+        elif(seperation_var =='Öko Tarif/ Konventioneller Tarif'):
+            st.write('Top {top_n} Öko-Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
+            get_table(ohne_laufzeit_15000,selected_date_e)
+            st.write('Top {top_n} Nicht-Öko Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
+            get_table(mit_laufzeit_15000,selected_date_e)
+        elif(seperation_var =='Partner'):
+            st.write('Top {top_n} Tarife von Verivox am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
+            get_table(ohne_laufzeit_15000,selected_date_e)
+            st.write('Top {top_n} Tarife von Check24 am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
+            get_table(mit_laufzeit_15000,selected_date_e)
+        elif(seperation_var == 'Kein Unterscheidungsmerkmal'):
+            st.write('Top {top_n} Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
+            get_table(mit_laufzeit_15000,selected_date_e)
+
+    tariff_list_expander_9000g = st.expander('Tarifliste - Gastarife mit 9000 kWh Verbrauch', expanded=False)
+    
+    with tariff_list_expander_9000g:
+        if( (seperation_var == 'Preisgarantie') | (seperation_var == 'Vertragslaufzeit') ):
+            #st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
+            st.write('Top {top_n} Tarife am {selected_date} mit {seperation_var} < {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
+            get_table(ohne_laufzeit_9000,selected_date_e)
+            st.write('Top {top_n} Tarife am {selected_date} mit {seperation_var} >= {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
+            get_table(mit_laufzeit_9000,selected_date_e)
+        elif(seperation_var =='Öko Tarif/ Konventioneller Tarif'):
+            st.write('Top {top_n} Öko-Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
+            get_table(ohne_laufzeit_9000,selected_date_e)
+            st.write('Top {top_n} Nicht-Öko Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
+            get_table(mit_laufzeit_9000,selected_date_e)
+        elif(seperation_var =='Partner'):
+            st.write('Top {top_n} Tarife von Verivox am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
+            get_table(ohne_laufzeit_9000,selected_date_e)
+            st.write('Top {top_n} Tarife von Check24 am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
+            get_table(mit_laufzeit_9000,selected_date_e)
+        elif(seperation_var == 'Kein Unterscheidungsmerkmal'):
+            st.write('Top {top_n} Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
+            get_table(mit_laufzeit_9000,selected_date_e)
+
+
+
+
+##########################################################
 
 
 #javascript integriegen um screen weite zu lesen:
