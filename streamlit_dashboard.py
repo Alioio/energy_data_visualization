@@ -858,19 +858,18 @@ center_breakline1.markdown("""---""")
 
 ### MENU AUSWAHL REGION
 selection_menu_container = st.container()
-empty_left_menu, time_selection_column,center_menu, attribute_selection_column,empty_right_menu = selection_menu_container.columns([1,4,1,4,1])
+empty_left_menu, time_selection_column,empty_menu1, attribute_selection_column,empty_menu2, left1_division_expander, empty_right_menu = selection_menu_container.columns([1, 1.5, 0.2, 3.6, 0.25, 4.4, 1])
 
 
-division_selection_column, division_value_selection_column = selection_menu_container.columns([1,3])
+#division_selection_column, division_value_selection_column = selection_menu_container.columns([1,3])
 
 ##Zeitintervallauswahl
 today = date.today()
 tree_months_ago = today - timedelta(days=90)
 date_interval = [tree_months_ago, today]
 
-time_selection_column.write("**Zeitraum:**")
 time_selection = time_selection_column.selectbox(
-    label=' ',
+    label='Zeitraum',
     options=('1 Monat', '3 Monat', '1 Jahr', 'Eigener Zeitraum'),
     index=1)
 
@@ -905,7 +904,7 @@ elif(time_selection == 'Eigener Zeitraum'):
 #            default=['Alle'])
 
 
-attribute_selection_column.write("**Attributauswahl**")
+#attribute_selection_column.write("**Attributauswahl**")
 
 selected_variable = attribute_selection_column.selectbox(
     'Welches Attribut möchtest du anschauen?',
@@ -914,7 +913,7 @@ selected_variable = attribute_selection_column.selectbox(
 
 
 mean_median_btn = attribute_selection_column.radio(
-        ("Wie möchtest du den {selected_variable} der Tarife aggregieren?").format(selected_variable=selected_variable),
+        ("").format(selected_variable=selected_variable),
         options=["Durchschnitt", "Median", "Minimum", "Maximum", "Standardabweichung"],
     )
 
@@ -925,8 +924,8 @@ with time_selection_column:
                 index=3)
 
 
-empty_left_division_expander,left1_division_expander,center_division_expander,right1_division_expander, empty_right_division_expander= st.columns((1,4,1,4,1))
-division_expander = left1_division_expander.expander('Weiteres Unterscheidungsmerkmal 🍎🍏 - Hier kannst du ein weiteres Unterscheidungsmerkmal an welches du die Tarife aufteilen möchtest auswählen.', expanded=False)
+#empty_left_division_expander,left1_division_expander,center_division_expander,right1_division_expander, empty_right_division_expander= st.columns((1,4,1,4,1))
+#division_expander = left1_division_expander.expander('Weiteres Unterscheidungsmerkmal 🍎🍏 - Hier kannst du ein weiteres Unterscheidungsmerkmal an welches du die Tarife aufteilen möchtest auswählen.', expanded=False)
 
 
         
@@ -938,7 +937,7 @@ seperation_var = left1_division_expander.selectbox('Nach welches Attribut möcht
 selection_slider = 12
 
 if( (seperation_var =='Vertragslaufzeit') |(seperation_var =='Preisgarantie')  ):
-    selection_slider = right1_division_expander.slider('Ab welchen Wert für das Attribut '+seperation_var+ ' teilen?', 0, 24, 12, step=3,
+    selection_slider = left1_division_expander.slider('Ab welchen Wert für das Attribut '+seperation_var+ ' teilen?', 0, 24, 12, step=3,
     help="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
 
 ### ENDE MENU AUSWAHL REGION
