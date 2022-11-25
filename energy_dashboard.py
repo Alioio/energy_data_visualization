@@ -578,7 +578,7 @@ def create_chart(summary, aggregation='mean', seperation_value=12, date_interval
         #x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
         #y=alt.Y('mean:Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)')),
         x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
-        y=alt.Y('count_all:Q', axis = alt.Axis(title='# Absolut'), scale=alt.Scale(domain=domain3)),
+        y=alt.Y('count_all:Q', axis = alt.Axis(title='Anzahl Ergenbisse'), scale=alt.Scale(domain=domain3)),
         color=alt.Color('beschreibung:N', scale=alt.Scale(domain=dom, range=rng)),
         opacity=alt.condition(nearest, alt.value(1), alt.value(0.5)),
         #tooltip = alt.Tooltip(['date:T', aggregation+':Q', 'count_all:Q', 'beschreibung:N']),
@@ -589,27 +589,7 @@ def create_chart(summary, aggregation='mean', seperation_value=12, date_interval
     )
     ).properties(
         width=widtht,
-        height=150
-    ).add_selection(
-        nearest
-    )
-
-    count_chart_normalized = base.mark_bar(size=6.8).encode(
-        #x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
-        #y=alt.Y('mean:Q', axis = alt.Axis(title='Arbeitspreis (ct/kWh)')),
-        x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
-        y=alt.Y('count_all:Q', axis = alt.Axis(title='# (Normalisiert)'), stack="normalize"),
-        color=alt.Color('beschreibung:N', scale=alt.Scale(domain=dom, range=rng)),
-        opacity=alt.condition(nearest, alt.value(1), alt.value(0.5)),
-        #tooltip = alt.Tooltip(['date:T', aggregation+':Q', 'count_all:Q', 'beschreibung:N']),
-        order=alt.Order(
-        # Sort the segments of the bars by this field
-        'count_all:Q',
-      sort='descending'
-    )
-    ).properties(
-        width=widtht,
-        height=80
+        height=200
     ).add_selection(
         nearest
     )
@@ -690,7 +670,6 @@ def create_chart(summary, aggregation='mean', seperation_value=12, date_interval
 
     print('im CREATE CHART: ',aggregation,'  ',aggregation_dict[aggregation])
     count_chart_view = alt.vconcat(count_chart ,
-                                   count_chart_normalized,
                                    count_text_date ,
                                     (count_text.properties(title=alt.TitleParams(text='Anzahl Anfragenergebnisse', align='left')) | 
                                         count_text.encode(text=alt.condition(nearest, aggregation+':Q', alt.value(' '), format=".2f")).properties(title=alt.TitleParams(text=aggregation_dict[aggregation], align='left')) | 
@@ -789,30 +768,31 @@ def load_events_df():
     return events_df
 
 
-def get_table(results, selected_date):
+def get_table(results):
 
-    top_n_strom_tarife = results.copy()
-    top_n_strom_tarife = top_n_strom_tarife[top_n_strom_tarife.date == selected_date][['plz','rank', 'providerName', 'tariffName', 'signupPartner','dataunit', 'Jahreskosten',  'dataeco', 'priceGuaranteeNormalized', 'contractDurationNormalized']]
-        
+    top_n_strom_tarife = electricity_results_3000.copy()
+        if(top_n != 'Alle'):
+            top_n_strom_tarife.sort_values(['date', 'plz', 'dataunit'], ascending=[True, True, True], inplace=True)
+            top_n_strom_tarife['rank'] = 1
+            top_n_strom_tarife['rank'] = top_n_strom_tarife.groupby(['date', 'plz'])['rank'].cumsum()
+            top_n_strom_tarife = top_n_strom_tarife[top_n_strom_tarife['rank'] <= int(top_n)]
 
-    gd = GridOptionsBuilder.from_dataframe(top_n_strom_tarife)
-    gd.configure_pagination(enabled=True)
-    gd.configure_default_column(editable=False, groupable=True)
-    #gd.configure_selection(selection_mode='multiple', use_checkbox=True)
-    #gd.configure_column("date", type=["customDateTimeFormat"], custom_format_string='yyyy-MM-dd')
-    gd.configure_column("rank", header_name="Rang")
-    gd.configure_column("plz", header_name="PLZ")
-    gd.configure_column("signupPartner", header_name="Partner")
-    gd.configure_column("providerName", header_name="Versorger")
-    gd.configure_column("tariffName", header_name="Tarif Name")
-    gd.configure_column('dataunit', header_name="Arbeitspreis")
-    gd.configure_column('dataeco', header_name="Öko")
-    gd.configure_column('priceGuaranteeNormalized', header_name="Preisgarantie")
-    gd.configure_column('contractDurationNormalized', header_name="Vertragslaufzeit")
-    #um date picker einzufügen: https://discuss.streamlit.io/t/ag-grid-component-with-input-support/8108/349?page=17
-    gridoptions = gd.build()
+        gd = GridOptionsBuilder.from_dataframe(top_n_strom_tarife)
+        gd.configure_pagination(enabled=True)
+        gd.configure_default_column(editable=False, groupable=True)
+        #gd.configure_selection(selection_mode='multiple', use_checkbox=True)
+        #gd.configure_column("date", type=["customDateTimeFormat"], custom_format_string='yyyy-MM-dd')
+        gd.configure_column("plz", header_name="PLZ")
+        gd.configure_column("providerName", header_name="Versorger")
+        gd.configure_column("tariffName", header_name="Tarif Name")
+        gd.configure_column('dataunit', header_name="Arbeitspreis")
+        gd.configure_column('dataeco', header_name="Öko")
+        gd.configure_column('priceGuaranteeNormalized', header_name="Preisgarantie")
+        gd.configure_column('contractDurationNormalized', header_name="Vertragslaufzeit")
+        #um date picker einzufügen: https://discuss.streamlit.io/t/ag-grid-component-with-input-support/8108/349?page=17
+        gridoptions = gd.build()
 
-    grid_table = AgGrid(top_n_strom_tarife, 
+        grid_table = AgGrid(top_n_strom_tarife, 
         gridOptions=gridoptions, 
         update_mode=GridUpdateMode.GRID_CHANGED, 
         enable_enterprise_modules= True,
@@ -827,7 +807,7 @@ def get_table(results, selected_date):
 
 #### HEADER REGION
 
-empty_left_head, row1_1,center_head, row1_2, empty_right_head= st.columns((1,4, 1,4,1))
+row1_1, row1_2 = st.columns((2, 3))
 
 with row1_1:
     st.title(" Strom 🔌 & 🔥 Gas - Dashboard ")
@@ -853,12 +833,11 @@ with row1_2:
         )
 
 ### END HEADER REGION
-empty_breakline1,center_breakline1, empty_right_breakline1= st.columns((1,10,1))
-center_breakline1.markdown("""---""")
+st.markdown("""---""")
 
 ### MENU AUSWAHL REGION
 selection_menu_container = st.container()
-empty_left_menu, time_selection_column,center_menu, attribute_selection_column,empty_right_menu = selection_menu_container.columns([1,4,1,4,1])
+time_selection_column, attribute_selection_column = selection_menu_container.columns([1,2])
 
 
 division_selection_column, division_value_selection_column = selection_menu_container.columns([1,3])
@@ -918,41 +897,51 @@ mean_median_btn = attribute_selection_column.radio(
         options=["Durchschnitt", "Median", "Minimum", "Maximum", "Standardabweichung"],
     )
 
-with time_selection_column:
+with attribute_selection_column:
     top_n = st.selectbox(
-                'Agregiere über Top N günstigste Tarife?',
-                ['1','3', '5', '10', 'Alle'],
+                'Top N?',
+                ['1','3', '5', '10', '15', 'Alle'],
                 index=3)
 
 
-empty_left_division_expander,left1_division_expander,center_division_expander,right1_division_expander, empty_right_division_expander= st.columns((1,4,1,4,1))
-division_expander = left1_division_expander.expander('Weiteres Unterscheidungsmerkmal 🍎🍏 - Hier kannst du ein weiteres Unterscheidungsmerkmal an welches du die Tarife aufteilen möchtest auswählen.', expanded=False)
+division_expander = st.expander('Weiteres Unterscheidungsmerkmal 🍎🍏 - Hier kannst du ein weiteres Unterscheidungsmerkmal an welches du die Tarife aufteilen möchtest auswählen.', expanded=False)
 
+with division_expander:
+    st.info(('Gebe ein weiteres Unterscheidungsmerkmal ein welchest du betrachten möchtest. \nZ.B.: Vergleiche die Entwicklung von {selected_variable} für Tarife mit **mit langer Preisgarantie** Tarife **mit kurzer Preisgarantie**.').format(selected_variable=selected_variable))
 
+    sep_var_col, sep_val_col = st.columns(2)
         
-seperation_var = left1_division_expander.selectbox('Nach welches Attribut möchtest du aufteilen?',
-    ('Kein Unterscheidungsmerkmal', 'Vertragslaufzeit', 'Preisgarantie', 'Öko Tarif/ Konventioneller Tarif','Partner'),
+    seperation_var = sep_var_col.selectbox('Nach welches Attribut möchtest du aufteilen?',
+    ('Kein Unterscheidungsmerkmal', 'Vertragslaufzeit', 'Preisgarantie', 'Öko Tarif/ Konventioneller Tarif','Partner', 'Anbieter'),
     index=0,
     help="Gebe hier ein nach welhes Attribut du trennen möchtest: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
             
-selection_slider = 12
+    selection_slider = 12
 
-if( (seperation_var =='Vertragslaufzeit') |(seperation_var =='Preisgarantie')  ):
-    selection_slider = right1_division_expander.slider('Ab welchen Wert für das Attribut '+seperation_var+ ' teilen?', 0, 24, 12, step=3,
-    help="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
+    if( (seperation_var =='Vertragslaufzeit') |(seperation_var =='Preisgarantie')  ):
+        selection_slider = sep_val_col.slider('Ab welchen Wert für das Attribut '+seperation_var+ ' teilen?', 0, 24, 12, step=3,
+        help="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
+    elif((seperation_var =='Anbieter')):
+        col1, col2 = st.columns(2)
+
+        gas = gas_results_15000.copy()
+        gas['type'] = 'gas'
+        electricity = electricity_results_3000.copy()
+        electricity['type'] = 'electricity'
+
+        all = pd.concat([gas, electricity]).drop_duplicates(['providerName'])
+
+        col1.write(all)
+        col2.write(len(all))
 
 ### ENDE MENU AUSWAHL REGION
 
-        
-empty_breakline2,center_breakline2, empty_right_breakline2= st.columns((1,10,1))
-center_breakline2.markdown("""---""")
+st.markdown("""---""")
 
 #### ANNOTATION REGION
 
-empty_events1,center_events1, empty_right_events1= st.columns((1,10,1))
-
 events_df = load_events_df()
-annotation_container = center_events1.expander('Ereignisse 📰🌟 - Hier kannst du Ereinisse in die Zeitachse der Grafiken einblenden oder entfernen', expanded=False)
+annotation_container = st.expander('Ereignisse 📰🌟 - Hier kannst du Ereinisse in die Zeitachse der Grafiken einblenden oder entfernen', expanded=False)
 
 with annotation_container:
     st.info('Ereignisse werden als vertikale Annotationslienien oder Intervalle auf die Zeitachse der Grafiken eingeblendet. Dies unterschtüzt das Storrytelling Charater der Grafik und das Betrachten von bestimmten Entwicklungen in Zusammenhang mit Ereignissen.')
@@ -971,7 +960,7 @@ with annotation_container:
     enable_enterprise_modules= True,
     fit_columns_on_grid_load=True,
     #height = 300,
-    width='100%',
+    width='100%',""" """  """ """
     allow_unsafe_jscode=True,
     theme='alpine'
      )
@@ -987,94 +976,61 @@ with annotation_container:
 
     selected_events = events_df.iloc[inxexes_of_selected]
 
-
+st.markdown("""---""")
 ## ENDE ANNOTATION REGION
 
+main_chart_container = st.container()
 energy_type_selections = ['Strom', 'Gas']
 electricity_chart_column, gas_chart_column = st.columns(2) 
 
 st.write('<style>div.row-widget.stRadio > div{flex-direction:row;justify-content: left;} </style>', unsafe_allow_html=True)
 st.write('<style>div.st-bf{flex-direction:column;} div.st-ag{font-weight:bold;padding-left:2px;}</style>', unsafe_allow_html=True)
-
 #st.radio("",("Durchschnitt","Median"))
-empty_chartHeader_left, chart_header_line_left1, chart_header_middle,  empty_chart_header_line_right1, empty_chart_header_right = st.columns([1,3.5,  3,  3.5, 1])
-
-chart_header_line_left1.markdown("""---""")
-
-empty_chart_header_line_right1.markdown("""---""")
-
 
 if(seperation_var != 'Kein Unterscheidungsmerkmal'):
-    short_description=('Preisentwicklung - {selected_variable} und {seperation_var} der Strom - und Gastarife').format(selected_variable=selected_variable, seperation_var=seperation_var).upper()
-    long_description=('Die oberen zwei Grafiken zeigen die Entwicklung der Tarife bezüglich {selected_variable} und {seperation_var}. Im dritten Grafik ist die Anzahl der Suchanfragenergebnisse visualisiert.').format(selected_variable=selected_variable, seperation_var=seperation_var)
+    main_chart_container.write(('**Preisentwicklung - {selected_variable} und {seperation_var} der Strom - und Gastarife**').format(selected_variable=selected_variable, seperation_var=seperation_var).upper())
+    main_chart_container.write(('Die oberen zwei Grafiken zeigen die Entwicklung der Tarife bezüglich {selected_variable} und {seperation_var}. Im dritten Grafik ist die Anzahl der Suchanfragenergebnisse visualisiert.').format(selected_variable=selected_variable, seperation_var=seperation_var))
 else:
-    short_description=('Preisentwicklung - {selected_variable} der Strom - und Gastarife').format(selected_variable=selected_variable, seperation_var=seperation_var).upper()
-    long_description=('Die oberen zwei Grafiken zeigen die Entwicklung der Tarife bezüglich: {selected_variable}. Im dritten Grafik ist die Anzahl der Suchanfragenergebnisse visualisiert.').format(selected_variable=selected_variable)
+    main_chart_container.write(('**Preisentwicklung - {selected_variable}**').format(selected_variable=selected_variable).upper())
+    main_chart_container.write(('Die oberen zwei Grafiken zeigen die Entwicklung der Tarife bezüglich: {selected_variable}. Im dritten Grafik ist die Anzahl der Suchanfragenergebnisse visualisiert.').format(selected_variable=selected_variable))
 
-
-with chart_header_middle:
-    st.write('  ')
-    st.write('<div style="text-align: center"><b>'+short_description+'</b></div>', unsafe_allow_html=True)
-
-empty_chartHeader_left1,  chart_header_middle1,   empty_chart_header_right1 = st.columns([1,  10,  1])
-main_chart_container = chart_header_middle1.container()
-        
-main_chart_container.write(('Die oberen zwei Grafiken zeigen die Entwicklung der Tarife bezüglich: {selected_variable}. Im dritten Grafik ist die Anzahl der Suchanfragenergebnisse visualisiert.').format(selected_variable=selected_variable))
-
-ohne_laufzeit_1300, ohne_laufzeit_9000, ohne_laufzeit_3000, ohne_laufzeit_15000 = None, None, None, None
-mit_laufzeit_1300, mit_laufzeit_9000, mit_laufzeit_3000, mit_laufzeit_15000 = None, None, None, None
-
-empty_left, e_chart, middle, g_chart, empty_right = st.columns([1, 4,1,4,1])
-
-dates = electricity_results_3000[(electricity_results_3000.date >= pd.to_datetime(date_interval[0])) & (electricity_results_3000.date <= pd.to_datetime(date_interval[1]))].date.unique()
 
 if(len(date_interval) == 2):
     with electricity_chart_column:
         print(top_n,'  ',type(top_n))
-        e_median_date= electricity_results_3000[(electricity_results_3000.date == pd.to_datetime(date_interval[0])) & (electricity_results_3000.date <= pd.to_datetime(date_interval[1]))].date.median()
         chart_header = "**{energy_selection}verträge ({selected_variable})**".format(selected_variable=selected_variable, energy_selection='Strom')
         ohne_laufzeit_3000, mit_laufzeit_3000,summary_3000 = summarize(electricity_results_3000, seperation_var, int(selection_slider),'3000',selected_variable, top_n=top_n)
         ohne_laufzeit_1300, mit_laufzeit_1300,summary_1300 = summarize(electricity_results_1300, seperation_var, int(selection_slider),'1300', selected_variable, top_n=top_n) 
            
         summary = pd.concat([summary_3000, summary_1300])
-        e_chart.write(chart_header)
+        st.write(chart_header)
         energy_line_chart_e = create_chart(summary, mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events,energy_type='electricity', seperation_var=seperation_var)
-        e_chart.altair_chart(energy_line_chart_e, use_container_width=True)
+        st.altair_chart(energy_line_chart_e, use_container_width=True)
 
     with gas_chart_column:
-        g_median_date = gas_results_15000[(gas_results_15000.date >= pd.to_datetime(date_interval[0])) & (gas_results_15000.date <= pd.to_datetime(date_interval[1]))].date.median()
         chart_header = "**{energy_selection}verträge ({selected_variable})**".format(selected_variable=selected_variable, energy_selection='Gas')
         ohne_laufzeit_9000, mit_laufzeit_9000, summary_9000 = summarize(gas_results_9000, seperation_var,int(selection_slider),'9000',selected_variable, top_n=top_n)
         ohne_laufzeit_15000, mit_laufzeit_15000,summary_15000 = summarize(gas_results_15000, seperation_var,int(selection_slider),'15000',selected_variable, top_n=top_n)
         
         summary = pd.concat([summary_9000, summary_15000])
-        g_chart.write(chart_header)
+        st.write(chart_header)
         energy_line_chart_e = create_chart(summary, mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events,energy_type='gas', seperation_var=seperation_var)
-        g_chart.altair_chart(energy_line_chart_e, use_container_width=True)
+        st.altair_chart(energy_line_chart_e, use_container_width=True)
 
 ## ENDE CHART REGION
+st.markdown("""---""")
 
-empty_column_left, empty_left_colum1, tarif_list_menu_column_previous, tarif_list_menu_current, tarif_list_menu_next, empty_right_column1, empty_column_right  = st.columns([1, 3.7, 0.8, 1, 0.8, 3.7, 1]) 
+
+empty_colum1, tarif_list_menu_column_previous, tarif_list_menu_current, tarif_list_menu_next, empty_column2  = st.columns([6, 1, 2, 1, 6]) 
 electricity_tarif_list_column, gas_tarif_listchart_column = st.columns(2) 
 
-tariff_list_empty_left, electricity_tarif_list_column, tariff_list_middle, gas_tarif_listchart_column, tariff_list_empty_right = st.columns([1, 4,1,4,1])
-
-with empty_left_colum1:
-    st.write('   ')
-    st.markdown("""---""")
-with empty_right_column1:
-    st.write('   ')
-    st.markdown("""---""")
-    
 dates = electricity_results_3000[(electricity_results_3000.date >= pd.to_datetime(date_interval[0])) & (electricity_results_3000.date <= pd.to_datetime(date_interval[1]))].date.unique()
 dates = pd.to_datetime(dates).strftime("%b %d, %Y")
 
-
 with tarif_list_menu_current: 
     selected_date_e = st.selectbox(
-                        '',
-                        (dates),
-                        index= (len(dates)+1)//2)
+                        'Wähle Tag für eine Tarifliste aus!',
+                        (dates))
 
 if(len(dates[np.where(np.asarray( dates)< selected_date_e)]) > 0):
     with tarif_list_menu_column_previous:
@@ -1084,7 +1040,6 @@ if(len(dates[np.where(np.asarray( dates)< selected_date_e)]) > 0):
             prev_date = dates[np.where(np.asarray( dates)< selected_date_e)][-1:][0]
             prev_date = pd.to_datetime(prev_date).strftime("%b %d, %Y")
             st.button(' {prev_date} << '.format(prev_date=prev_date), disabled=True)
-            
 
 if(len(dates[np.where(np.asarray( dates)> selected_date_e)]) > 0):
     with tarif_list_menu_next:
@@ -1094,105 +1049,65 @@ if(len(dates[np.where(np.asarray( dates)> selected_date_e)]) > 0):
             next_date = dates[np.where(np.asarray( dates)> selected_date_e)][:1][0]
             next_date = pd.to_datetime(next_date).strftime("%b %d, %Y")
             st.button(' >> {next_date} '.format(next_date=next_date), disabled=True)
-
-sep_line_empty_left2, sep_line2_center, sep_line_empty_right = st.columns([1, 10, 1])                   
-sep_line2_center.markdown("""---""")
+        
+st.markdown("""---""")
 
 with electricity_tarif_list_column:
-    tariff_list_expander_3000e = st.expander('Tarifliste - Stromtarife mit 3000 kWh Verbrauch', expanded=True)
+    tariff_list_expander_e = st.expander('Tarife', expanded=True)
     
-    with tariff_list_expander_3000e:
-        if( (seperation_var == 'Preisgarantie') | (seperation_var == 'Vertragslaufzeit') ):
-            #st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
-            st.write('Top {top_n} Tarife am {selected_date} mit {seperation_var} < {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(ohne_laufzeit_3000,selected_date_e)
-            st.write('Top {top_n} Tarife am {selected_date} mit {seperation_var} >= {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_3000,selected_date_e)
-        elif(seperation_var =='Öko Tarif/ Konventioneller Tarif'):
-            st.write('Top {top_n} Öko-Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(ohne_laufzeit_3000,selected_date_e)
-            st.write('Top {top_n} Nicht-Öko Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_3000,selected_date_e)
-        elif(seperation_var =='Partner'):
-            st.write('Top {top_n} Tarife von Verivox am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(ohne_laufzeit_3000,selected_date_e)
-            st.write('Top {top_n} Tarife von Check24 am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_3000,selected_date_e)
-        elif(seperation_var == 'Kein Unterscheidungsmerkmal'):
-            st.write('Top {top_n} Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_3000,selected_date_e)
 
-    tariff_list_expander_1300e = st.expander('Tarifliste - Stromtarife mit 1300 kWh Verbrauch', expanded=False)
-    
-    with tariff_list_expander_1300e:
-        if( (seperation_var == 'Preisgarantie') | (seperation_var == 'Vertragslaufzeit') ):
-            #st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
-            st.write('Top {top_n} Tarife am {selected_date} mit {seperation_var} < {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(ohne_laufzeit_1300,selected_date_e)
-            st.write('Top {top_n} Tarife am {selected_date} mit {seperation_var} >= {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_1300,selected_date_e)
-        elif(seperation_var =='Öko Tarif/ Konventioneller Tarif'):
-            st.write('Top {top_n} Öko-Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(ohne_laufzeit_1300,selected_date_e)
-            st.write('Top {top_n} Nicht-Öko Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_1300,selected_date_e)
-        elif(seperation_var =='Partner'):
-            st.write('Top {top_n} Tarife von Verivox am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(ohne_laufzeit_1300,selected_date_e)
-            st.write('Top {top_n} Tarife von Check24 am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_1300,selected_date_e)
-        elif(seperation_var == 'Kein Unterscheidungsmerkmal'):
-            st.write('Top {top_n} Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_1300,selected_date_e)
+    with tariff_list_expander_e:
+        st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
+
+        
+        st.write('Top {top_n} Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e))
+
+
 
 with gas_tarif_listchart_column:
-    tariff_list_expander_15000g = st.expander('Tarifliste - Gasarife mit 1500 kWh Verbrauch', expanded=True)
+    tariff_list_expander_g = st.expander('Tarife', expanded=True)
     
-    with tariff_list_expander_15000g:
-        if( (seperation_var == 'Preisgarantie') | (seperation_var == 'Vertragslaufzeit') ):
-            #st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
-            st.write('Top {top_n} Tarife am {selected_date} mit {seperation_var} < {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(ohne_laufzeit_15000,selected_date_e)
-            st.write('Top {top_n} Tarife am {selected_date} mit {seperation_var} >= {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_15000,selected_date_e)
-        elif(seperation_var =='Öko Tarif/ Konventioneller Tarif'):
-            st.write('Top {top_n} Öko-Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(ohne_laufzeit_15000,selected_date_e)
-            st.write('Top {top_n} Nicht-Öko Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_15000,selected_date_e)
-        elif(seperation_var =='Partner'):
-            st.write('Top {top_n} Tarife von Verivox am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(ohne_laufzeit_15000,selected_date_e)
-            st.write('Top {top_n} Tarife von Check24 am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_15000,selected_date_e)
-        elif(seperation_var == 'Kein Unterscheidungsmerkmal'):
-            st.write('Top {top_n} Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_15000,selected_date_e)
+    with tariff_list_expander_g:
+        st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
 
-    tariff_list_expander_9000g = st.expander('Tarifliste - Gastarife mit 9000 kWh Verbrauch', expanded=False)
-    
-    with tariff_list_expander_9000g:
-        if( (seperation_var == 'Preisgarantie') | (seperation_var == 'Vertragslaufzeit') ):
-            #st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
-            st.write('Top {top_n} Tarife am {selected_date} mit {seperation_var} < {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(ohne_laufzeit_9000,selected_date_e)
-            st.write('Top {top_n} Tarife am {selected_date} mit {seperation_var} >= {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_9000,selected_date_e)
-        elif(seperation_var =='Öko Tarif/ Konventioneller Tarif'):
-            st.write('Top {top_n} Öko-Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(ohne_laufzeit_9000,selected_date_e)
-            st.write('Top {top_n} Nicht-Öko Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_9000,selected_date_e)
-        elif(seperation_var =='Partner'):
-            st.write('Top {top_n} Tarife von Verivox am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(ohne_laufzeit_9000,selected_date_e)
-            st.write('Top {top_n} Tarife von Check24 am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_9000,selected_date_e)
-        elif(seperation_var == 'Kein Unterscheidungsmerkmal'):
-            st.write('Top {top_n} Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_9000,selected_date_e)
+        
+        st.write('Top {top_n} Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e))
+        
+        top_n_strom_tarife = gas_results_15000.copy()
+        if(top_n != 'Alle'):
+            top_n_strom_tarife.sort_values(['date', 'plz', 'dataunit'], ascending=[True, True, True], inplace=True)
+            top_n_strom_tarife['rank'] = 1
+            top_n_strom_tarife['rank'] = top_n_strom_tarife.groupby(['date', 'plz'])['rank'].cumsum()
+            top_n_strom_tarife = top_n_strom_tarife[top_n_strom_tarife['rank'] <= int(top_n)]
 
-st.write(e_median_date)
+        
+        gd = GridOptionsBuilder.from_dataframe(top_n_strom_tarife)
+        gd.configure_pagination(enabled=True)
+        gd.configure_default_column(editable=False, groupable=True)
+        #gd.configure_selection(selection_mode='multiple', use_checkbox=True)
+        #gd.configure_column("date", type=["customDateTimeFormat"], custom_format_string='yyyy-MM-dd')
+        gd.configure_column("plz", header_name="PLZ")
+        gd.configure_column("providerName", header_name="Versorger")
+        gd.configure_column("tariffName", header_name="Tarif Name")
+        gd.configure_column('dataunit', header_name="Arbeitspreis")
+        gd.configure_column('dataeco', header_name="Öko")
+        gd.configure_column('priceGuaranteeNormalized', header_name="Preisgarantie")
+        gd.configure_column('contractDurationNormalized', header_name="Vertragslaufzeit")
+        #um date picker einzufügen: https://discuss.streamlit.io/t/ag-grid-component-with-input-support/8108/349?page=17
+        gridoptions = gd.build()
+
+        grid_table = AgGrid(top_n_strom_tarife, 
+        gridOptions=gridoptions, 
+        update_mode=GridUpdateMode.GRID_CHANGED, 
+        enable_enterprise_modules= True,
+        fit_columns_on_grid_load=True,
+        height = 350,
+        width=805,
+        allow_unsafe_jscode=True,
+        theme='alpine'
+        )
+
+
 
 
 ##########################################################
@@ -1212,5 +1127,3 @@ st.write(e_median_date)
 #https://www.bundesnetzagentur.de/DE/Fachthemen/ElektrizitaetundGas/Versorgungssicherheit/aktuelle_gasversorgung_/_svg/Gasimporte/Gasimporte.html
 #wetter und verbrauch daten
 #https://www.bundesnetzagentur.de/DE/Gasversorgung/aktuelle_gasversorgung/_svg/GasverbrauchSLP_monatlich/Gasverbrauch_SLP_M.html;jsessionid=BC4D6020F61B843F1C0FB52C4384DE6E
-#<div tabindex="0" role="button" aria-expanded="true" class="streamlit-expanderHeader st-ae st-bw st-ag st-ah st-ai st-aj st-bx st-by st-bz st-c0 st-c1 st-c2 st-c3 st-ar st-as st-c4 st-c5 st-b3 st-c6 st-c7 st-c8 st-b4 st-c9 st-ca st-cb st-cc st-cd">Tarifliste - Gasarife mit 1500 kWh Verbrauch<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor" xmlns="http://www.w3.org/2000/svg" color="inherit" class="e1fb0mya1 css-fblp2m ex0cdmw0"><path fill="none" d="M0 0h24v24H0V0z"></path><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14l-6-6z"></path></svg></div>
-#<div tabindex="0" role="button" aria-expanded="true" class="streamlit-expanderHeader st-ae st-bw st-ag st-ah st-ai st-aj st-bx st-by st-bz st-c0 st-c1 st-c2 st-c3 st-ar st-as st-c4 st-c5 st-b3 st-c6 st-c7 st-c8 st-b4 st-c9 st-ca st-cb st-cc st-cd">Tarifliste - Stromtarife mit 3000 kWh Verbrauch<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor" xmlns="http://www.w3.org/2000/svg" color="inherit" class="e1fb0mya1 css-fblp2m ex0cdmw0"><path fill="none" d="M0 0h24v24H0V0z"></path><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14l-6-6z"></path></svg></div>
