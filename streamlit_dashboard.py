@@ -710,7 +710,7 @@ def create_chart(summary, aggregation='mean', seperation_value=12, date_interval
   labelFontSize=10
 )
 
-    return final_view
+    return final_view, rng, dom
 
 def load_events_df():
     events_df = pd.DataFrame([
@@ -789,7 +789,7 @@ def load_events_df():
     return events_df
 
 
-def get_table(results, selected_date):
+def get_table(results, selected_date, rng, dom):
 
     top_n_strom_tarife = results.copy()
     top_n_strom_tarife = top_n_strom_tarife[top_n_strom_tarife.date == selected_date][['plz','rank', 'providerName', 'tariffName', 'signupPartner','dataunit', 'Jahreskosten',  'dataeco', 'priceGuaranteeNormalized', 'contractDurationNormalized']]
@@ -1037,7 +1037,7 @@ if(len(date_interval) == 2):
            
         summary = pd.concat([summary_3000, summary_1300])
         e_chart.write(chart_header)
-        energy_line_chart_e = create_chart(summary, mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events,energy_type='electricity', seperation_var=seperation_var)
+        energy_line_chart_e, rng_e, dom_e = create_chart(summary, mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events,energy_type='electricity', seperation_var=seperation_var)
         e_chart.altair_chart(energy_line_chart_e, use_container_width=True)
 
     with gas_chart_column:
@@ -1048,7 +1048,7 @@ if(len(date_interval) == 2):
         
         summary = pd.concat([summary_9000, summary_15000])
         g_chart.write(chart_header)
-        energy_line_chart_e = create_chart(summary, mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events,energy_type='gas', seperation_var=seperation_var)
+        energy_line_chart_e, rng_g, dom_g = create_chart(summary, mean_median_btn, int(selection_slider), date_interval=date_interval, selected_variable=selected_variable, events_df=selected_events,energy_type='gas', seperation_var=seperation_var)
         g_chart.altair_chart(energy_line_chart_e, use_container_width=True)
 
 ## ENDE CHART REGION
@@ -1103,46 +1103,46 @@ with electricity_tarif_list_column:
     with tariff_list_expander_3000e:
         if( (seperation_var == 'Preisgarantie') | (seperation_var == 'Vertragslaufzeit') ):
             #st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
-            st.write('Top {top_n} Tarife am {selected_date} mit {seperation_var} < {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(ohne_laufzeit_3000,selected_date_e)
-            st.write('Top {top_n} Tarife am {selected_date} mit {seperation_var} >= {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_3000,selected_date_e)
+            st.write('<div style=background-color:'+rng_e[0]+';>Top {top_n} Tarife am {selected_date} mit {seperation_var} < {selection_slider}:</div>'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            get_table(ohne_laufzeit_3000,selected_date_e, rng_e[0], dom_e[0])
+            st.write('<div style=background-color:'+rng_e[1]+';>Top {top_n} Tarife am {selected_date} mit {seperation_var} >= {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            get_table(mit_laufzeit_3000,selected_date_e, rng_e[1], dom_e[1])
         elif(seperation_var =='Öko Tarif/ Konventioneller Tarif'):
-            st.write('Top {top_n} Öko-Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(ohne_laufzeit_3000,selected_date_e)
-            st.write('Top {top_n} Nicht-Öko Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_3000,selected_date_e)
+            st.write('<div style=background-color:'+rng_e[1]+';>Top {top_n} Nicht-Öko Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            get_table(ohne_laufzeit_3000,selected_date_e, rng_e[1], dom_e[1])
+            st.write('<div style=background-color:'+rng_e[0]+';>Top {top_n} Öko Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            get_table(mit_laufzeit_3000,selected_date_e, rng_e[0], dom_e[0])
         elif(seperation_var =='Partner'):
-            st.write('Top {top_n} Tarife von Verivox am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(ohne_laufzeit_3000,selected_date_e)
-            st.write('Top {top_n} Tarife von Check24 am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_3000,selected_date_e)
+            st.write('<div style=background-color:'+rng_e[1]+';>Top {top_n} Tarife von Verivox am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            get_table(ohne_laufzeit_3000,selected_date_e, rng_e[1], dom_e[1])
+            st.write('<div style=background-color:'+rng_e[0]+';>Top {top_n} Tarife von Check24 am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            get_table(mit_laufzeit_3000,selected_date_e, rng_e[0], dom_e[0])
         elif(seperation_var == 'Kein Unterscheidungsmerkmal'):
-            st.write('Top {top_n} Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_3000,selected_date_e)
+            st.write('<div style=background-color:'+rng_e[0]+';>Top {top_n} Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            get_table(mit_laufzeit_3000,selected_date_e, rng_e[0], dom_e[0])
 
     tariff_list_expander_1300e = st.expander('Tarifliste - Stromtarife mit 1300 kWh Verbrauch', expanded=False)
     
     with tariff_list_expander_1300e:
         if( (seperation_var == 'Preisgarantie') | (seperation_var == 'Vertragslaufzeit') ):
             #st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
-            st.write('Top {top_n} Tarife am {selected_date} mit {seperation_var} < {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(ohne_laufzeit_1300,selected_date_e)
-            st.write('Top {top_n} Tarife am {selected_date} mit {seperation_var} >= {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_1300,selected_date_e)
+            st.write('<div style=background-color:'+rng_e[2]+';>Top {top_n} Tarife am {selected_date} mit {seperation_var} < {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            get_table(ohne_laufzeit_1300,selected_date_e, rng_e[2], dom_e[2])
+            st.write('<div style=background-color:'+rng_e[3]+';>Top {top_n} Tarife am {selected_date} mit {seperation_var} >= {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            get_table(mit_laufzeit_1300,selected_date_e, rng_e[3], dom_e[3])
         elif(seperation_var =='Öko Tarif/ Konventioneller Tarif'):
-            st.write('Top {top_n} Öko-Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(ohne_laufzeit_1300,selected_date_e)
-            st.write('Top {top_n} Nicht-Öko Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_1300,selected_date_e)
+            st.write('<div style=background-color:'+rng_e[3]+';>Top {top_n} Nicht-Öko Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            get_table(ohne_laufzeit_1300,selected_date_e, rng_e[3], dom_e[3])
+            st.write('<div style=background-color:'+rng_e[2]+';>Top {top_n} Öko Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            get_table(mit_laufzeit_1300,selected_date_e, rng_e[2], dom_e[2])
         elif(seperation_var =='Partner'):
-            st.write('Top {top_n} Tarife von Verivox am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(ohne_laufzeit_1300,selected_date_e)
-            st.write('Top {top_n} Tarife von Check24 am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_1300,selected_date_e)
+            st.write('<div style=background-color:'+rng_e[3]+';>Top {top_n} Tarife von Verivox am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            get_table(ohne_laufzeit_1300,selected_date_e, rng_e[3], dom_e[3])
+            st.write('<div style=background-color:'+rng_e[2]+';>Top {top_n} Tarife von Check24 am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            get_table(mit_laufzeit_1300,selected_date_e, rng_e[2], dom_e[2])
         elif(seperation_var == 'Kein Unterscheidungsmerkmal'):
-            st.write('Top {top_n} Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_1300,selected_date_e)
+            st.write('<div style=background-color:'+rng_e[1]+';>Top {top_n} Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            get_table(mit_laufzeit_1300,selected_date_e, rng_e[1], dom_e[1])
 
 with gas_tarif_listchart_column:
     tariff_list_expander_15000g = st.expander('Tarifliste - Gasarife mit 1500 kWh Verbrauch', expanded=True)
@@ -1150,46 +1150,46 @@ with gas_tarif_listchart_column:
     with tariff_list_expander_15000g:
         if( (seperation_var == 'Preisgarantie') | (seperation_var == 'Vertragslaufzeit') ):
             #st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
-            st.write('Top {top_n} Tarife am {selected_date} mit {seperation_var} < {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(ohne_laufzeit_15000,selected_date_e)
-            st.write('Top {top_n} Tarife am {selected_date} mit {seperation_var} >= {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_15000,selected_date_e)
+            st.write('<div style=background-color:'+rng_g[0]+';>Top {top_n} Tarife am {selected_date} mit {seperation_var} < {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            get_table(ohne_laufzeit_15000,selected_date_e, rng_g[0], dom_g[0])
+            st.write('<div style=background-color:'+rng_g[1]+';>Top {top_n} Tarife am {selected_date} mit {seperation_var} >= {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            get_table(mit_laufzeit_15000,selected_date_e, rng_g[1], dom_g[1])
         elif(seperation_var =='Öko Tarif/ Konventioneller Tarif'):
-            st.write('Top {top_n} Öko-Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(ohne_laufzeit_15000,selected_date_e)
-            st.write('Top {top_n} Nicht-Öko Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_15000,selected_date_e)
+            st.write('<div style=background-color:'+rng_g[1]+';>Top {top_n} Nicht-Öko Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            get_table(ohne_laufzeit_15000,selected_date_e, rng_g[1], dom_g[1])
+            st.write('<div style=background-color:'+rng_g[0]+';>Top {top_n} Öko Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            get_table(mit_laufzeit_15000,selected_date_e, rng_g[0], dom_g[0])
         elif(seperation_var =='Partner'):
-            st.write('Top {top_n} Tarife von Verivox am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(ohne_laufzeit_15000,selected_date_e)
-            st.write('Top {top_n} Tarife von Check24 am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_15000,selected_date_e)
+            st.write('<div style=background-color:'+rng_g[1]+';>Top {top_n} Tarife von Verivox am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            get_table(ohne_laufzeit_15000,selected_date_e, rng_g[1], dom_g[1])
+            st.write('<div style=background-color:'+rng_g[0]+';>Top {top_n} Tarife von Check24 am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            get_table(mit_laufzeit_15000,selected_date_e, rng_g[0], dom_g[0])
         elif(seperation_var == 'Kein Unterscheidungsmerkmal'):
-            st.write('Top {top_n} Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_15000,selected_date_e)
+            st.write('<div style=background-color:'+rng_g[0]+';>Top {top_n} Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            get_table(mit_laufzeit_15000,selected_date_e, rng_g[0], dom_g[0])
 
     tariff_list_expander_9000g = st.expander('Tarifliste - Gastarife mit 9000 kWh Verbrauch', expanded=False)
     
     with tariff_list_expander_9000g:
         if( (seperation_var == 'Preisgarantie') | (seperation_var == 'Vertragslaufzeit') ):
             #st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
-            st.write('Top {top_n} Tarife am {selected_date} mit {seperation_var} < {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(ohne_laufzeit_9000,selected_date_e)
-            st.write('Top {top_n} Tarife am {selected_date} mit {seperation_var} >= {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_9000,selected_date_e)
+            st.write('<div style=background-color:'+rng_g[2]+';>Top {top_n} Tarife am {selected_date} mit {seperation_var} < {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            get_table(ohne_laufzeit_9000,selected_date_e, rng_g[2], dom_g[2])
+            st.write('<div style=background-color:'+rng_g[3]+';>Top {top_n} Tarife am {selected_date} mit {seperation_var} >= {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            get_table(mit_laufzeit_9000,selected_date_e, rng_g[3], dom_g[3])
         elif(seperation_var =='Öko Tarif/ Konventioneller Tarif'):
-            st.write('Top {top_n} Öko-Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(ohne_laufzeit_9000,selected_date_e)
-            st.write('Top {top_n} Nicht-Öko Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_9000,selected_date_e)
+            st.write('<div style=background-color:'+rng_g[3]+';>Top {top_n} Nicht-Öko Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            get_table(ohne_laufzeit_9000,selected_date_e, rng_g[3], dom_g[3])
+            st.write('<div style=background-color:'+rng_g[2]+';>Top {top_n} Öko Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            get_table(mit_laufzeit_9000,selected_date_e, rng_g[2], dom_g[2])
         elif(seperation_var =='Partner'):
-            st.write('Top {top_n} Tarife von Verivox am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(ohne_laufzeit_9000,selected_date_e)
-            st.write('Top {top_n} Tarife von Check24 am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_9000,selected_date_e)
+            st.write('<div style=background-color:'+rng_g[3]+';>Top {top_n} Tarife von Verivox am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            get_table(ohne_laufzeit_9000,selected_date_e, rng_g[3], dom_g[3])
+            st.write('<div style=background-color:'+rng_g[2]+';>Top {top_n} Tarife von Check24 am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            get_table(mit_laufzeit_9000,selected_date_e, rng_g[2], dom_g[2])
         elif(seperation_var == 'Kein Unterscheidungsmerkmal'):
-            st.write('Top {top_n} Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider))
-            get_table(mit_laufzeit_9000,selected_date_e)
+            st.write('<div style=background-color:'+rng_g[1]+';>Top {top_n} Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            get_table(mit_laufzeit_9000,selected_date_e, rng_g[1], dom_g[1])
 
 st.write(e_median_date)
 
