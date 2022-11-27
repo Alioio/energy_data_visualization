@@ -228,6 +228,7 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
     if( (seperation_var == 'contractDurationNormalized') | (seperation_var == 'priceGuaranteeNormalized') ):
 
         ohne_laufzeit  = results[results[seperation_var] < seperation_value]
+        ohne_laufzeit_all = ohne_laufzeit.copy()
 
         summary_ohne_laufzeit_all = ohne_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
         summary_ohne_laufzeit_all.columns =  [ 'mean_all', 'median_all','std_all', 'min_all', 'max_all', 'count_all']
@@ -246,6 +247,7 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         
         #mit_laufzeit  = high_consume[high_consume['contractDurationNormalized'] > 11]
         mit_laufzeit  = results[results[seperation_var] >= seperation_value]
+        mit_laufzeit_all = mit_laufzeit.copy()
         summary_mit_laufzeit_all = mit_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
         summary_mit_laufzeit_all.columns =  [ 'mean_all', 'median_all','std_all', 'min_all', 'max_all', 'count_all']
 
@@ -278,6 +280,7 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         print('summary after merge: ',len(summary),'   ',summary.columns)
     elif(seperation_var == 'dataeco'):
         ohne_laufzeit  = results[results[seperation_var] == False]
+        ohne_laufzeit_all = ohne_laufzeit.copy()
 
         summary_ohne_laufzeit_all = ohne_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
         summary_ohne_laufzeit_all.columns =  [ 'mean_all', 'median_all','std_all', 'min_all', 'max_all', 'count_all']
@@ -296,6 +299,7 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         
         #mit_laufzeit  = high_consume[high_consume['contractDurationNormalized'] > 11]
         mit_laufzeit  = results[results[seperation_var] == True]
+        mit_laufzeit_all = mit_laufzeit.copy()
         summary_mit_laufzeit_all = mit_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
         summary_mit_laufzeit_all.columns =  [ 'mean_all', 'median_all','std_all', 'min_all', 'max_all', 'count_all']
 
@@ -328,6 +332,7 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         print('summary after merge: ',len(summary),'   ',summary.columns)
     elif(seperation_var == 'signupPartner'):
         ohne_laufzeit  = results[results[seperation_var] == 'vx']
+        ohne_laufzeit_all = ohne_laufzeit.copy()
 
         summary_ohne_laufzeit_all = ohne_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
         summary_ohne_laufzeit_all.columns =  [ 'mean_all', 'median_all','std_all', 'min_all', 'max_all', 'count_all']
@@ -346,6 +351,7 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         
         #mit_laufzeit  = high_consume[high_consume['contractDurationNormalized'] > 11]
         mit_laufzeit  = results[results[seperation_var] == 'c24']
+        mit_laufzeit_all = mit_laufzeit.copy()
         summary_mit_laufzeit_all = mit_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
         summary_mit_laufzeit_all.columns =  [ 'mean_all', 'median_all','std_all', 'min_all', 'max_all', 'count_all']
 
@@ -377,7 +383,9 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
     elif(seperation_var=='None'):
 
         ohne_laufzeit = None
+        ohne_laufzeit_all = None
         mit_laufzeit  = results.copy()
+        mit_laufzeit_all = results.copy()
         summary_mit_laufzeit_all = mit_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
         summary_mit_laufzeit_all.columns =  [ 'mean_all', 'median_all','std_all', 'min_all', 'max_all', 'count_all']
 
@@ -408,7 +416,7 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
                  on='date')
 
 
-    return ohne_laufzeit, mit_laufzeit, summary
+    return ohne_laufzeit, mit_laufzeit, ohne_laufzeit_all, mit_laufzeit_all, summary
 
 
 def create_chart(summary, aggregation='mean', seperation_value=12, date_interval=['2022-07-17', '2022-10-17'], widtht=700, height=280,selected_variable='dataunit', events_df=None, energy_type='gas', seperation_var='priceGuaranteeNormalized'):
@@ -825,6 +833,33 @@ def get_table(results, selected_date, rng, dom):
 
     return grid_table
 
+
+def create_desitiy_chart(data_all,selected_date_e, selected_variable, rng,dom):
+    selectd_variable_dict = {
+        "Arbeitspreis": "dataunit",
+        "dataunit": "Arbeitspreis",
+        "Grundpreis": "datafixed",
+        "datafixed":"Grundpreis",
+        "Jahreskosten":"Jahreskosten"}
+
+    max_dataunit = data_all[data_all.date == selected_date_e][selectd_variable_dict[selected_variable]].max()
+    min_dataunit = data_all[data_all.date == selected_date_e][selectd_variable_dict[selected_variable]].min()
+
+    density_chart_e = alt.Chart(data_all).transform_density(
+        selectd_variable_dict[selected_variable],
+        as_=[selectd_variable_dict[selected_variable], 'density'],
+        extent= [min_dataunit, max_dataunit],
+        groupby=['Beschreibung']
+    ).mark_area().encode(
+        x= alt.X(selectd_variable_dict[selected_variable]+':Q',axis= alt.Axis(grid=False, title=selected_variable)),
+        y=alt.Y('density:Q', axis = alt.Axis(  offset= 5, title='Dichte')),
+        color=alt.Color('Beschreibung:N', scale=alt.Scale(domain=dom, range=rng) , legend=None),
+        column = alt.Column('Beschreibung:N', title=''),
+        tooltip=['density:Q',selectd_variable_dict[selected_variable]+':Q']
+    ).properties(width=350, height=75, title='').interactive()
+
+    return density_chart_e
+
 #### HEADER REGION
 
 empty_left_head, row1_1,center_head, row1_2, empty_right_head= st.columns((1,4, 1,4,1))
@@ -1032,8 +1067,8 @@ if(len(date_interval) == 2):
         print(top_n,'  ',type(top_n))
         e_median_date= electricity_results_3000[(electricity_results_3000.date == pd.to_datetime(date_interval[0])) & (electricity_results_3000.date <= pd.to_datetime(date_interval[1]))].date.median()
         chart_header = "**{energy_selection}verträge ({selected_variable})**".format(selected_variable=selected_variable, energy_selection='Strom')
-        ohne_laufzeit_3000, mit_laufzeit_3000,summary_3000 = summarize(electricity_results_3000, seperation_var, int(selection_slider),'3000',selected_variable, top_n=top_n)
-        ohne_laufzeit_1300, mit_laufzeit_1300,summary_1300 = summarize(electricity_results_1300, seperation_var, int(selection_slider),'1300', selected_variable, top_n=top_n) 
+        ohne_laufzeit_3000, mit_laufzeit_3000, ohne_laufzeit_3000_all, mit_laufzeit_3000_all, summary_3000 = summarize(electricity_results_3000, seperation_var, int(selection_slider),'3000',selected_variable, top_n=top_n)
+        ohne_laufzeit_1300, mit_laufzeit_1300, ohne_laufzeit_1300_all, mit_laufzeit_1300_all, summary_1300 = summarize(electricity_results_1300, seperation_var, int(selection_slider),'1300', selected_variable, top_n=top_n) 
            
         summary = pd.concat([summary_3000, summary_1300])
         e_chart.write(chart_header)
@@ -1043,8 +1078,8 @@ if(len(date_interval) == 2):
     with gas_chart_column:
         g_median_date = gas_results_15000[(gas_results_15000.date >= pd.to_datetime(date_interval[0])) & (gas_results_15000.date <= pd.to_datetime(date_interval[1]))].date.median()
         chart_header = "**{energy_selection}verträge ({selected_variable})**".format(selected_variable=selected_variable, energy_selection='Gas')
-        ohne_laufzeit_9000, mit_laufzeit_9000, summary_9000 = summarize(gas_results_9000, seperation_var,int(selection_slider),'9000',selected_variable, top_n=top_n)
-        ohne_laufzeit_15000, mit_laufzeit_15000,summary_15000 = summarize(gas_results_15000, seperation_var,int(selection_slider),'15000',selected_variable, top_n=top_n)
+        ohne_laufzeit_9000, mit_laufzeit_9000, ohne_laufzeit_9000_all, mit_laufzeit_9000_all,  summary_9000 = summarize(gas_results_9000, seperation_var,int(selection_slider),'9000',selected_variable, top_n=top_n)
+        ohne_laufzeit_15000, mit_laufzeit_15000, ohne_laufzeit_15000_all, mit_laufzeit_15000_all, summary_15000 = summarize(gas_results_15000, seperation_var,int(selection_slider),'15000',selected_variable, top_n=top_n)
         
         summary = pd.concat([summary_9000, summary_15000])
         g_chart.write(chart_header)
@@ -1098,9 +1133,32 @@ sep_line_empty_left2, sep_line2_center, sep_line_empty_right = st.columns([1, 10
 sep_line2_center.markdown("""---""")
 
 with electricity_tarif_list_column:
-    tariff_list_expander_3000e = st.expander('Tarifliste - Stromtarife mit 3000 kWh Verbrauch', expanded=True)
+    tariff_list_expander_3000e = st.expander('Stromtarife mit 3000 kWh Verbrauch', expanded=True)
     
     with tariff_list_expander_3000e:
+
+        
+        #st.write('Tarif mit teuerster Arbeitspreis: ')
+        #st.write(electritcity_all.loc[electritcity_all['dataunit'] == electritcity_all['dataunit'].max()][['providerName', 'tariffName', 'Jahreskosten', 'dataunit','datafixed', 'dataeco' ]])
+
+        #st.write('Tarif mit teuerster Jahreskosten: ')
+        #st.write(electritcity_all.loc[electritcity_all['Jahreskosten'] == electritcity_all['Jahreskosten'].max()][['providerName', 'tariffName', 'Jahreskosten', 'dataunit','datafixed', 'dataeco' ]])
+
+        #st.write('Tarif mit teuerste Grundpreis: ')
+        #st.write(electritcity_all.loc[electritcity_all['datafixed'] == electritcity_all['datafixed'].max()][['providerName', 'tariffName', 'Jahreskosten', 'dataunit','datafixed', 'dataeco' ]])
+        st.write('<div style="text-align: center"><b>'+'Zusammenfassung aller Tarife mit 3K Verbrauch am '+str(selected_date_e)+'</b></div>', unsafe_allow_html=True)
+        st.write('<div style="text-align: center"><b>'+'Verteilung'+'</b></div>', unsafe_allow_html=True)
+        st.write(' ')
+        if(seperation_var != 'Kein Unterscheidungsmerkmal'):
+            ohne_laufzeit_3000_all['Beschreibung'] = dom_e[0]
+            mit_laufzeit_3000_all['Beschreibung'] = dom_e[1]
+
+            electritcity_all = pd.concat([ohne_laufzeit_3000_all,  mit_laufzeit_3000_all])
+
+            density_chart_e = create_desitiy_chart(electritcity_all, selected_date_e, selected_variable, rng_e, dom_e)
+
+            st.altair_chart(density_chart_e)
+
         if( (seperation_var == 'Preisgarantie') | (seperation_var == 'Vertragslaufzeit') ):
             #st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
             st.write('<div style=background-color:'+rng_e[0]+';>Top {top_n} Tarife am {selected_date} mit {seperation_var} < {selection_slider}:</div>'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
@@ -1118,12 +1176,34 @@ with electricity_tarif_list_column:
             st.write('<div style=background-color:'+rng_e[0]+';>Top {top_n} Tarife von Check24 am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
             get_table(mit_laufzeit_3000,selected_date_e, rng_e[0], dom_e[0])
         elif(seperation_var == 'Kein Unterscheidungsmerkmal'):
+
+            mit_laufzeit_3000_all['Beschreibung'] = dom_e[0]
+
+            density_chart_e = create_desitiy_chart(mit_laufzeit_3000_all, selected_date_e, selected_variable, rng_e, dom_e)
+
+            st.altair_chart(density_chart_e)
+
             st.write('<div style=background-color:'+rng_e[0]+';>Top {top_n} Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
             get_table(mit_laufzeit_3000,selected_date_e, rng_e[0], dom_e[0])
 
-    tariff_list_expander_1300e = st.expander('Tarifliste - Stromtarife mit 1300 kWh Verbrauch', expanded=False)
+    tariff_list_expander_1300e = st.expander('Stromtarife mit 1300 kWh Verbrauch', expanded=False)
     
     with tariff_list_expander_1300e:
+
+        st.write('<div style="text-align: center"><b>'+'Zusammenfassung aller Tarife mit 3K Verbrauch am '+str(selected_date_e)+'</b></div>', unsafe_allow_html=True)
+        st.write('<div style="text-align: center"><b>'+'Verteilung'+'</b></div>', unsafe_allow_html=True)
+        st.write(' ')
+
+        if(seperation_var != 'Kein Unterscheidungsmerkmal'):
+            ohne_laufzeit_1300_all['Beschreibung'] = dom_e[2]
+            mit_laufzeit_1300_all['Beschreibung'] = dom_e[3]
+
+            electritcity_all = pd.concat([ohne_laufzeit_1300_all,  mit_laufzeit_1300_all])
+
+            density_chart_e = create_desitiy_chart(electritcity_all, selected_date_e, selected_variable, rng_e, dom_e)
+
+            st.altair_chart(density_chart_e)
+
         if( (seperation_var == 'Preisgarantie') | (seperation_var == 'Vertragslaufzeit') ):
             #st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
             st.write('<div style=background-color:'+rng_e[2]+';>Top {top_n} Tarife am {selected_date} mit {seperation_var} < {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
@@ -1141,6 +1221,12 @@ with electricity_tarif_list_column:
             st.write('<div style=background-color:'+rng_e[2]+';>Top {top_n} Tarife von Check24 am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
             get_table(mit_laufzeit_1300,selected_date_e, rng_e[2], dom_e[2])
         elif(seperation_var == 'Kein Unterscheidungsmerkmal'):
+            mit_laufzeit_1300_all['Beschreibung'] = dom_e[1]
+
+            density_chart_e = create_desitiy_chart(mit_laufzeit_1300_all, selected_date_e, selected_variable, rng_e, dom_e)
+
+            st.altair_chart(density_chart_e)
+
             st.write('<div style=background-color:'+rng_e[1]+';>Top {top_n} Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
             get_table(mit_laufzeit_1300,selected_date_e, rng_e[1], dom_e[1])
 
@@ -1148,6 +1234,21 @@ with gas_tarif_listchart_column:
     tariff_list_expander_15000g = st.expander('Tarifliste - Gasarife mit 1500 kWh Verbrauch', expanded=True)
     
     with tariff_list_expander_15000g:
+
+        st.write('<div style="text-align: center"><b>'+'Zusammenfassung aller Tarife mit 15K kWh Verbrauch am '+str(selected_date_e)+'</b></div>', unsafe_allow_html=True)
+        st.write('<div style="text-align: center"><b>'+'Verteilung'+'</b></div>', unsafe_allow_html=True)
+        st.write(' ')
+
+        if(seperation_var != 'Kein Unterscheidungsmerkmal'):
+            ohne_laufzeit_15000_all['Beschreibung'] = dom_g[0]
+            mit_laufzeit_15000_all['Beschreibung'] = dom_g[1]
+
+            gas_all = pd.concat([ohne_laufzeit_15000_all,  mit_laufzeit_15000_all])
+
+            density_chart_g = create_desitiy_chart(gas_all, selected_date_e, selected_variable, rng_g, dom_g)
+
+            st.altair_chart(density_chart_g)
+
         if( (seperation_var == 'Preisgarantie') | (seperation_var == 'Vertragslaufzeit') ):
             #st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
             st.write('<div style=background-color:'+rng_g[0]+';>Top {top_n} Tarife am {selected_date} mit {seperation_var} < {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
@@ -1165,12 +1266,34 @@ with gas_tarif_listchart_column:
             st.write('<div style=background-color:'+rng_g[0]+';>Top {top_n} Tarife von Check24 am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
             get_table(mit_laufzeit_15000,selected_date_e, rng_g[0], dom_g[0])
         elif(seperation_var == 'Kein Unterscheidungsmerkmal'):
+
+            mit_laufzeit_15000_all['Beschreibung'] = dom_g[0]
+
+            density_chart_e = create_desitiy_chart(mit_laufzeit_15000_all, selected_date_e, selected_variable, rng_g, dom_g)
+
+            st.altair_chart(density_chart_e)
             st.write('<div style=background-color:'+rng_g[0]+';>Top {top_n} Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
             get_table(mit_laufzeit_15000,selected_date_e, rng_g[0], dom_g[0])
 
     tariff_list_expander_9000g = st.expander('Tarifliste - Gastarife mit 9000 kWh Verbrauch', expanded=False)
     
     with tariff_list_expander_9000g:
+
+
+        st.write('<div style="text-align: center"><b>'+'Zusammenfassung aller Tarife mit 9K kWh Verbrauch am '+str(selected_date_e)+'</b></div>', unsafe_allow_html=True)
+        st.write('<div style="text-align: center"><b>'+'Verteilung'+'</b></div>', unsafe_allow_html=True)
+        st.write(' ')
+
+        if(seperation_var != 'Kein Unterscheidungsmerkmal'):
+            ohne_laufzeit_9000_all['Beschreibung'] = dom_g[2]
+            mit_laufzeit_9000_all['Beschreibung'] = dom_g[3]
+
+            gas_all = pd.concat([ohne_laufzeit_9000_all,  mit_laufzeit_9000_all])
+
+            density_chart_g = create_desitiy_chart(gas_all, selected_date_e, selected_variable, rng_g, dom_g)
+
+            st.altair_chart(density_chart_g)
+
         if( (seperation_var == 'Preisgarantie') | (seperation_var == 'Vertragslaufzeit') ):
             #st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
             st.write('<div style=background-color:'+rng_g[2]+';>Top {top_n} Tarife am {selected_date} mit {seperation_var} < {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
@@ -1188,10 +1311,15 @@ with gas_tarif_listchart_column:
             st.write('<div style=background-color:'+rng_g[2]+';>Top {top_n} Tarife von Check24 am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
             get_table(mit_laufzeit_9000,selected_date_e, rng_g[2], dom_g[2])
         elif(seperation_var == 'Kein Unterscheidungsmerkmal'):
+
+            mit_laufzeit_9000_all['Beschreibung'] = dom_g[1]
+
+            density_chart_e = create_desitiy_chart(mit_laufzeit_9000_all, selected_date_e, selected_variable, rng_g, dom_g)
+
+            st.altair_chart(density_chart_e)
             st.write('<div style=background-color:'+rng_g[1]+';>Top {top_n} Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
             get_table(mit_laufzeit_9000,selected_date_e, rng_g[1], dom_g[1])
 
-st.write(e_median_date)
 
 
 ##########################################################
