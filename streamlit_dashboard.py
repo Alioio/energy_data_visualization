@@ -859,7 +859,7 @@ def create_desitiy_chart(data_all,selected_date_e, selected_variable, rng,dom):
 
     density_chart_e = alt.Chart(data_all).mark_bar().encode(
         x= alt.X(selectd_variable_dict[selected_variable]+':Q',bin=True,axis= alt.Axis(grid=False, title=selected_variable)),
-        y=alt.Y('count()', axis = alt.Axis(  offset= 5, title='Dichte')),
+        y=alt.Y('count()', axis = alt.Axis(  offset= 5, title='Anzahl')),
         color=alt.Color('Beschreibung:N', scale=alt.Scale(domain=dom, range=rng) , legend=None),
         column = alt.Column('Beschreibung:N', title=''),
         tooltip=['count():Q',selectd_variable_dict[selected_variable]+':Q', 'providerName', 'tariffName', 'plz']
