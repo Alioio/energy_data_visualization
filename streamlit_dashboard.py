@@ -234,10 +234,11 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         summary_ohne_laufzeit_all.columns =  [ 'mean_all', 'median_all','std_all', 'min_all', 'max_all', 'count_all']
 
 
+        
+        ohne_laufzeit.sort_values(['date', 'plz', 'dataunit'], ascending=[True, True, True], inplace=True)
+        ohne_laufzeit['rank'] = 1
+        ohne_laufzeit['rank'] = ohne_laufzeit.groupby(['date', 'plz'])['rank'].cumsum()
         if(top_n != 'Alle'):
-            ohne_laufzeit.sort_values(['date', 'plz', 'dataunit'], ascending=[True, True, True], inplace=True)
-            ohne_laufzeit['rank'] = 1
-            ohne_laufzeit['rank'] = ohne_laufzeit.groupby(['date', 'plz'])['rank'].cumsum()
             ohne_laufzeit = ohne_laufzeit[ohne_laufzeit['rank'] <= int(top_n)]
 
         summary_ohne_laufzeit = ohne_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
@@ -251,10 +252,11 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         summary_mit_laufzeit_all = mit_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
         summary_mit_laufzeit_all.columns =  [ 'mean_all', 'median_all','std_all', 'min_all', 'max_all', 'count_all']
 
+        
+        mit_laufzeit.sort_values(['date', 'plz', 'dataunit'], ascending=[True, True, True], inplace=True)
+        mit_laufzeit['rank'] = 1
+        mit_laufzeit['rank'] = mit_laufzeit.groupby(['date', 'plz'])['rank'].cumsum()
         if(top_n != 'Alle'):
-            mit_laufzeit.sort_values(['date', 'plz', 'dataunit'], ascending=[True, True, True], inplace=True)
-            mit_laufzeit['rank'] = 1
-            mit_laufzeit['rank'] = mit_laufzeit.groupby(['date', 'plz'])['rank'].cumsum()
             mit_laufzeit = mit_laufzeit[mit_laufzeit['rank'] <= int(top_n)]
 
         summary_mit_laufzeit = mit_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
@@ -286,10 +288,11 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         summary_ohne_laufzeit_all.columns =  [ 'mean_all', 'median_all','std_all', 'min_all', 'max_all', 'count_all']
 
 
+        
+        ohne_laufzeit.sort_values(['date', 'plz', 'dataunit'], ascending=[True, True, True], inplace=True)
+        ohne_laufzeit['rank'] = 1
+        ohne_laufzeit['rank'] = ohne_laufzeit.groupby(['date', 'plz'])['rank'].cumsum()
         if(top_n != 'Alle'):
-            ohne_laufzeit.sort_values(['date', 'plz', 'dataunit'], ascending=[True, True, True], inplace=True)
-            ohne_laufzeit['rank'] = 1
-            ohne_laufzeit['rank'] = ohne_laufzeit.groupby(['date', 'plz'])['rank'].cumsum()
             ohne_laufzeit = ohne_laufzeit[ohne_laufzeit['rank'] <= int(top_n)]
 
         summary_ohne_laufzeit = ohne_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
@@ -303,10 +306,11 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         summary_mit_laufzeit_all = mit_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
         summary_mit_laufzeit_all.columns =  [ 'mean_all', 'median_all','std_all', 'min_all', 'max_all', 'count_all']
 
+        
+        mit_laufzeit.sort_values(['date', 'plz', 'dataunit'], ascending=[True, True, True], inplace=True)
+        mit_laufzeit['rank'] = 1
+        mit_laufzeit['rank'] = mit_laufzeit.groupby(['date', 'plz'])['rank'].cumsum()
         if(top_n != 'Alle'):
-            mit_laufzeit.sort_values(['date', 'plz', 'dataunit'], ascending=[True, True, True], inplace=True)
-            mit_laufzeit['rank'] = 1
-            mit_laufzeit['rank'] = mit_laufzeit.groupby(['date', 'plz'])['rank'].cumsum()
             mit_laufzeit = mit_laufzeit[mit_laufzeit['rank'] <= int(top_n)]
 
         summary_mit_laufzeit = mit_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
@@ -338,10 +342,11 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         summary_ohne_laufzeit_all.columns =  [ 'mean_all', 'median_all','std_all', 'min_all', 'max_all', 'count_all']
 
 
+        
+        ohne_laufzeit.sort_values(['date', 'plz', 'dataunit'], ascending=[True, True, True], inplace=True)
+        ohne_laufzeit['rank'] = 1
+        ohne_laufzeit['rank'] = ohne_laufzeit.groupby(['date', 'plz'])['rank'].cumsum()
         if(top_n != 'Alle'):
-            ohne_laufzeit.sort_values(['date', 'plz', 'dataunit'], ascending=[True, True, True], inplace=True)
-            ohne_laufzeit['rank'] = 1
-            ohne_laufzeit['rank'] = ohne_laufzeit.groupby(['date', 'plz'])['rank'].cumsum()
             ohne_laufzeit = ohne_laufzeit[ohne_laufzeit['rank'] <= int(top_n)]
 
         summary_ohne_laufzeit = ohne_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
@@ -355,10 +360,11 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         summary_mit_laufzeit_all = mit_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
         summary_mit_laufzeit_all.columns =  [ 'mean_all', 'median_all','std_all', 'min_all', 'max_all', 'count_all']
 
+        
+        mit_laufzeit.sort_values(['date', 'plz', 'dataunit'], ascending=[True, True, True], inplace=True)
+        mit_laufzeit['rank'] = 1
+        mit_laufzeit['rank'] = mit_laufzeit.groupby(['date', 'plz'])['rank'].cumsum()
         if(top_n != 'Alle'):
-            mit_laufzeit.sort_values(['date', 'plz', 'dataunit'], ascending=[True, True, True], inplace=True)
-            mit_laufzeit['rank'] = 1
-            mit_laufzeit['rank'] = mit_laufzeit.groupby(['date', 'plz'])['rank'].cumsum()
             mit_laufzeit = mit_laufzeit[mit_laufzeit['rank'] <= int(top_n)]
 
         summary_mit_laufzeit = mit_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
@@ -389,10 +395,11 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         summary_mit_laufzeit_all = mit_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
         summary_mit_laufzeit_all.columns =  [ 'mean_all', 'median_all','std_all', 'min_all', 'max_all', 'count_all']
 
+        
+        mit_laufzeit.sort_values(['date', 'plz', 'dataunit'], ascending=[True, True, True], inplace=True)
+        mit_laufzeit['rank'] = 1
+        mit_laufzeit['rank'] = mit_laufzeit.groupby(['date', 'plz'])['rank'].cumsum()
         if(top_n != 'Alle'):
-            mit_laufzeit.sort_values(['date', 'plz', 'dataunit'], ascending=[True, True, True], inplace=True)
-            mit_laufzeit['rank'] = 1
-            mit_laufzeit['rank'] = mit_laufzeit.groupby(['date', 'plz'])['rank'].cumsum()
             mit_laufzeit = mit_laufzeit[mit_laufzeit['rank'] <= int(top_n)]
 
         summary_mit_laufzeit = mit_laufzeit[ ['date','providerName','tariffName','signupPartner', variables_dict[selected_variable]]].groupby(['date']).agg(agg_functions)
@@ -824,7 +831,7 @@ def get_table(results, selected_date, rng, dom):
         gridOptions=gridoptions, 
         update_mode=GridUpdateMode.GRID_CHANGED, 
         enable_enterprise_modules= True,
-        fit_columns_on_grid_load=True,
+        #fit_columns_on_grid_load=True,
         height = 350,
         width=805,
         allow_unsafe_jscode=True,
@@ -850,17 +857,12 @@ def create_desitiy_chart(data_all,selected_date_e, selected_variable, rng,dom):
     max_dataunit = data_all[data_all.date == selected_date_e][selectd_variable_dict[selected_variable]].max()
     min_dataunit = data_all[data_all.date == selected_date_e][selectd_variable_dict[selected_variable]].min()
 
-    density_chart_e = alt.Chart(data_all).transform_density(
-        selectd_variable_dict[selected_variable],
-        as_=[selectd_variable_dict[selected_variable], 'density'],
-        extent= [min_dataunit, max_dataunit],
-        groupby=['Beschreibung']
-    ).mark_area().encode(
-        x= alt.X(selectd_variable_dict[selected_variable]+':Q',axis= alt.Axis(grid=False, title=selected_variable)),
-        y=alt.Y('density:Q', axis = alt.Axis(  offset= 5, title='Dichte')),
+    density_chart_e = alt.Chart(data_all).mark_bar().encode(
+        x= alt.X(selectd_variable_dict[selected_variable]+':Q',bin=True,axis= alt.Axis(grid=False, title=selected_variable)),
+        y=alt.Y('count()', axis = alt.Axis(  offset= 5, title='Dichte')),
         color=alt.Color('Beschreibung:N', scale=alt.Scale(domain=dom, range=rng) , legend=None),
         column = alt.Column('Beschreibung:N', title=''),
-        tooltip=['density:Q',selectd_variable_dict[selected_variable]+':Q']
+        tooltip=['count():Q',selectd_variable_dict[selected_variable]+':Q', 'providerName', 'tariffName', 'plz']
     ).properties(width=350, height=75, title='').interactive()
 
     return density_chart_e
