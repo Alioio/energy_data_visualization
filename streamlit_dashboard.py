@@ -835,6 +835,11 @@ def get_table(results, selected_date, rng, dom):
 
 
 def create_desitiy_chart(data_all,selected_date_e, selected_variable, rng,dom):
+    data_all = data_all[data_all.date == selected_date_e]
+
+    data_all = data_all.drop_duplicates(['providerName', 'tariffName', 'signupPartner', 'Jahreskosten', 'dataunit', 'datafixed'])
+
+    print(data_all)
     selectd_variable_dict = {
         "Arbeitspreis": "dataunit",
         "dataunit": "Arbeitspreis",
