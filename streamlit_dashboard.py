@@ -813,7 +813,7 @@ def get_table(results, selected_date, rng, dom):
     gd = GridOptionsBuilder.from_dataframe(top_n_strom_tarife)
     gd.configure_pagination(enabled=True)
     gd.configure_default_column(editable=False, groupable=True)
-    #gd.configure_selection(selection_mode='multiple', use_checkbox=True)
+    gd.configure_selection(selection_mode='single', use_checkbox=False, pre_selected_rows=[0])
     #gd.configure_column("date", type=["customDateTimeFormat"], custom_format_string='yyyy-MM-dd')
     gd.configure_column("rank", header_name="Rang")
     gd.configure_column("plz", header_name="PLZ")
@@ -838,7 +838,7 @@ def get_table(results, selected_date, rng, dom):
         theme='alpine'
         )
 
-    return grid_table
+    return grid_table, top_n_strom_tarife
 
 
 def create_desitiy_chart(data_all,selected_date_e, selected_variable, rng,dom):
@@ -866,6 +866,55 @@ def create_desitiy_chart(data_all,selected_date_e, selected_variable, rng,dom):
     ).properties(width=350, height=75, title='').interactive()
 
     return density_chart_e
+
+def summarize_tariff(results, selected_variable):
+
+    selectd_variable_dict = {
+        "Arbeitspreis": "dataunit",
+        "dataunit": "Arbeitspreis",
+        "Grundpreis": "datafixed",
+        "datafixed":"Grundpreis",
+        "Jahreskosten":"Jahreskosten"}
+
+    results[selectd_variable_dict[selected_variable]+'_mean'] = results.groupby('date')['dataunit'].transform('mean')
+    #st.write(results[['date', 'dataunit', 'dataunit_mean']])
+    return results
+                
+
+def create_tarif_chart(source, selected_variable):
+
+    selectd_variable_dict = {
+        "Arbeitspreis": "dataunit",
+        "dataunit": "Arbeitspreis",
+        "Grundpreis": "datafixed",
+        "datafixed":"Grundpreis",
+        "Jahreskosten":"Jahreskosten"}
+
+    variable = selectd_variable_dict[selected_variable]+'_mean'
+
+    min_y = source[variable].min() - (0.02 * source[variable].min())
+    max_y = source[variable].max() + (0.02 * source[variable].max() )
+
+    tarif_y_domain = [min_y, max_y]
+    #st.write(list(tarif_y_domain))
+
+    tarif_chart = alt.Chart(source).mark_circle(size=100).encode(
+                    x = alt.X('date:T', axis=alt.Axis(format="%y %b", grid=False, title='Datum')),
+                    y = alt.Y(variable+':Q', scale=alt.Scale(domain=list(tarif_y_domain)),axis= alt.Axis(title=selected_variable, offset=5)),
+                    tooltip=['date:T',variable+':Q']
+                ).properties(width=700, height=250, title='')
+    return tarif_chart
+
+def create_tarif_summary_section(results, grid_table_df, index, selected_variable):
+    index = sel_row[0]['_selectedRowNodeInfo']['nodeRowIndex']
+    tariffName = grid_table_df.iloc[index]['tariffName']
+    providerName = grid_table_df.iloc[index]['providerName']
+    tarif_df = results[(results.tariffName == tariffName) & (results.providerName == providerName)]
+    tarif_df = summarize_tariff(tarif_df, selected_variable)
+    tarif_chart = create_tarif_chart(tarif_df, selected_variable)
+
+    st.write('<div style="text-align: center">Tarif \"{tariffName}\" vom Anbieter \"{providerName}\" für 1.3K kWh Verbrauch'.format(tariffName = tariffName, providerName = providerName), unsafe_allow_html=True)
+    st.altair_chart(tarif_chart)
 
 #### HEADER REGION
 
@@ -1142,9 +1191,7 @@ sep_line2_center.markdown("""---""")
 with electricity_tarif_list_column:
     tariff_list_expander_3000e = st.expander('Stromtarife mit 3000 kWh Verbrauch', expanded=True)
     
-    with tariff_list_expander_3000e:
-
-        
+    with tariff_list_expander_3000e: 
         #st.write('Tarif mit teuerster Arbeitspreis: ')
         #st.write(electritcity_all.loc[electritcity_all['dataunit'] == electritcity_all['dataunit'].max()][['providerName', 'tariffName', 'Jahreskosten', 'dataunit','datafixed', 'dataeco' ]])
 
@@ -1154,7 +1201,8 @@ with electricity_tarif_list_column:
         #st.write('Tarif mit teuerste Grundpreis: ')
         #st.write(electritcity_all.loc[electritcity_all['datafixed'] == electritcity_all['datafixed'].max()][['providerName', 'tariffName', 'Jahreskosten', 'dataunit','datafixed', 'dataeco' ]])
         st.write('<div style="text-align: center"><b>'+'Zusammenfassung aller Tarife mit 3K Verbrauch am '+str(selected_date_e)+'</b></div>', unsafe_allow_html=True)
-        st.write('<div style="text-align: center"><b>'+'Verteilung'+'</b></div>', unsafe_allow_html=True)
+        st.write(' ')
+        st.write('<div style="text-align: center"><b>'+'Histogramm'+'</b></div>', unsafe_allow_html=True)
         st.write(' ')
         if(seperation_var != 'Kein Unterscheidungsmerkmal'):
             ohne_laufzeit_3000_all['Beschreibung'] = dom_e[0]
@@ -1163,25 +1211,66 @@ with electricity_tarif_list_column:
             electritcity_all = pd.concat([ohne_laufzeit_3000_all,  mit_laufzeit_3000_all])
 
             density_chart_e = create_desitiy_chart(electritcity_all, selected_date_e, selected_variable, rng_e, dom_e)
-
             st.altair_chart(density_chart_e)
+        
 
         if( (seperation_var == 'Preisgarantie') | (seperation_var == 'Vertragslaufzeit') ):
             #st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
-            st.write('<div style=background-color:'+rng_e[0]+';>Top {top_n} Tarife am {selected_date} mit {seperation_var} < {selection_slider}:</div>'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
-            get_table(ohne_laufzeit_3000,selected_date_e, rng_e[0], dom_e[0])
-            st.write('<div style=background-color:'+rng_e[1]+';>Top {top_n} Tarife am {selected_date} mit {seperation_var} >= {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
-            get_table(mit_laufzeit_3000,selected_date_e, rng_e[1], dom_e[1])
+            st.write('<div style="text-align: center"><b>'+'Top {top_n} Tarife am {selected_date}'.format(top_n=top_n, selected_date=selected_date_e)+'</b></div>', unsafe_allow_html=True)
+            st.write('<div  style="background-color:'+rng_e[0]+'; text-align: center; width:auto;">{seperation_var} < {selection_slider}</div>'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            grid_table, grid_table_df = get_table(ohne_laufzeit_3000,selected_date_e, rng_e[0], dom_e[0])
+            sel_row = grid_table['selected_rows']
+
+            if(len(sel_row) > 0 ):
+                index = sel_row[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                create_tarif_summary_section(electritcity_all, grid_table_df, index, selected_variable)
+
+            #st.write('<div style="text-align: center"><b>'+'Top {top_n} Tarife am {selected_date}'.format(top_n=top_n, selected_date=selected_date_e)+'</b></div>', unsafe_allow_html=True)
+            st.write('<div style="background-color:'+rng_e[1]+';  text-align: center">{seperation_var} >= {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            grid_table, grid_table_df = get_table(mit_laufzeit_3000,selected_date_e, rng_e[1], dom_e[1])
+            sel_row = grid_table['selected_rows']
+
+            if(len(sel_row) > 0 ):
+                index = sel_row[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                create_tarif_summary_section(electritcity_all, grid_table_df, index, selected_variable)
+
+
         elif(seperation_var =='Öko Tarif/ Konventioneller Tarif'):
-            st.write('<div style=background-color:'+rng_e[1]+';>Top {top_n} Nicht-Öko Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
-            get_table(ohne_laufzeit_3000,selected_date_e, rng_e[1], dom_e[1])
-            st.write('<div style=background-color:'+rng_e[0]+';>Top {top_n} Öko Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
-            get_table(mit_laufzeit_3000,selected_date_e, rng_e[0], dom_e[0])
+            st.write('<div style="text-align: center"><b>'+'Top {top_n} Tarife am {selected_date}'.format(top_n=top_n, selected_date=selected_date_e)+'</b></div>', unsafe_allow_html=True)
+            st.write('<div style="background-color:'+rng_e[1]+'; text-align: center">Nicht-Öko Tarife'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            grid_table, grid_table_df = get_table(ohne_laufzeit_3000,selected_date_e, rng_e[1], dom_e[1])
+            sel_row = grid_table['selected_rows']
+
+            if(len(sel_row) > 0 ):
+                index = sel_row[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                create_tarif_summary_section(electritcity_all, grid_table_df, index, selected_variable)
+
+            st.write('<div style="background-color:'+rng_e[0]+'; text-align: center">Öko Tarife'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            grid_table, grid_table_df = get_table(mit_laufzeit_3000,selected_date_e, rng_e[0], dom_e[0])
+            sel_row = grid_table['selected_rows']
+
+            if(len(sel_row) > 0 ):
+                index = sel_row[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                create_tarif_summary_section(electritcity_all, grid_table_df, index, selected_variable)
+
         elif(seperation_var =='Partner'):
-            st.write('<div style=background-color:'+rng_e[1]+';>Top {top_n} Tarife von Verivox am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
-            get_table(ohne_laufzeit_3000,selected_date_e, rng_e[1], dom_e[1])
-            st.write('<div style=background-color:'+rng_e[0]+';>Top {top_n} Tarife von Check24 am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
-            get_table(mit_laufzeit_3000,selected_date_e, rng_e[0], dom_e[0])
+            st.write('<div style="text-align: center"><b>'+'Top {top_n} Tarife am {selected_date}'.format(top_n=top_n, selected_date=selected_date_e)+'</b></div>', unsafe_allow_html=True)
+            st.write('<div style="background-color:'+rng_e[1]+'; text-align: center">Von Verivox'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            grid_table, grid_table_df = get_table(ohne_laufzeit_3000,selected_date_e, rng_e[1], dom_e[1])
+            sel_row = grid_table['selected_rows']
+
+            if(len(sel_row) > 0 ):
+                index = sel_row[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                create_tarif_summary_section(electritcity_all, grid_table_df, index, selected_variable)
+
+            st.write('<div style="background-color:'+rng_e[0]+'; text-align: center">Von Check24'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            grid_table, grid_table_df = get_table(mit_laufzeit_3000,selected_date_e, rng_e[0], dom_e[0])
+            sel_row = grid_table['selected_rows']
+
+            if(len(sel_row) > 0 ):
+                index = sel_row[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                create_tarif_summary_section(electritcity_all, grid_table_df, index, selected_variable)
+
         elif(seperation_var == 'Kein Unterscheidungsmerkmal'):
 
             mit_laufzeit_3000_all['Beschreibung'] = dom_e[0]
@@ -1189,16 +1278,22 @@ with electricity_tarif_list_column:
             density_chart_e = create_desitiy_chart(mit_laufzeit_3000_all, selected_date_e, selected_variable, rng_e, dom_e)
 
             st.altair_chart(density_chart_e)
+            st.write('<div style="text-align: center"><b>'+'Top {top_n} Tarife am {selected_date}'.format(top_n=top_n, selected_date=selected_date_e)+'</b></div>', unsafe_allow_html=True)
+            st.write('<div style="background-color:'+rng_e[0]+'; text-align: center">Mit 3K kWh Verbrauch', unsafe_allow_html=True)
+            grid_table, grid_table_df = get_table(mit_laufzeit_3000,selected_date_e, rng_e[0], dom_e[0])
+            sel_row = grid_table['selected_rows']
 
-            st.write('<div style=background-color:'+rng_e[0]+';>Top {top_n} Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
-            get_table(mit_laufzeit_3000,selected_date_e, rng_e[0], dom_e[0])
+            if(len(sel_row) > 0 ):
+                index = sel_row[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                create_tarif_summary_section(mit_laufzeit_3000_all, grid_table_df, index, selected_variable)
 
     tariff_list_expander_1300e = st.expander('Stromtarife mit 1300 kWh Verbrauch', expanded=False)
     
     with tariff_list_expander_1300e:
 
         st.write('<div style="text-align: center"><b>'+'Zusammenfassung aller Tarife mit 3K Verbrauch am '+str(selected_date_e)+'</b></div>', unsafe_allow_html=True)
-        st.write('<div style="text-align: center"><b>'+'Verteilung'+'</b></div>', unsafe_allow_html=True)
+        st.write(' ')
+        st.write('<div style="text-align: center"><b>'+'Histogramm'+'</b></div>', unsafe_allow_html=True)
         st.write(' ')
 
         if(seperation_var != 'Kein Unterscheidungsmerkmal'):
@@ -1213,20 +1308,60 @@ with electricity_tarif_list_column:
 
         if( (seperation_var == 'Preisgarantie') | (seperation_var == 'Vertragslaufzeit') ):
             #st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
-            st.write('<div style=background-color:'+rng_e[2]+';>Top {top_n} Tarife am {selected_date} mit {seperation_var} < {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
-            get_table(ohne_laufzeit_1300,selected_date_e, rng_e[2], dom_e[2])
-            st.write('<div style=background-color:'+rng_e[3]+';>Top {top_n} Tarife am {selected_date} mit {seperation_var} >= {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
-            get_table(mit_laufzeit_1300,selected_date_e, rng_e[3], dom_e[3])
+            st.write('<div style="text-align: center"><b>'+'Top {top_n} Tarife am {selected_date}'.format(top_n=top_n, selected_date=selected_date_e)+'</b></div>', unsafe_allow_html=True)
+            st.write('<div style="background-color:'+rng_e[2]+'; text-align: center">{seperation_var} < {selection_slider}'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            grid_table, grid_table_df = get_table(ohne_laufzeit_1300,selected_date_e, rng_e[2], dom_e[2])
+            sel_row = grid_table['selected_rows']
+
+            if(len(sel_row) > 0 ):
+                index = sel_row[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                create_tarif_summary_section(electritcity_all, grid_table_df, index, selected_variable)
+
+            st.write('<div style="background-color:'+rng_e[3]+'; text-align: center">{seperation_var} >= {selection_slider}'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            grid_table, grid_table_df = get_table(mit_laufzeit_1300,selected_date_e, rng_e[3], dom_e[3])
+            sel_row = grid_table['selected_rows']
+
+            if(len(sel_row) > 0 ):
+                index = sel_row[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                create_tarif_summary_section(electritcity_all, grid_table_df, index, selected_variable)
+
         elif(seperation_var =='Öko Tarif/ Konventioneller Tarif'):
-            st.write('<div style=background-color:'+rng_e[3]+';>Top {top_n} Nicht-Öko Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
-            get_table(ohne_laufzeit_1300,selected_date_e, rng_e[3], dom_e[3])
-            st.write('<div style=background-color:'+rng_e[2]+';>Top {top_n} Öko Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
-            get_table(mit_laufzeit_1300,selected_date_e, rng_e[2], dom_e[2])
+
+            st.write('<div style="text-align: center"><b>'+'Top {top_n} Tarife am {selected_date}'.format(top_n=top_n, selected_date=selected_date_e)+'</b></div>', unsafe_allow_html=True)
+            st.write('<div style="background-color:'+rng_e[3]+'; text-align: center">Nicht-Öko Tarife'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            grid_table, grid_table_df = get_table(ohne_laufzeit_1300,selected_date_e, rng_e[3], dom_e[3])
+            sel_row = grid_table['selected_rows']
+
+            if(len(sel_row) > 0 ):
+                index = sel_row[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                create_tarif_summary_section(electritcity_all, grid_table_df, index, selected_variable)
+
+            st.write('<div style="background-color:'+rng_e[2]+'; text-align: center">Öko Tarife'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            grid_table, grid_table_df = get_table(mit_laufzeit_1300,selected_date_e, rng_e[2], dom_e[2])
+            sel_row = grid_table['selected_rows']
+
+            if(len(sel_row) > 0 ):
+                index = sel_row[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                create_tarif_summary_section(electritcity_all, grid_table_df, index, selected_variable)
+
         elif(seperation_var =='Partner'):
-            st.write('<div style=background-color:'+rng_e[3]+';>Top {top_n} Tarife von Verivox am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
-            get_table(ohne_laufzeit_1300,selected_date_e, rng_e[3], dom_e[3])
-            st.write('<div style=background-color:'+rng_e[2]+';>Top {top_n} Tarife von Check24 am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
-            get_table(mit_laufzeit_1300,selected_date_e, rng_e[2], dom_e[2])
+            st.write('<div style="text-align: center"><b>'+'Top {top_n} Tarife am {selected_date}'.format(top_n=top_n, selected_date=selected_date_e)+'</b></div>', unsafe_allow_html=True)
+            st.write('<div style="background-color:'+rng_e[3]+'; text-align: center">Von Verivox', unsafe_allow_html=True)
+            grid_table, grid_table_df = get_table(ohne_laufzeit_1300,selected_date_e, rng_e[3], dom_e[3])
+            sel_row = grid_table['selected_rows']
+
+            if(len(sel_row) > 0 ):
+                index = sel_row[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                create_tarif_summary_section(electritcity_all, grid_table_df, index, selected_variable)
+
+            st.write('<div style="background-color:'+rng_e[2]+'; text-align: center">Von Check24', unsafe_allow_html=True)
+            grid_table, grid_table_df = get_table(mit_laufzeit_1300,selected_date_e, rng_e[2], dom_e[2])
+            sel_row = grid_table['selected_rows']
+
+            if(len(sel_row) > 0 ):
+                index = sel_row[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                create_tarif_summary_section(electritcity_all, grid_table_df, index, selected_variable)
+
         elif(seperation_var == 'Kein Unterscheidungsmerkmal'):
             mit_laufzeit_1300_all['Beschreibung'] = dom_e[1]
 
@@ -1234,8 +1369,15 @@ with electricity_tarif_list_column:
 
             st.altair_chart(density_chart_e)
 
-            st.write('<div style=background-color:'+rng_e[1]+';>Top {top_n} Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
-            get_table(mit_laufzeit_1300,selected_date_e, rng_e[1], dom_e[1])
+            st.write('<div style="text-align: center"><b>'+'Top {top_n} Tarife am {selected_date}'.format(top_n=top_n, selected_date=selected_date_e)+'</b></div>', unsafe_allow_html=True)
+            st.write('<div style="background-color:'+rng_e[1]+'; text-align: center">Mit 1.3K kWh Verbrauch', unsafe_allow_html=True)
+            grid_table, grid_table_df = get_table(mit_laufzeit_1300,selected_date_e, rng_e[1], dom_e[1])
+            sel_row = grid_table['selected_rows']
+
+            #st.write(sel_row)
+            if(len(sel_row) > 0 ):
+                index = sel_row[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                create_tarif_summary_section(mit_laufzeit_1300_all, grid_table_df, index, selected_variable)
 
 with gas_tarif_listchart_column:
     tariff_list_expander_15000g = st.expander('Tarifliste - Gasarife mit 1500 kWh Verbrauch', expanded=True)
@@ -1243,7 +1385,7 @@ with gas_tarif_listchart_column:
     with tariff_list_expander_15000g:
 
         st.write('<div style="text-align: center"><b>'+'Zusammenfassung aller Tarife mit 15K kWh Verbrauch am '+str(selected_date_e)+'</b></div>', unsafe_allow_html=True)
-        st.write('<div style="text-align: center"><b>'+'Verteilung'+'</b></div>', unsafe_allow_html=True)
+        st.write('<div style="text-align: center"><b>'+'Histogramm'+'</b></div>', unsafe_allow_html=True)
         st.write(' ')
 
         if(seperation_var != 'Kein Unterscheidungsmerkmal'):
@@ -1251,27 +1393,63 @@ with gas_tarif_listchart_column:
             mit_laufzeit_15000_all['Beschreibung'] = dom_g[1]
 
             gas_all = pd.concat([ohne_laufzeit_15000_all,  mit_laufzeit_15000_all])
-
             density_chart_g = create_desitiy_chart(gas_all, selected_date_e, selected_variable, rng_g, dom_g)
-
             st.altair_chart(density_chart_g)
 
         if( (seperation_var == 'Preisgarantie') | (seperation_var == 'Vertragslaufzeit') ):
             #st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
-            st.write('<div style=background-color:'+rng_g[0]+';>Top {top_n} Tarife am {selected_date} mit {seperation_var} < {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
-            get_table(ohne_laufzeit_15000,selected_date_e, rng_g[0], dom_g[0])
-            st.write('<div style=background-color:'+rng_g[1]+';>Top {top_n} Tarife am {selected_date} mit {seperation_var} >= {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
-            get_table(mit_laufzeit_15000,selected_date_e, rng_g[1], dom_g[1])
+            st.write('<div style="text-align: center"><b>'+'Top {top_n} Tarife am {selected_date}'.format(top_n=top_n, selected_date=selected_date_e)+'</b></div>', unsafe_allow_html=True)
+            st.write('<div style="background-color:'+rng_g[0]+'; text-align: center">{seperation_var} < {selection_slider}'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            grid_table, grid_table_df = get_table(ohne_laufzeit_15000,selected_date_e, rng_g[0], dom_g[0])
+            sel_row = grid_table['selected_rows']
+
+            if(len(sel_row) > 0 ):
+                index = sel_row[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                create_tarif_summary_section(gas_all, grid_table_df, index, selected_variable)
+
+            st.write('<div style="background-color:'+rng_g[1]+'; text-align: center">{seperation_var} >= {selection_slider}'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            grid_table, grid_table_df = get_table(mit_laufzeit_15000,selected_date_e, rng_g[1], dom_g[1])
+            sel_row = grid_table['selected_rows']
+
+            if(len(sel_row) > 0 ):
+                index = sel_row[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                create_tarif_summary_section(gas_all, grid_table_df, index, selected_variable)
         elif(seperation_var =='Öko Tarif/ Konventioneller Tarif'):
-            st.write('<div style=background-color:'+rng_g[1]+';>Top {top_n} Nicht-Öko Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
-            get_table(ohne_laufzeit_15000,selected_date_e, rng_g[1], dom_g[1])
-            st.write('<div style=background-color:'+rng_g[0]+';>Top {top_n} Öko Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
-            get_table(mit_laufzeit_15000,selected_date_e, rng_g[0], dom_g[0])
+            st.write('<div style="text-align: center"><b>'+'Top {top_n} Tarife am {selected_date}'.format(top_n=top_n, selected_date=selected_date_e)+'</b></div>', unsafe_allow_html=True)
+            st.write('<div style="background-color:'+rng_g[1]+'; text-align: center">Nicht-Öko Tarife', unsafe_allow_html=True)
+            grid_table, grid_table_df = get_table(ohne_laufzeit_15000,selected_date_e, rng_g[1], dom_g[1])
+            sel_row = grid_table['selected_rows']
+
+            if(len(sel_row) > 0 ):
+                index = sel_row[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                create_tarif_summary_section(gas_all, grid_table_df, index, selected_variable)
+
+            st.write('<div style="background-color:'+rng_g[0]+'; text-align: center">Öko Tarife', unsafe_allow_html=True)
+            grid_table, grid_table_df = get_table(mit_laufzeit_15000,selected_date_e, rng_g[0], dom_g[0])
+            sel_row = grid_table['selected_rows']
+
+            if(len(sel_row) > 0 ):
+                index = sel_row[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                create_tarif_summary_section(gas_all, grid_table_df, index, selected_variable)
+
         elif(seperation_var =='Partner'):
-            st.write('<div style=background-color:'+rng_g[1]+';>Top {top_n} Tarife von Verivox am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
-            get_table(ohne_laufzeit_15000,selected_date_e, rng_g[1], dom_g[1])
-            st.write('<div style=background-color:'+rng_g[0]+';>Top {top_n} Tarife von Check24 am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
-            get_table(mit_laufzeit_15000,selected_date_e, rng_g[0], dom_g[0])
+            st.write('<div style="text-align: center"><b>'+'Top {top_n} Tarife am {selected_date}'.format(top_n=top_n, selected_date=selected_date_e)+'</b></div>', unsafe_allow_html=True)
+            st.write('<div style="background-color:'+rng_g[1]+'; text-align: center">Von Verivox', unsafe_allow_html=True)
+            grid_table, grid_table_df = get_table(ohne_laufzeit_15000,selected_date_e, rng_g[1], dom_g[1])
+            sel_row = grid_table['selected_rows']
+
+            if(len(sel_row) > 0 ):
+                index = sel_row[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                create_tarif_summary_section(gas_all, grid_table_df, index, selected_variable)
+
+            st.write('<div style="background-color:'+rng_g[0]+'; text-align: center">Von Check24', unsafe_allow_html=True)
+            grid_table, grid_table_df = get_table(mit_laufzeit_15000,selected_date_e, rng_g[0], dom_g[0])
+            sel_row = grid_table['selected_rows']
+
+            if(len(sel_row) > 0 ):
+                index = sel_row[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                create_tarif_summary_section(gas_all, grid_table_df, index, selected_variable)
+                
         elif(seperation_var == 'Kein Unterscheidungsmerkmal'):
 
             mit_laufzeit_15000_all['Beschreibung'] = dom_g[0]
@@ -1279,8 +1457,14 @@ with gas_tarif_listchart_column:
             density_chart_e = create_desitiy_chart(mit_laufzeit_15000_all, selected_date_e, selected_variable, rng_g, dom_g)
 
             st.altair_chart(density_chart_e)
-            st.write('<div style=background-color:'+rng_g[0]+';>Top {top_n} Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
-            get_table(mit_laufzeit_15000,selected_date_e, rng_g[0], dom_g[0])
+            st.write('<div style="text-align: center"><b>'+'Top {top_n} Tarife am {selected_date}'.format(top_n=top_n, selected_date=selected_date_e)+'</b></div>', unsafe_allow_html=True)
+            st.write('<div style="background-color:'+rng_g[0]+'; text-align: center">Mit 15K kWh Verbrauch', unsafe_allow_html=True)
+            grid_table, grid_table_df = get_table(mit_laufzeit_15000,selected_date_e, rng_g[0], dom_g[0])
+            sel_row = grid_table['selected_rows']
+
+            if(len(sel_row) > 0 ):
+                index = sel_row[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                create_tarif_summary_section(mit_laufzeit_15000_all, grid_table_df, index, selected_variable)
 
     tariff_list_expander_9000g = st.expander('Tarifliste - Gastarife mit 9000 kWh Verbrauch', expanded=False)
     
@@ -1288,7 +1472,7 @@ with gas_tarif_listchart_column:
 
 
         st.write('<div style="text-align: center"><b>'+'Zusammenfassung aller Tarife mit 9K kWh Verbrauch am '+str(selected_date_e)+'</b></div>', unsafe_allow_html=True)
-        st.write('<div style="text-align: center"><b>'+'Verteilung'+'</b></div>', unsafe_allow_html=True)
+        st.write('<div style="text-align: center"><b>'+'Histogramm'+'</b></div>', unsafe_allow_html=True)
         st.write(' ')
 
         if(seperation_var != 'Kein Unterscheidungsmerkmal'):
@@ -1303,20 +1487,58 @@ with gas_tarif_listchart_column:
 
         if( (seperation_var == 'Preisgarantie') | (seperation_var == 'Vertragslaufzeit') ):
             #st.info('Hier ist gedacht die Tarife aufzulisten die oben im Barchart ausgewählt sind')
-            st.write('<div style=background-color:'+rng_g[2]+';>Top {top_n} Tarife am {selected_date} mit {seperation_var} < {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
-            get_table(ohne_laufzeit_9000,selected_date_e, rng_g[2], dom_g[2])
-            st.write('<div style=background-color:'+rng_g[3]+';>Top {top_n} Tarife am {selected_date} mit {seperation_var} >= {selection_slider}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
-            get_table(mit_laufzeit_9000,selected_date_e, rng_g[3], dom_g[3])
+            st.write('<div style="text-align: center"><b>'+'Top {top_n} Tarife am {selected_date}'.format(top_n=top_n, selected_date=selected_date_e)+'</b></div>', unsafe_allow_html=True)
+            st.write('<div style="background-color:'+rng_g[2]+'; text-align: center">{seperation_var} < {selection_slider}'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            grid_table, grid_table_df = get_table(ohne_laufzeit_9000,selected_date_e, rng_g[2], dom_g[2])
+            sel_row = grid_table['selected_rows']
+
+            if(len(sel_row) > 0 ):
+                index = sel_row[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                create_tarif_summary_section(gas_all, grid_table_df, index, selected_variable)
+
+            st.write('<div style="background-color:'+rng_g[3]+'; text-align: center">{seperation_var} >= {selection_slider}'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
+            grid_table, grid_table_df = get_table(mit_laufzeit_9000,selected_date_e, rng_g[3], dom_g[3])
+            sel_row = grid_table['selected_rows']
+
+            if(len(sel_row) > 0 ):
+                index = sel_row[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                create_tarif_summary_section(gas_all, grid_table_df, index, selected_variable)
+
         elif(seperation_var =='Öko Tarif/ Konventioneller Tarif'):
-            st.write('<div style=background-color:'+rng_g[3]+';>Top {top_n} Nicht-Öko Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
-            get_table(ohne_laufzeit_9000,selected_date_e, rng_g[3], dom_g[3])
-            st.write('<div style=background-color:'+rng_g[2]+';>Top {top_n} Öko Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
-            get_table(mit_laufzeit_9000,selected_date_e, rng_g[2], dom_g[2])
+            st.write('<div style="text-align: center"><b>'+'Top {top_n} Tarife am {selected_date}'.format(top_n=top_n, selected_date=selected_date_e)+'</b></div>', unsafe_allow_html=True)
+            st.write('<div style="background-color:'+rng_g[3]+'; text-align: center">Nicht-Öko Tarife', unsafe_allow_html=True)
+            grid_table, grid_table_df = get_table(ohne_laufzeit_9000,selected_date_e, rng_g[3], dom_g[3])
+            sel_row = grid_table['selected_rows']
+
+            if(len(sel_row) > 0 ):
+                index = sel_row[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                create_tarif_summary_section(gas_all, grid_table_df, index, selected_variable)
+                
+            st.write('<div style="background-color:'+rng_g[2]+'; text-align: center">Öko Tarife', unsafe_allow_html=True)
+            grid_table, grid_table_df = get_table(mit_laufzeit_9000,selected_date_e, rng_g[2], dom_g[2])
+            sel_row = grid_table['selected_rows']
+
+            if(len(sel_row) > 0 ):
+                index = sel_row[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                create_tarif_summary_section(gas_all, grid_table_df, index, selected_variable)
+
         elif(seperation_var =='Partner'):
-            st.write('<div style=background-color:'+rng_g[3]+';>Top {top_n} Tarife von Verivox am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
-            get_table(ohne_laufzeit_9000,selected_date_e, rng_g[3], dom_g[3])
-            st.write('<div style=background-color:'+rng_g[2]+';>Top {top_n} Tarife von Check24 am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
-            get_table(mit_laufzeit_9000,selected_date_e, rng_g[2], dom_g[2])
+            st.write('<div style="text-align: center"><b>'+'Top {top_n} Tarife am {selected_date}'.format(top_n=top_n, selected_date=selected_date_e)+'</b></div>', unsafe_allow_html=True)
+            st.write('<div style="background-color:'+rng_g[3]+'; text-align: center">Von Verivox', unsafe_allow_html=True)
+            grid_table, grid_table_df = get_table(ohne_laufzeit_9000,selected_date_e, rng_g[3], dom_g[3])
+            sel_row = grid_table['selected_rows']
+
+            if(len(sel_row) > 0 ):
+                index = sel_row[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                create_tarif_summary_section(gas_all, grid_table_df, index, selected_variable)
+
+            st.write('<div style="background-color:'+rng_g[2]+'; text-align: center">Von Check24', unsafe_allow_html=True)
+            grid_table, grid_table_df = get_table(mit_laufzeit_9000,selected_date_e, rng_g[2], dom_g[2])
+            sel_row = grid_table['selected_rows']
+
+            if(len(sel_row) > 0 ):
+                index = sel_row[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                create_tarif_summary_section(gas_all, grid_table_df, index, selected_variable)
         elif(seperation_var == 'Kein Unterscheidungsmerkmal'):
 
             mit_laufzeit_9000_all['Beschreibung'] = dom_g[1]
@@ -1324,8 +1546,16 @@ with gas_tarif_listchart_column:
             density_chart_e = create_desitiy_chart(mit_laufzeit_9000_all, selected_date_e, selected_variable, rng_g, dom_g)
 
             st.altair_chart(density_chart_e)
-            st.write('<div style=background-color:'+rng_g[1]+';>Top {top_n} Tarife am {selected_date}:'.format(top_n=top_n, selected_date=selected_date_e, seperation_var=seperation_var, selection_slider=selection_slider), unsafe_allow_html=True)
-            get_table(mit_laufzeit_9000,selected_date_e, rng_g[1], dom_g[1])
+            st.write('<div style="text-align: center"><b>'+'Top {top_n} Tarife am {selected_date}'.format(top_n=top_n, selected_date=selected_date_e)+'</b></div>', unsafe_allow_html=True)
+            st.write('<div style="background-color:'+rng_g[1]+'; text-align: center">Mit 9K kWh Verbrauch', unsafe_allow_html=True)
+            grid_table, grid_table_df = get_table(mit_laufzeit_9000,selected_date_e, rng_g[1], dom_g[1])
+            sel_row = grid_table['selected_rows']
+
+            if(len(sel_row) > 0 ):
+                index = sel_row[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                create_tarif_summary_section(mit_laufzeit_9000_all, grid_table_df, index, selected_variable)
+
+
 
 
 
