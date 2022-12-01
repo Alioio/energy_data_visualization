@@ -876,7 +876,7 @@ def summarize_tariff(results, selected_variable):
         "datafixed":"Grundpreis",
         "Jahreskosten":"Jahreskosten"}
 
-    results[selectd_variable_dict[selected_variable]+'_mean'] = results.groupby('date')['dataunit'].transform('mean')
+    results[selectd_variable_dict[selected_variable]+'_mean'] = results.groupby('date')[selectd_variable_dict[selected_variable]].transform('mean')
     #st.write(results[['date', 'dataunit', 'dataunit_mean']])
     return results
                 
@@ -898,11 +898,11 @@ def create_tarif_chart(source, selected_variable):
     tarif_y_domain = [min_y, max_y]
     #st.write(list(tarif_y_domain))
 
-    tarif_chart = alt.Chart(source).mark_circle(size=100).encode(
+    tarif_chart = alt.Chart(source).mark_circle(size=50).encode(
                     x = alt.X('date:T', axis=alt.Axis(format="%y %b", grid=False, title='Datum')),
                     y = alt.Y(variable+':Q', scale=alt.Scale(domain=list(tarif_y_domain)),axis= alt.Axis(title=selected_variable, offset=5)),
                     tooltip=['date:T',variable+':Q']
-                ).properties(width=700, height=250, title='')
+                ).properties(width=550, height=150, title='')
     return tarif_chart
 
 def create_tarif_summary_section(results, grid_table_df, index, selected_variable):
