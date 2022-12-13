@@ -295,12 +295,10 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         "Jahreskosten": "Jahreskosten"
         }
 
-
-
-    results_pl = pl.from_pandas(results)
-    global_summary = results_pl.groupby(['date']).count()
-    global_summary = global_summary.rename({'count':'count_global'})
-    global_summary = global_summary.to_pandas()
+    global_summary = results.groupby(['date']).count()
+    global_summary['date'] = global_summary.index
+    global_summary['count_global'] = global_summary.providerName
+    global_summary = global_summary[['date', 'count_global']].reset_index(drop=True).copy()
 
     agg_functions = {
         variables_dict[selected_variable]:
