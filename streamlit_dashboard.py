@@ -654,7 +654,7 @@ def create_chart(summary, aggregation='mean', seperation_value=12, date_interval
     )
     
     chart = base.encode(
-        x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
+        x=alt.X('date:T',axis= alt.Axis(grid=False, title='', format="%d %b %y", labelAngle=45), scale=alt.Scale(domain=interval.ref())),
         y=alt.Y(aggregation+':Q', axis = alt.Axis(title=y_axis_title,  offset= 5), scale=alt.Scale(domain=list(domain2))),
         tooltip = alt.Tooltip(['date:T', aggregation+':Q', 'beschreibung:N']),
         opacity=alt.condition(selection, alt.value(1), alt.value(0.2))
@@ -665,8 +665,8 @@ def create_chart(summary, aggregation='mean', seperation_value=12, date_interval
 
     #count_selector = alt.selection(type='single', encodings=['x'])
 
-    count_chart = base.mark_bar(size=6.8).encode(
-        x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
+    count_chart = base.mark_bar(size=6.8).encode( 
+        x=alt.X('date:T',axis= alt.Axis(labels=False, grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
         y=alt.Y('count_all:Q', axis = alt.Axis(title='# Absolut'), scale=alt.Scale(domain=domain3)),
         color=alt.Color('beschreibung:N', scale=alt.Scale(domain=dom, range=rng)),
         opacity=alt.condition(nearest, alt.value(1), alt.value(0.5)),
@@ -682,8 +682,8 @@ def create_chart(summary, aggregation='mean', seperation_value=12, date_interval
     )
 
     count_chart_normalized = base.mark_bar(size=6.8).encode(
-        x=alt.X('date:T',axis= alt.Axis(grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
-        y=alt.Y('count_all:Q', axis = alt.Axis(title='# (Normalisiert)'), stack="normalize"),
+        x=alt.X('date:T',axis= alt.Axis(format="%d %b %y", labelAngle=45, grid=False, title=''), scale=alt.Scale(domain=interval.ref())),
+        y=alt.Y('count_all:Q', axis = alt.Axis(title='# (Normiert)'), stack="normalize"),
         color=alt.Color('beschreibung:N', scale=alt.Scale(domain=dom, range=rng)),
         opacity=alt.condition(nearest, alt.value(1), alt.value(0.5)),
         order=alt.Order(
@@ -698,6 +698,7 @@ def create_chart(summary, aggregation='mean', seperation_value=12, date_interval
     )
     
     view = base.encode(
+        x = alt.X('date:T',axis=alt.Axis(format="%d %b %y", labelAngle=45, grid=False, title='')),
         y = alt.Y(aggregation+':Q', axis = alt.Axis(title=y_axis_title),scale=alt.Scale(domain=list(domain1))),
     ).add_selection(
         interval
@@ -1073,7 +1074,7 @@ def create_tarif_chart(source, selected_variable):
     #st.write(list(tarif_y_domain))
 
     tarif_chart = alt.Chart(source).mark_circle(size=50).encode(
-                    x = alt.X('date:T', axis=alt.Axis(format="%y %b", grid=False, title='Datum')),
+                    x = alt.X('date:T', axis=alt.Axis(format="%d %b %y", grid=False, title='Datum', labelAngle=45)),
                     y = alt.Y(variable+':Q', scale=alt.Scale(domain=list(tarif_y_domain)),axis= alt.Axis(title=selected_variable, offset=10)),
                     tooltip=['date:T',variable+':Q']
                 ).properties(width=550, height=150, title='')
@@ -1192,7 +1193,7 @@ with time_selection_column:
 #empty_left_division_expander,left1_division_expander,center_division_expander,right1_division_expander, empty_right_division_expander= st.columns((1,4,1,4,1))
 #division_expander = left1_division_expander.expander('Weiteres Unterscheidungsmerkmal 🍎🍏 - Hier kannst du ein weiteres Unterscheidungsmerkmal an welches du die Tarife aufteilen möchtest auswählen.', expanded=False)
         
-seperation_var = left1_division_expander.selectbox('Nach welches Attribut möchtest du aufteilen?',
+seperation_var = left1_division_expander.selectbox('Nach welchem Merkmal möchtest du aufteilen?',
     ('Kein Unterscheidungsmerkmal', 'Vertragslaufzeit', 'Preisgarantie', 'Öko Tarif/ Konventioneller Tarif','Partner'),
     index=0,
     help="Gebe hier ein nach welhes Attribut du trennen möchtest: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
@@ -1200,7 +1201,7 @@ seperation_var = left1_division_expander.selectbox('Nach welches Attribut möcht
 selection_slider = 12
 
 if( (seperation_var =='Vertragslaufzeit') |(seperation_var =='Preisgarantie')  ):
-    selection_slider = left1_division_expander.slider('Ab welchen Wert für das Attribut '+seperation_var+ ' teilen?', 0, 24, 12, step=3,
+    selection_slider = left1_division_expander.slider('Teile '+seperation_var+ ' ab:', 0, 24, 12, step=3,
     help="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
 
 ### ENDE MENU AUSWAHL REGION
@@ -1281,7 +1282,7 @@ with chart_header_middle:
 empty_chartHeader_left1,  chart_header_middle1,   empty_chart_header_right1 = st.columns([1,  10,  1])
 main_chart_container = chart_header_middle1.container()
         
-main_chart_container.write(('Die oberen zwei Grafiken zeigen die Entwicklung der Tarife bezüglich: {selected_variable}. Im dritten Grafik ist die Anzahl der Suchanfragenergebnisse visualisiert.').format(selected_variable=selected_variable))
+main_chart_container.write(('Die oberen Grafiken zeigen die Entwicklung der Tarife bezüglich: {selected_variable}. Die unteren Grafiken zeigen die Entwicklung der Anzahl der Suchanfragenergebnisse.').format(selected_variable=selected_variable))
 
 ohne_laufzeit_1300, ohne_laufzeit_9000, ohne_laufzeit_3000, ohne_laufzeit_15000 = None, None, None, None
 mit_laufzeit_1300, mit_laufzeit_9000, mit_laufzeit_3000, mit_laufzeit_15000 = None, None, None, None
@@ -1320,17 +1321,24 @@ if(len(date_interval) == 2):
 
 ## ENDE CHART REGION
 
-empty_column_left, empty_left_colum1, tarif_list_menu_column_previous, tarif_list_menu_current, tarif_list_menu_next, empty_right_column1, empty_column_right  = st.columns([1, 3.7, 0.8, 1, 0.8, 3.7, 1]) 
+empty_left_tariffSummaryHeader, empty_left1_tariffSummaryHeader,centerTariffSummaryHeader, empty_right1_tariffSummaryHeader, empty_right_tariffSummaryHeader = st.columns([1,4,2,4,1]) 
+empty_column_left, empty_left_colum1, tarif_list_menu_column_previous, tarif_list_menu_current, tarif_list_menu_next, empty_right_column1, empty_column_right  = st.columns([1, 3, 1, 2, 1, 3, 1]) 
 electricity_tarif_list_column, gas_tarif_listchart_column = st.columns(2) 
+
+empty_left1_tariffSummaryHeader.markdown("""---""")
+empty_right1_tariffSummaryHeader.markdown("""---""")
+tariffHeadder=('Tariflisten übersicht').format(selected_variable=selected_variable, seperation_var=seperation_var).upper()
+centerTariffSummaryHeader.write(' ')
+centerTariffSummaryHeader.write('<div style="text-align: center">'+tariffHeadder+'</div>', unsafe_allow_html=True)
 
 tariff_list_empty_left, electricity_tarif_list_column, tariff_list_middle, gas_tarif_listchart_column, tariff_list_empty_right = st.columns([1, 4,1,4,1])
 
 with empty_left_colum1:
     st.write('   ')
-    st.markdown("""---""")
+    st.markdown(' ')
 with empty_right_column1:
     st.write('   ')
-    st.markdown("""---""")
+    st.markdown(' ')
     
 dates = electricity_results_3000[(electricity_results_3000.date >= pd.to_datetime(date_interval[0])) & (electricity_results_3000.date <= pd.to_datetime(date_interval[1]))].date.unique()
 dates = pd.to_datetime(dates).strftime("%b %d, %Y")
@@ -1362,7 +1370,7 @@ if(len(dates[np.where(np.asarray( dates)> selected_date_e)]) > 0):
             st.button(' >> {next_date} '.format(next_date=next_date), disabled=True)
 
 sep_line_empty_left2, sep_line2_center, sep_line_empty_right = st.columns([1, 10, 1])                   
-sep_line2_center.markdown("""---""")
+sep_line2_center.markdown("""""---""""")
 
 with electricity_tarif_list_column:
     tariff_list_expander_3000e = st.expander('Stromtarife mit 3000 kWh Verbrauch', expanded=True)
