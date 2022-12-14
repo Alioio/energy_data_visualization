@@ -1088,7 +1088,7 @@ def create_tarif_summary_section(results, grid_table_df, index, selected_variabl
     tarif_df = summarize_tariff(tarif_df, selected_variable)
     tarif_chart = create_tarif_chart(tarif_df, selected_variable)
 
-    st.write('<div style="text-align: center">Tarif \"{tariffName}\" vom Anbieter \"{providerName}\" für 1.3K kWh Verbrauch'.format(tariffName = tariffName, providerName = providerName), unsafe_allow_html=True)
+    st.write('<div style="text-align: center">Entwicklung - Tarif \"{tariffName}\" vom Anbieter \"{providerName}\"'.format(tariffName = tariffName, providerName = providerName), unsafe_allow_html=True)
     st.altair_chart(tarif_chart)
 
 #### HEADER REGION
@@ -1100,12 +1100,7 @@ with row1_1:
     
 with row1_2:
     st.write(
-        """
-    ##
-    **Dieses Dashboard ist zum Explorieren von Strom- und Gastarifdaten**. Hier einen kuzen Abschnitt einfügen welches diesen Dashboard beschreibt.
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. 
-    At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-    """
+        """Hier noch eine kurze Beschreibung des Dashboard einfügen. """
     )
 
     dateset_description_expander = st.expander('Datensatz', expanded=False)
@@ -1113,8 +1108,16 @@ with row1_2:
     with dateset_description_expander:
         st.write(
             """
-        ##
-        **Datensatz:** Hier die Beschreibung der Quellen und Datensätze einfügen.
+        **Was**\n
+        Für fünf Postleitzahlen werden die Tarife für jeweils zwei unterschiedliche Energiemengen automatisiert abgerufen. \n\n
+        **Rhythmus:**\n
+        Die automatisierte Abfrage erfolgt einmal pro Woche. Es gibt keinen festen Tag dafür. \n
+        **Postleitzahlen und Verbrauchsmengen:**\n\n
+        **10245 Berlin** - 1.300 kWh Strom, 3.000 kWh Strom, 9.000 kWh Gas, 15.000 kWh Gas\n
+        **99425 Weimar** - 1.300 kWh Strom, 3.000 kWh Strom, 9.000 kWh Gas, 15.000 kWh Gas\n
+        **33100 Paderborn** - 1.300 kWh Strom, 3.000 kWh Strom, 9.000 kWh Gas, 15.000 kWh Gas\n
+        **50670 Köln** - 1.300 kWh Strom, 3.000 kWh Strom, 9.000 kWh Gas, 15.000 kWh Gas\n
+        **49661 Cloppenburg** - 1.300 kWh Strom, 3.000 kWh Strom, 9.000 kWh Gas, 15.000 kWh Gas\n
         """
         )
 
@@ -1282,7 +1285,8 @@ with chart_header_middle:
 empty_chartHeader_left1,  chart_header_middle1,   empty_chart_header_right1 = st.columns([1,  10,  1])
 main_chart_container = chart_header_middle1.container()
         
-main_chart_container.write(('Die oberen Grafiken zeigen die Entwicklung der Tarife bezüglich: {selected_variable}. Die unteren Grafiken zeigen die Entwicklung der Anzahl der Suchanfragenergebnisse.').format(selected_variable=selected_variable))
+main_chart_container.write(("""In diesem Abschnit kann die Entwcilung der Tarife als eine Zeitreihe betrachtet werden.\n
+Die oberen Grafiken zeigen die Entwicklung der Tarife bezüglich: {selected_variable}. Die unteren Grafiken zeigen die Entwicklung der Anzahl der Suchanfragenergebnisse.""").format(selected_variable=selected_variable))
 
 ohne_laufzeit_1300, ohne_laufzeit_9000, ohne_laufzeit_3000, ohne_laufzeit_15000 = None, None, None, None
 mit_laufzeit_1300, mit_laufzeit_9000, mit_laufzeit_3000, mit_laufzeit_15000 = None, None, None, None
@@ -1330,6 +1334,10 @@ empty_right1_tariffSummaryHeader.markdown("""---""")
 tariffHeadder=('Tariflisten übersicht').format(selected_variable=selected_variable, seperation_var=seperation_var).upper()
 centerTariffSummaryHeader.write(' ')
 centerTariffSummaryHeader.write('<div style="text-align: center">'+tariffHeadder+'</div>', unsafe_allow_html=True)
+
+tariffLists_empty_left, tariffList_center_long_text, tariffLists_empty_right = st.columns([1, 10, 1])
+
+tariffList_center_long_text.write('In diesem Abschnitt können Tarife welche zu einem bestimmten Zeitpunkt vorhanden waren und deren Eitwicklung im einzelnen betrachtet werden.')
 
 tariff_list_empty_left, electricity_tarif_list_column, tariff_list_middle, gas_tarif_listchart_column, tariff_list_empty_right = st.columns([1, 4,1,4,1])
 
@@ -1474,7 +1482,7 @@ with electricity_tarif_list_column:
     
     with tariff_list_expander_1300e:
 
-        st.write('<div style="text-align: center"><b>'+'Zusammenfassung aller Tarife mit 3K Verbrauch am '+str(selected_date_e)+'</b></div>', unsafe_allow_html=True)
+        st.write('<div style="text-align: center"><b>'+'Zusammenfassung aller Tarife mit 1.3K Verbrauch am '+str(selected_date_e)+'</b></div>', unsafe_allow_html=True)
         st.write(' ')
         st.write('<div style="text-align: center"><b>'+'Histogramm'+'</b></div>', unsafe_allow_html=True)
         st.write(' ')
