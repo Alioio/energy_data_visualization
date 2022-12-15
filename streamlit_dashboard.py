@@ -905,7 +905,7 @@ def get_table(results, selected_date, rng, dom):
         height = 350,
         width=805,
         allow_unsafe_jscode=True,
-        theme='dark'
+        theme='alpine'
         )
 
     return grid_table, top_n_strom_tarife
@@ -965,7 +965,7 @@ def get_tariff_table(results, selected_date):
         height = 650,
         width=805,
         allow_unsafe_jscode=True,
-        theme='dark'
+        theme='alpine'
         )
 
     return grid_table
@@ -1011,7 +1011,7 @@ def get_tariff_table_comparison_signupPartner(results, selected_date):
         height = 650,
         width=805,
         allow_unsafe_jscode=True,
-        theme='dark'
+        theme='alpine'
         )
 
     return grid_table
@@ -1239,7 +1239,7 @@ with annotation_container:
     #height = 300,
     width='100%',
     allow_unsafe_jscode=True,
-    theme='dark'
+    theme='alpine'
      )
 
     sel_row = grid_table['selected_rows']
