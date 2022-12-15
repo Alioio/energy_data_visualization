@@ -905,7 +905,7 @@ def get_table(results, selected_date, rng, dom):
         height = 350,
         width=805,
         allow_unsafe_jscode=True,
-        theme='alpine'
+        theme='dark'
         )
 
     return grid_table, top_n_strom_tarife
@@ -965,7 +965,7 @@ def get_tariff_table(results, selected_date):
         height = 650,
         width=805,
         allow_unsafe_jscode=True,
-        theme='alpine'
+        theme='dark'
         )
 
     return grid_table
@@ -1011,7 +1011,7 @@ def get_tariff_table_comparison_signupPartner(results, selected_date):
         height = 650,
         width=805,
         allow_unsafe_jscode=True,
-        theme='alpine'
+        theme='dark'
         )
 
     return grid_table
@@ -1226,7 +1226,7 @@ with annotation_container:
     gd = GridOptionsBuilder.from_dataframe(events_df)
     gd.configure_pagination(enabled=True)
     gd.configure_default_column(editable=True, groupable=True)
-    gd.configure_selection(selection_mode='multiple', use_checkbox=True)
+    gd.configure_selection(selection_modarkde='multiple', use_checkbox=True)
     gd.configure_column("start", type=["customDateTimeFormat"], custom_format_string='yyyy-MM-dd')
     #um date picker einzufügen: https://discuss.streamlit.io/t/ag-grid-component-with-input-support/8108/349?page=17
     gridoptions = gd.build()
@@ -1239,7 +1239,7 @@ with annotation_container:
     #height = 300,
     width='100%',
     allow_unsafe_jscode=True,
-    theme='alpine'
+    theme='dark'
      )
 
     sel_row = grid_table['selected_rows']
