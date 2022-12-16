@@ -79,7 +79,6 @@ def set_plz(ID):
   elif((ID==19) |(ID==17)):
     return '71771'
 
-
 @st.cache(ttl=7*24*60*60)
 def read_energy_data_100(energy_type, verbrauch):
     ## Lese alle Dateien und füge sie zu einer Liste zusammen
@@ -251,7 +250,6 @@ def read_energy_data(energy_type, verbrauch):
     print('MIT DEM EINLESEN DER 5 PLZ DATEN FERTIG ',energy_type)
     return all_dates[['date', 'providerName', 'tariffName', 'signupPartner', 'plz', 'dataunit',  'datafixed','Jahreskosten','contractDurationNormalized', 'priceGuaranteeNormalized', 'dataeco']]
 
-
 with concurrent.futures.ThreadPoolExecutor() as executor:
     electricity_reader_thread_3000 = executor.submit(read_energy_data, 'electricity', '3000')
     electricity_reader_thread_1300 = executor.submit(read_energy_data, 'electricity', '1300')
@@ -274,6 +272,7 @@ with concurrent.futures.ThreadPoolExecutor() as executor:
     #gas_results_100_15000 = gas_reader_thread_100_15000.result()
     #gas_results_100_9000 = gas_reader_thread_100_9000.result()
 
+@st.cache(suppress_st_warning=True, allow_output_mutation=True)
 def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_value=12, consumption='unknown',selected_variable='dataunit', top_n = '10'):
 
     sep_var_readable = seperation_var
@@ -287,7 +286,6 @@ def summarize(results, seperation_var='priceGuaranteeNormalized',seperation_valu
         seperation_var = 'signupPartner'
     elif(seperation_var== 'Kein Unterscheidungsmerkmal'):
         seperation_var = 'None'
-
 
     variables_dict = {
         "Arbeitspreis": "dataunit",
@@ -1162,18 +1160,6 @@ elif(time_selection == 'Eigener Zeitraum'):
                     key='#date_range',
                     help="Start-und End Datum: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At")
 
-#plz_list = electricity_results_3000['plz'].unique().tolist()
-#print(electricity_results_3000['plz'].unique())
-#plz_list.append('Alle')
-
-#with time_selection_column:
-#    st.multiselect(
-#            'Tarife aus welchen Postleitzahlen soll enthalten sein?',
-#            plz_list,
-#            default=['Alle'])
-
-
-#attribute_selection_column.write("**Attributauswahl**")
 
 selected_variable = attribute_selection_column.selectbox(
     'Welches Attribut möchtest du anschauen?',
