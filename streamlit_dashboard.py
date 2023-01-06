@@ -8,7 +8,7 @@ import timeit
 from datetime import datetime as dt
 from datetime import date, timedelta
 import altair as alt
-import altair_catplot as altcat
+#import altair_catplot as altcat
 alt.renderers.set_embed_options(tooltip={"theme": "dark"})
 alt.data_transformers.disable_max_rows()
 import streamlit as st
